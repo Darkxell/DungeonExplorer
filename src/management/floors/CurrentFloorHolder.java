@@ -2,6 +2,8 @@ package management.floors;
 
 import java.awt.Graphics2D;
 
+import display.GameCanvas;
+import management.player.PlayerInfo;
 import res.Res;
 
 /** Static class that hold the current floor. */
@@ -10,7 +12,8 @@ public abstract class CurrentFloorHolder {
     /** The depth of the current floor. */
     public static int depth = 0;
 
-    public static Floor CurrentFloor = new Floor(Res.FOLDER_PATH + "");
+    public static Floor CurrentFloor = new Floor(Res.FOLDER_PATH
+	    + "maps\\testdungeon");
 
     // TODO: set the default floor here.
 
@@ -19,10 +22,31 @@ public abstract class CurrentFloorHolder {
 	CurrentFloor.getPlayerRoom().update();
     }
 
-    /** Prints the current room on the specified Graphics2D object. */
-    public static void printPlayerRoom(Graphics2D g2d) {
-	CurrentFloor.getPlayerRoom().print(g2d, 0, 0);// TODO change the
-						      // position
+    /** Prints the whole floor on the specified Graphics2D object. */
+    public static void printFloor(Graphics2D g2d) {
+	g2d.translate(-PlayerInfo.cameraX * 16 + GameCanvas.ScreenWidth / 2,
+		-PlayerInfo.cameraY * 16 + GameCanvas.ScreenHeight / 2);
+
+	for (int i = 0; i < CurrentFloor.rooms.length; i++) {
+	    CurrentFloor.rooms[i].print(g2d,
+		    CurrentFloor.rooms[i].posX * 16,
+		    CurrentFloor.rooms[i].posY * 16);
+	}
+
+	int pSpriteSize = 32;
+	if (PlayerInfo.playerdirection == PlayerInfo.RIGHT) {
+	    g2d.drawImage(PlayerInfo.playersprite.getCurrentSprite(),
+		    (int) (PlayerInfo.posX * 16 + (pSpriteSize / 2)),
+		    (int) (PlayerInfo.posY * 16 - pSpriteSize / 2),
+		    -pSpriteSize, pSpriteSize, null);
+	} else {
+	    g2d.drawImage(PlayerInfo.playersprite.getCurrentSprite(),
+		    (int) (PlayerInfo.posX * 16 - pSpriteSize / 2),
+		    (int) (PlayerInfo.posY * 16 - pSpriteSize / 2), null);
+	}
+
+	g2d.translate(PlayerInfo.cameraX - GameCanvas.ScreenWidth,
+		PlayerInfo.cameraY - GameCanvas.ScreenHeight);
     }
 
 }

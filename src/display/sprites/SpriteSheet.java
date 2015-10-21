@@ -33,4 +33,9 @@ public class SpriteSheet {
 	this.currentAnimatedspriteID = id;
     }
 
+    /** gets this spritesheet animatedsprite current ID. */
+    public int getSpriteID() {
+	return currentAnimatedspriteID;
+    }
+
 }

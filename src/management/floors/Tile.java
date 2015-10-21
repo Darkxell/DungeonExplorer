@@ -15,11 +15,12 @@ public class Tile {
     public static final int TYPE_NORMAL = 0;
     public static final int TYPE_SOLID = 1;
     public static final int TYPE_WATER = 2;
-    public static final int TYPE_JUMPABLE_LEFT = 3;
-    public static final int TYPE_JUMPABLE_RIGHT = 4;
-    public static final int TYPE_JUMPABLE_UP = 5;
-    public static final int TYPE_JUMPABLE_DOWN = 6;
-    public static final int TYPE_VOID = 7;
+    public static final int TYPE_LAVA = 3;
+    public static final int TYPE_JUMPABLE_LEFT = 4;
+    public static final int TYPE_JUMPABLE_RIGHT = 5;
+    public static final int TYPE_JUMPABLE_UP = 6;
+    public static final int TYPE_JUMPABLE_DOWN = 7;
+    public static final int TYPE_VOID = 8;
 
     /**
      * The sprite of the tile. Please note that this sprite MUST be repetable,
@@ -68,6 +69,22 @@ public class Tile {
 	    sprite.next();
 	    updater = 0;
 	}
+    }
+
+    /**
+     * returns true if the player can go on the specified area of the tile. This
+     * returns true if the player can go inside it, doesn't mean he will live
+     * long if he goes, depends on the tile...
+     * 
+     * @param pos
+     *            the position on the tile. between 0 and 1.
+     */
+    public static boolean canWalkOn(int tileType, double x, double y) {
+	if (tileType == TYPE_NORMAL || tileType == TYPE_WATER
+		|| tileType == TYPE_LAVA || tileType == TYPE_VOID) {
+	    return true;
+	}
+	return false; // TODO : add all the weird tiles.
     }
 
 }

@@ -1,10 +1,12 @@
 package management.player;
 
+import management.floors.CurrentFloorHolder;
+import display.GameCanvas;
 import display.sprites.SpriteSheet;
 import display.sprites.entities.PlayerSpriteSheet;
 
 /**
- * Static class that holds all of the player information. THis could be an
+ * Static class that holds all of the player information. This could be an
  * object, but since there is only one player at a time (at least for now, don't
  * get your hopes up...) I guess I might as well do it static way.
  */
@@ -15,12 +17,33 @@ public abstract class PlayerInfo {
     public static final int UP = 2;
     public static final int DOWN = 3;
 
+    public static boolean hold_left;
+    public static boolean hold_right;
+    public static boolean hold_up;
+    public static boolean hold_down;
+
     public static int playerupdater;
-    
-    public static int posX;
-    public static int posY;
-    public static int cameraX;
-    public static int cameraY;
+
+    /**
+     * The X position of the player in the Floor. keep in mind that this is not
+     * the position in the room.
+     */
+    public static double posX = 3.0d;
+    /**
+     * The Y position of the player in the Floor. keep in mind taht this is not
+     * the position in the room.
+     */
+    public static double posY = 3.0d;
+    /**
+     * The X position of the camera in the floor. Pretty much follows the player
+     * Xpos at set speed.
+     */
+    public static double cameraX;
+    /**
+     * The Y position of the camera in the floor. Pretty much follows the player
+     * Ypos at set speed.
+     */
+    public static double cameraY;
 
     /** The direction faced by the player. Is equals to the last key PRESSED. */
     public static int playerdirection = DOWN;
@@ -31,14 +54,77 @@ public abstract class PlayerInfo {
     public static int ruppees;
     /** The current player health. */
     public static double health = 3.0d;
+    /** The walking speed of the player. */
+    public static double wspeed = 0.1d;
 
     /** Updates the player. */
     public static void update() {
+	movecamera();
+
 	++playerupdater;
 	if (playerupdater > 2) {
 	    playerupdater = 0;
 	    playersprite.next();
 	}
+	// TODO : check if the player isn't doing something else before calling
+	// thoose methods.
+	WalkingUtility.updateWalksprite();
+	WalkingUtility.walk();
+    }
+
+    /** Moves the camera smartly towards the player. */
+    private static void movecamera() {
+	if (iscaminboundsat(cameraX, cameraY)) {
+	    if (cameraX > posX + 1 && iscaminboundsat(cameraX - 0.1, cameraY))
+		cameraX -= 0.1;
+	    if (cameraX < posX - 1 && iscaminboundsat(cameraX + 0.1, cameraY))
+		cameraX += 0.1;
+	    if (cameraY > posY + 1 && iscaminboundsat(cameraX, cameraY - 0.1))
+		cameraY -= 0.1;
+	    if (cameraY < posY - 1 && iscaminboundsat(cameraX, cameraY + 0.1))
+		cameraY += 0.1;
+	} else {
+	    if (cameraX < CurrentFloorHolder.CurrentFloor.getPlayerRoom().posX
+		    + ((double) GameCanvas.ScreenWidth / 32))
+		cameraX += 0.2;
+	    if (cameraX > CurrentFloorHolder.CurrentFloor.getPlayerRoom().posX
+		    + CurrentFloorHolder.CurrentFloor.getPlayerRoom().width
+		    - ((double) GameCanvas.ScreenWidth / 32))
+		cameraX -= 0.2;
+	    if (cameraY < CurrentFloorHolder.CurrentFloor.getPlayerRoom().posY
+		    + (GameCanvas.ScreenHeight / 32))
+		cameraY += 0.2;
+	    if (cameraY > CurrentFloorHolder.CurrentFloor.getPlayerRoom().posY
+		    + CurrentFloorHolder.CurrentFloor.getPlayerRoom().height
+		    - (GameCanvas.ScreenHeight / 32))
+		cameraY -= 0.2;
+	}
+    }
+
+    /**
+     * Returns true if an hypotetical camera in the x and y position would be in
+     * the room.
+     */
+    private static boolean iscaminboundsat(double cameraX2, double cameraY2) {
+	return cameraX2 > CurrentFloorHolder.CurrentFloor.getPlayerRoom().posX
+		+ ((double) GameCanvas.ScreenWidth / 32)
+		&& cameraX2 < CurrentFloorHolder.CurrentFloor.getPlayerRoom().posX
+			+ CurrentFloorHolder.CurrentFloor.getPlayerRoom().width
+			- ((double) GameCanvas.ScreenWidth / 32)
+		&& cameraY2 > CurrentFloorHolder.CurrentFloor.getPlayerRoom().posY
+			+ (GameCanvas.ScreenHeight / 32)
+		&& cameraY2 < CurrentFloorHolder.CurrentFloor.getPlayerRoom().posY
+			+ CurrentFloorHolder.CurrentFloor.getPlayerRoom().height
+			- (GameCanvas.ScreenHeight / 32);
+    }
+
+    /**
+     * Returns true if the player is currently pressing one of the four
+     * directional keys. Returns true if a dir key is pressed, doesn't check for
+     * other dir keys actions.
+     */
+    protected static boolean isPressingAKey() {
+	return hold_left || hold_right || hold_up || hold_down;
     }
 
     /**
@@ -82,39 +168,74 @@ public abstract class PlayerInfo {
     }
 
     public static void leftpress() {
-	playerdirection = LEFT;
-	playersprite.setSpriteID(PlayerSpriteSheet.ID_WALK_LEFT);
+	if (!isPressingAKey())
+	    playerdirection = LEFT;
+	hold_left = true;
     }
 
     public static void leftrelease() {
-	playersprite.setSpriteID(PlayerSpriteSheet.ID_STILL_LEFT);
+	hold_left = false;
+	if (isPressingAKey()) {
+	    if (hold_right)
+		playerdirection = RIGHT;
+	    if (hold_up)
+		playerdirection = UP;
+	    if (hold_down)
+		playerdirection = DOWN;
+	}
     }
 
     public static void rightpress() {
-	playerdirection = RIGHT;
-	playersprite.setSpriteID(PlayerSpriteSheet.ID_WALK_LEFT);
+	if (!isPressingAKey())
+	    playerdirection = RIGHT;
+	hold_right = true;
     }
 
     public static void rightrelease() {
-	playersprite.setSpriteID(PlayerSpriteSheet.ID_STILL_LEFT);
+	hold_right = false;
+	if (isPressingAKey()) {
+	    if (hold_left)
+		playerdirection = LEFT;
+	    if (hold_up)
+		playerdirection = UP;
+	    if (hold_down)
+		playerdirection = DOWN;
+	}
     }
 
     public static void downpress() {
-	playerdirection = DOWN;
-	playersprite.setSpriteID(PlayerSpriteSheet.ID_WALK_DOWN);
+	if (!isPressingAKey())
+	    playerdirection = DOWN;
+	hold_down = true;
     }
 
     public static void downrelease() {
-	playersprite.setSpriteID(PlayerSpriteSheet.ID_STILL_DOWN);
+	hold_down = false;
+	if (isPressingAKey()) {
+	    if (hold_left)
+		playerdirection = LEFT;
+	    if (hold_right)
+		playerdirection = RIGHT;
+	    if (hold_up)
+		playerdirection = UP;
+	}
     }
 
     public static void uppress() {
-	playerdirection = UP;
-	playersprite.setSpriteID(PlayerSpriteSheet.ID_WALK_UP);
+	if (!isPressingAKey())
+	    playerdirection = UP;
+	hold_up = true;
     }
 
     public static void uprelease() {
-	playersprite.setSpriteID(PlayerSpriteSheet.ID_STILL_UP);
+	hold_up = false;
+	if (isPressingAKey()) {
+	    if (hold_left)
+		playerdirection = LEFT;
+	    if (hold_right)
+		playerdirection = RIGHT;
+	    if (hold_down)
+		playerdirection = DOWN;
+	}
     }
-
 }

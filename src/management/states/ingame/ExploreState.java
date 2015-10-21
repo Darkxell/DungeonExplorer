@@ -28,15 +28,8 @@ public class ExploreState implements CanvasState {
 
     @Override
     public void print(Graphics2D g2d) {
-	if (PlayerInfo.playerdirection == PlayerInfo.RIGHT) {
-	    g2d.drawImage(PlayerInfo.playersprite.getCurrentSprite(), 132, 100,
-		    -32, 32, null);
-	} else {
-	    g2d.drawImage(PlayerInfo.playersprite.getCurrentSprite(), 100, 100,
-		    null);
-	}
 
-	CurrentFloorHolder.printPlayerRoom(g2d);
+	CurrentFloorHolder.printFloor(g2d);
 
     }
 

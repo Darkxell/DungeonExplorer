@@ -39,7 +39,7 @@ public class StringMatcher {
 		    if (matcher[i] == totest[j]) {
 			i++;
 			j++;
-		    } else 
+		    } else
 			return false;
 		    break;
 		}
@@ -152,5 +152,23 @@ public class StringMatcher {
 	    else
 		retarray[occurences] += testarray[i];
 	return retarray;
+    }
+
+    /**
+     * Returns the filename of a file without it's extention. May return
+     * "Unknown name" in case of error. error might happen if the file don't
+     * have any extention for exemple.
+     */
+    public static String getRawFilename(String completeName) {
+	try {
+	    String[] array = split(completeName, '.');
+	    String rawname = "";
+	    for (int i = 1; i < array.length; i++) {
+		rawname += array[i - 1];
+	    }
+	    return rawname;
+	} catch (Exception e) {
+	    return "Unknown name";
+	}
     }
 }
