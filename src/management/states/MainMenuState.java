@@ -2,7 +2,6 @@ package management.states;
 
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
 
 import main.DungeonExplorer;
 import display.GameCanvas;
@@ -46,13 +45,14 @@ public class MainMenuState implements CanvasState {
 	    int sheight = (int) (Res_MainMenu.sword1.getHeight() * swordsize);
 	    int sposx = (GameCanvas.ScreenWidth - swidth) / 2;
 	    int sposy = (GameCanvas.ScreenHeight - sheight) / 2;
-	    g2d.drawImage(Res_MainMenu.sword1, sposx, sposy, swidth, sheight, null);
+	    g2d.drawImage(Res_MainMenu.sword1, sposx, sposy, swidth, sheight,
+		    null);
 	    if (swordshine < 15) {
-		g2d.drawImage(Res_MainMenu.sword2, sposx, sposy, swidth, sheight,
-			null);
+		g2d.drawImage(Res_MainMenu.sword2, sposx, sposy, swidth,
+			sheight, null);
 	    } else {
-		g2d.drawImage(Res_MainMenu.sword1, sposx, sposy, swidth, sheight,
-			null);
+		g2d.drawImage(Res_MainMenu.sword1, sposx, sposy, swidth,
+			sheight, null);
 	    }
 	}
 	// Draws the menu title and the start text.
@@ -91,40 +91,12 @@ public class MainMenuState implements CanvasState {
     }
 
     @Override
-    public void mouseReleased(MouseEvent e) {
-    }
-
-    @Override
-    public void mousePressed(MouseEvent e) {
-    }
-
-    @Override
-    public void mouseExited(MouseEvent e) {
-    }
-
-    @Override
-    public void mouseEntered(MouseEvent e) {
-    }
-
-    @Override
-    public void mouseClicked(MouseEvent e) {
-    }
-
-    @Override
-    public void mouseMoved(MouseEvent e) {
-    }
-
-    @Override
-    public void mouseDragged(MouseEvent e) {
-    }
-
-    @Override
     public void keyTyped(KeyEvent e) {
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
-	if(e.getKeyCode() == KeyEvent.VK_SPACE /*&& frame>400 */){
+	if (e.getKeyCode() == KeyEvent.VK_SPACE /* && frame>400 */) {
 	    DungeonExplorer.frame.getCanvas().state = CanvasStatesHolder.FILESELECTSTATE;
 	    this.reset();
 	}

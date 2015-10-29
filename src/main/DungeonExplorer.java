@@ -18,4 +18,11 @@ public abstract class DungeonExplorer {
 	updaterthread = new Thread(updater);
 	updaterthread.start();
     }
+    //  A   => D
+    //  B   => S
+    // Left => A
+    // Right=> Z
+    // Dirs => Keys
+    // Start=> ENTER
+    // Select=>BACKSPACE
 }

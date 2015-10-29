@@ -1,7 +1,7 @@
 package management.player;
 
-import management.floors.CurrentFloorHolder;
-import display.GameCanvas;
+import management.Position;
+import management.player.playerstates.PlayerState;
 import display.sprites.SpriteSheet;
 import display.sprites.entities.PlayerSpriteSheet;
 
@@ -22,7 +22,10 @@ public abstract class PlayerInfo {
     public static boolean hold_up;
     public static boolean hold_down;
 
-    public static int playerupdater;
+    private static int playerupdater;
+
+    /** The player inventory. */
+    public static Inventory playerInventory = new Inventory();
 
     /**
      * The X position of the player in the Floor. keep in mind that this is not
@@ -34,88 +37,53 @@ public abstract class PlayerInfo {
      * the position in the room.
      */
     public static double posY = 3.0d;
-    /**
-     * The X position of the camera in the floor. Pretty much follows the player
-     * Xpos at set speed.
-     */
-    public static double cameraX;
-    /**
-     * The Y position of the camera in the floor. Pretty much follows the player
-     * Ypos at set speed.
-     */
-    public static double cameraY;
 
-    /** The direction faced by the player. Is equals to the last key PRESSED. */
+    /**
+     * The direction faced by the player. Is equals to the last key PRESSED if
+     * you are not already pressing an other one.
+     */
     public static int playerdirection = DOWN;
+    /**
+     * is true if the player direction is locked. pressing keys while the player
+     * direction is locked will not change it.
+     */
+    public static boolean isDirectionLocked;
 
     public static SpriteSheet playersprite = PlayerSpriteSheet.create();
 
-    /** The number of ruppees the player currently has. */
-    public static int ruppees;
     /** The current player health. */
     public static double health = 3.0d;
     /** The walking speed of the player. */
     public static double wspeed = 0.1d;
 
+    /**
+     * The current state of the player. Is <code>null</code> if the player is
+     * not using an item, not rolling, knocked back or using an item, meaning
+     * that he is standing still or walking.
+     */
+    public static PlayerState currentstate;
+
+    /** The id of the item in the player S hand. */
+    public static int hand_S_itemID;
+    /** The id of the item in the player D hand. */
+    public static int hand_D_itemID;
+
     /** Updates the player. */
     public static void update() {
-	movecamera();
+	ViewCamera.movecamera();
 
 	++playerupdater;
 	if (playerupdater > 2) {
 	    playerupdater = 0;
 	    playersprite.next();
 	}
-	// TODO : check if the player isn't doing something else before calling
-	// thoose methods.
-	WalkingUtility.updateWalksprite();
-	WalkingUtility.walk();
-    }
 
-    /** Moves the camera smartly towards the player. */
-    private static void movecamera() {
-	if (iscaminboundsat(cameraX, cameraY)) {
-	    if (cameraX > posX + 1 && iscaminboundsat(cameraX - 0.1, cameraY))
-		cameraX -= 0.1;
-	    if (cameraX < posX - 1 && iscaminboundsat(cameraX + 0.1, cameraY))
-		cameraX += 0.1;
-	    if (cameraY > posY + 1 && iscaminboundsat(cameraX, cameraY - 0.1))
-		cameraY -= 0.1;
-	    if (cameraY < posY - 1 && iscaminboundsat(cameraX, cameraY + 0.1))
-		cameraY += 0.1;
+	if (currentstate == null) {
+	    WalkingUtility.updateWalksprite();
+	    WalkingUtility.walk();
 	} else {
-	    if (cameraX < CurrentFloorHolder.CurrentFloor.getPlayerRoom().posX
-		    + ((double) GameCanvas.ScreenWidth / 32))
-		cameraX += 0.2;
-	    if (cameraX > CurrentFloorHolder.CurrentFloor.getPlayerRoom().posX
-		    + CurrentFloorHolder.CurrentFloor.getPlayerRoom().width
-		    - ((double) GameCanvas.ScreenWidth / 32))
-		cameraX -= 0.2;
-	    if (cameraY < CurrentFloorHolder.CurrentFloor.getPlayerRoom().posY
-		    + (GameCanvas.ScreenHeight / 32))
-		cameraY += 0.2;
-	    if (cameraY > CurrentFloorHolder.CurrentFloor.getPlayerRoom().posY
-		    + CurrentFloorHolder.CurrentFloor.getPlayerRoom().height
-		    - (GameCanvas.ScreenHeight / 32))
-		cameraY -= 0.2;
+	    currentstate.update();
 	}
-    }
-
-    /**
-     * Returns true if an hypotetical camera in the x and y position would be in
-     * the room.
-     */
-    private static boolean iscaminboundsat(double cameraX2, double cameraY2) {
-	return cameraX2 > CurrentFloorHolder.CurrentFloor.getPlayerRoom().posX
-		+ ((double) GameCanvas.ScreenWidth / 32)
-		&& cameraX2 < CurrentFloorHolder.CurrentFloor.getPlayerRoom().posX
-			+ CurrentFloorHolder.CurrentFloor.getPlayerRoom().width
-			- ((double) GameCanvas.ScreenWidth / 32)
-		&& cameraY2 > CurrentFloorHolder.CurrentFloor.getPlayerRoom().posY
-			+ (GameCanvas.ScreenHeight / 32)
-		&& cameraY2 < CurrentFloorHolder.CurrentFloor.getPlayerRoom().posY
-			+ CurrentFloorHolder.CurrentFloor.getPlayerRoom().height
-			- (GameCanvas.ScreenHeight / 32);
     }
 
     /**
@@ -125,6 +93,50 @@ public abstract class PlayerInfo {
      */
     protected static boolean isPressingAKey() {
 	return hold_left || hold_right || hold_up || hold_down;
+    }
+
+    /**
+     * Same as <code>isPessingAKey()</code> but returns true if the player is
+     * holding at least two keys.
+     */
+    protected static boolean isPressingMultipleKeys() {
+	if (hold_left)
+	    if (hold_right || hold_up || hold_down)
+		return true;
+	if (hold_right)
+	    if (hold_left || hold_up || hold_down)
+		return true;
+	if (hold_up)
+	    if (hold_right || hold_left || hold_down)
+		return true;
+	if (hold_down)
+	    if (hold_right || hold_up || hold_left)
+		return true;
+	return false;
+    }
+
+    /**
+     * Returns 9 points representing the player position. Since the player is
+     * smaller than a tile, this works with only 3 positions per side, plus a
+     * middle one. Keep in mind that this doesn't represent a full hitbox but
+     * only some points inside it.<br/>
+     * This returns an hypotetical player hitbox using the specified
+     * coordinates. If you want the straight up player hitbox, use
+     * <code>getplayerHitbox(PlayerInfo.posX,PlayerInfo.posY)</code>;
+     */
+    public static Position[] getPlayerHitbox(double posX, double posY) {
+	Position[] points = new Position[9];
+	double halfsize = 0.3d;
+	points[0] = new Position(posX - halfsize, posY - halfsize);
+	points[1] = new Position(posX, posY - halfsize);
+	points[2] = new Position(posX + halfsize, posY - halfsize);
+	points[3] = new Position(posX - halfsize, posY);
+	points[4] = new Position(posX, posY);
+	points[5] = new Position(posX + halfsize, posY);
+	points[6] = new Position(posX - halfsize, posY + halfsize);
+	points[7] = new Position(posX, posY + halfsize);
+	points[8] = new Position(posX + halfsize, posY + halfsize);
+	return points;
     }
 
     /**
@@ -168,14 +180,14 @@ public abstract class PlayerInfo {
     }
 
     public static void leftpress() {
-	if (!isPressingAKey())
+	if (!isPressingAKey() && !isDirectionLocked)
 	    playerdirection = LEFT;
 	hold_left = true;
     }
 
     public static void leftrelease() {
 	hold_left = false;
-	if (isPressingAKey()) {
+	if (isPressingAKey() && !isDirectionLocked) {
 	    if (hold_right)
 		playerdirection = RIGHT;
 	    if (hold_up)
@@ -186,14 +198,14 @@ public abstract class PlayerInfo {
     }
 
     public static void rightpress() {
-	if (!isPressingAKey())
+	if (!isPressingAKey() && !isDirectionLocked)
 	    playerdirection = RIGHT;
 	hold_right = true;
     }
 
     public static void rightrelease() {
 	hold_right = false;
-	if (isPressingAKey()) {
+	if (isPressingAKey() && !isDirectionLocked) {
 	    if (hold_left)
 		playerdirection = LEFT;
 	    if (hold_up)
@@ -204,14 +216,14 @@ public abstract class PlayerInfo {
     }
 
     public static void downpress() {
-	if (!isPressingAKey())
+	if (!isPressingAKey() && !isDirectionLocked)
 	    playerdirection = DOWN;
 	hold_down = true;
     }
 
     public static void downrelease() {
 	hold_down = false;
-	if (isPressingAKey()) {
+	if (isPressingAKey() && !isDirectionLocked) {
 	    if (hold_left)
 		playerdirection = LEFT;
 	    if (hold_right)
@@ -222,14 +234,14 @@ public abstract class PlayerInfo {
     }
 
     public static void uppress() {
-	if (!isPressingAKey())
+	if (!isPressingAKey() && !isDirectionLocked)
 	    playerdirection = UP;
 	hold_up = true;
     }
 
     public static void uprelease() {
 	hold_up = false;
-	if (isPressingAKey()) {
+	if (isPressingAKey() && !isDirectionLocked) {
 	    if (hold_left)
 		playerdirection = LEFT;
 	    if (hold_right)

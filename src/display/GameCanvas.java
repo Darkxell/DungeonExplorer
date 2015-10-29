@@ -40,27 +40,22 @@ public class GameCanvas extends Canvas {
 
 	    @Override
 	    public void mouseReleased(MouseEvent e) {
-		state.mouseReleased(e);
 	    }
 
 	    @Override
 	    public void mousePressed(MouseEvent e) {
-		state.mousePressed(e);
 	    }
 
 	    @Override
 	    public void mouseExited(MouseEvent e) {
-		state.mouseExited(e);
 	    }
 
 	    @Override
 	    public void mouseEntered(MouseEvent e) {
-		state.mouseEntered(e);
 	    }
 
 	    @Override
 	    public void mouseClicked(MouseEvent e) {
-		state.mouseClicked(e);
 	    }
 	});
 	this.addMouseMotionListener(new MouseMotionListener() {
@@ -69,7 +64,6 @@ public class GameCanvas extends Canvas {
 	    public void mouseMoved(MouseEvent e) {
 		mouseX = e.getX();
 		mouseY = e.getY();
-		state.mouseMoved(e);
 	    }
 
 	    @Override
@@ -77,7 +71,6 @@ public class GameCanvas extends Canvas {
 		if (mouseY < 20)
 		    DungeonExplorer.frame.moveTo(e.getXOnScreen() - mouseX,
 			    e.getYOnScreen() - mouseY);
-		state.mouseDragged(e);
 	    }
 	});
 	this.addKeyListener(new KeyListener() {
@@ -103,6 +96,11 @@ public class GameCanvas extends Canvas {
     public void update(Graphics g) {
 	BufferStrategy bs = this.getBufferStrategy();
 	Graphics gr = bs.getDrawGraphics();
+	// gr.setColor(Color.WHITE);
+	// gr.fillRect(0, 0, GameFrame.WIDTH, 20);
+	// gr.setColor(Color.LIGHT_GRAY);
+	// gr.fillRect(0, 19, GameFrame.WIDTH, 1);
+
 	BufferedImage doublebuffer = new BufferedImage(ScreenWidth,
 		ScreenHeight, BufferedImage.TYPE_INT_RGB);
 	Graphics2D doublebuffergraphics = doublebuffer.createGraphics();

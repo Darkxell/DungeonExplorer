@@ -2,7 +2,6 @@ package management.states.fileselect;
 
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
 
 import res.images.Res_FileSelect;
 import main.DungeonExplorer;
@@ -54,34 +53,6 @@ public class FileOpenerSubstate implements CanvasState {
 	    button = 3;
 	if (button > 3)
 	    button = 1;
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent e) {
-    }
-
-    @Override
-    public void mousePressed(MouseEvent e) {
-    }
-
-    @Override
-    public void mouseExited(MouseEvent e) {
-    }
-
-    @Override
-    public void mouseEntered(MouseEvent e) {
-    }
-
-    @Override
-    public void mouseClicked(MouseEvent e) {
-    }
-
-    @Override
-    public void mouseMoved(MouseEvent e) {
-    }
-
-    @Override
-    public void mouseDragged(MouseEvent e) {
     }
 
     @Override

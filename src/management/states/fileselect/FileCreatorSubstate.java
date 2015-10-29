@@ -1,10 +1,11 @@
 package management.states.fileselect;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
 
 import res.images.Res_FileSelect;
+import util.UTF8StringUtility;
 import management.saves.SaveFilesManager;
 import management.states.CanvasState;
 import management.states.FileSelectState;
@@ -56,6 +57,8 @@ public class FileCreatorSubstate implements CanvasState {
 	    g2d.drawImage(Res_FileSelect.kbutton_END, 180, 134, null);
 	// Draws the name box at the top and the cristal
 	g2d.drawImage(Res_FileSelect.filebox_active, 15, 22, null);
+	g2d.setColor(Color.WHITE);
+	g2d.drawString(name, 27, 38);
 	g2d.drawImage(parent.getCristalSprite(), 2, 27, null);
 	// Draws the entername text
 	g2d.drawImage(Res_FileSelect.textOverlay_ENTERNAME, 10, 0, null);
@@ -98,34 +101,6 @@ public class FileCreatorSubstate implements CanvasState {
     }
 
     @Override
-    public void mouseReleased(MouseEvent e) {
-    }
-
-    @Override
-    public void mousePressed(MouseEvent e) {
-    }
-
-    @Override
-    public void mouseExited(MouseEvent e) {
-    }
-
-    @Override
-    public void mouseEntered(MouseEvent e) {
-    }
-
-    @Override
-    public void mouseClicked(MouseEvent e) {
-    }
-
-    @Override
-    public void mouseMoved(MouseEvent e) {
-    }
-
-    @Override
-    public void mouseDragged(MouseEvent e) {
-    }
-
-    @Override
     public void keyTyped(KeyEvent e) {
     }
 
@@ -133,7 +108,34 @@ public class FileCreatorSubstate implements CanvasState {
     public void keyReleased(KeyEvent e) {
 	if (e.getKeyCode() == KeyEvent.VK_SHIFT) {
 	    uppercase = !uppercase;
-	} else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+	} else if (e.getKeyCode() == KeyEvent.VK_ENTER
+		|| (e.getKeyCode() == KeyEvent.VK_SPACE && letterX == 3 && letterY == 5)
+		|| (e.getKeyCode() == KeyEvent.VK_D && letterX == 3 && letterY == 5)) {
+	    this.end(!name.equals(""));
+	} else if ((e.getKeyCode() == KeyEvent.VK_SPACE && letterX == 0 && letterY == 5)
+		|| (e.getKeyCode() == KeyEvent.VK_D && letterX == 0 && letterY == 5)
+		|| e.getKeyCode() == KeyEvent.VK_A) {
+	    uppercase = true;
+	} else if ((e.getKeyCode() == KeyEvent.VK_SPACE && letterX == 1 && letterY == 5)
+		|| (e.getKeyCode() == KeyEvent.VK_D && letterX == 1 && letterY == 5)
+		|| e.getKeyCode() == KeyEvent.VK_Z) {
+	    uppercase = false;
+	} else if ((e.getKeyCode() == KeyEvent.VK_SPACE && letterX == 2 && letterY == 5)
+		|| (e.getKeyCode() == KeyEvent.VK_D && letterX == 2 && letterY == 5)
+		|| e.getKeyCode() == KeyEvent.VK_BACK_SPACE
+		|| e.getKeyCode() == KeyEvent.VK_S) {
+	    name = UTF8StringUtility.removeLastChar(name);
+	} else if ((e.getKeyCode() == KeyEvent.VK_SPACE && letterY != 5)
+		|| (e.getKeyCode() == KeyEvent.VK_D && letterY != 5)) {
+	    if (name.length() < 6)
+		name += UTF8StringUtility.getCharFrom(letterX, letterY,
+			uppercase);
+	}
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+	if (e.getKeyCode() == KeyEvent.VK_LEFT) {
 	    letterX--;
 	    if (letterY == 5) {
 		if (letterX < 0)
@@ -159,14 +161,7 @@ public class FileCreatorSubstate implements CanvasState {
 		letterX = 0;
 	    if (letterY > 5)
 		letterY = 0;
-	} else if (e.getKeyCode() == KeyEvent.VK_ENTER
-		|| (e.getKeyCode() == KeyEvent.VK_SPACE && letterX == 3 && letterY == 5)) {
-	    this.end(true); // TODO
 	}
-    }
-
-    @Override
-    public void keyPressed(KeyEvent e) {
     }
 
 }

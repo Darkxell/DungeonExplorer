@@ -29,6 +29,10 @@ public class Res_FileSelect {
 	    + "mainmenu\\fileselect.png", 2, 32, 69, 26);
     public static BufferedImage filebox_active = Res.createimage(
 	    Res.FOLDER_PATH + "mainmenu\\fileselect.png", 2, 62, 69, 26);
+    public static BufferedImage filebox_other = Res.createimage(Res.FOLDER_PATH
+	    + "mainmenu\\fileselect.png", 144, 306, 69, 26);
+    public static BufferedImage filebox_other_active = Res.createimage(
+	    Res.FOLDER_PATH + "mainmenu\\fileselect.png", 144, 336, 69, 26);
 
     public static BufferedImage displayarea1 = Res.createimage(Res.FOLDER_PATH
 	    + "mainmenu\\fileselect.png", 81, 32, 108, 76);
@@ -112,5 +116,8 @@ public class Res_FileSelect {
 	    + "mainmenu\\fileselect.png", 431, 322, 33, 16);
     public static BufferedImage kbutton_END_active = Res.createimage(
 	    Res.FOLDER_PATH + "mainmenu\\fileselect.png", 431, 342, 33, 16);
+    
+    public static BufferedImage buttonZ = Res.createimage(
+	    Res.FOLDER_PATH + "mainmenu\\fileselect.png", 51, 302, 24, 14);
 
 }

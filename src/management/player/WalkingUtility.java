@@ -1,10 +1,11 @@
 package management.player;
 
+import management.Position;
 import management.floors.CurrentFloorHolder;
 import management.floors.Tile;
 import display.sprites.entities.PlayerSpriteSheet;
 
-/** Class that holds methods that help the makes the player walk. */
+/** Class that holds methods that help the player to walk. */
 public abstract class WalkingUtility {
 
     /**
@@ -60,41 +61,47 @@ public abstract class WalkingUtility {
      * according to it's knockback ar anything.
      */
     protected static void walk() {
+	double buffer = PlayerInfo.wspeed;
+	if (PlayerInfo.isPressingMultipleKeys())
+	    PlayerInfo.wspeed = 0.75 * PlayerInfo.wspeed;
 	if (PlayerInfo.hold_left
-		&& (Tile.canWalkOn(CurrentFloorHolder.CurrentFloor
-			.getTileTypeAt(
-				(int) (PlayerInfo.posX - PlayerInfo.wspeed),
-				(int) (PlayerInfo.posY)), Math
-			.floor(PlayerInfo.posX - PlayerInfo.wspeed), Math
-			.floor(PlayerInfo.posY)))) {
+		&& canWalkTo(PlayerInfo.posX - PlayerInfo.wspeed,
+			PlayerInfo.posY)) {
 	    PlayerInfo.posX -= PlayerInfo.wspeed;
 
 	}
 	if (PlayerInfo.hold_right
-		&& Tile.canWalkOn(CurrentFloorHolder.CurrentFloor
-			.getTileTypeAt(
-				(int) (PlayerInfo.posX + PlayerInfo.wspeed),
-				(int) (PlayerInfo.posY)), Math
-			.floor(PlayerInfo.posX + PlayerInfo.wspeed), Math
-			.floor(PlayerInfo.posY))) {
+		&& canWalkTo(PlayerInfo.posX + PlayerInfo.wspeed,
+			PlayerInfo.posY)) {
 	    PlayerInfo.posX += PlayerInfo.wspeed;
 	}
 	if (PlayerInfo.hold_up
-		&& Tile.canWalkOn(CurrentFloorHolder.CurrentFloor
-			.getTileTypeAt((int) (PlayerInfo.posX),
-				(int) (PlayerInfo.posY - PlayerInfo.wspeed)),
-			Math.floor(PlayerInfo.posX), Math.floor(PlayerInfo.posY
-				- PlayerInfo.wspeed))) {
+		&& canWalkTo(PlayerInfo.posX, PlayerInfo.posY
+			- PlayerInfo.wspeed)) {
 	    PlayerInfo.posY -= PlayerInfo.wspeed;
 	}
 	if (PlayerInfo.hold_down
-		&& Tile.canWalkOn(CurrentFloorHolder.CurrentFloor
-			.getTileTypeAt((int) (PlayerInfo.posX),
-				(int) (PlayerInfo.posY + PlayerInfo.wspeed)),
-			Math.floor(PlayerInfo.posX), Math.floor(PlayerInfo.posY
-				+ PlayerInfo.wspeed))) {
+		&& canWalkTo(PlayerInfo.posX, PlayerInfo.posY
+			+ PlayerInfo.wspeed)) {
 	    PlayerInfo.posY += PlayerInfo.wspeed;
 	}
+	PlayerInfo.wspeed = buffer;
     }
 
+    /**
+     * Predicate that returns true if the player can walk in the wanted
+     * coordinates.
+     */
+    private static boolean canWalkTo(double toX, double toY) {
+	Position[] playerhitbox = PlayerInfo.getPlayerHitbox(toX, toY);
+	for (int i = 0; i < playerhitbox.length; i++) {
+	    if (!Tile.canWalkOn(CurrentFloorHolder.CurrentFloor.getTileTypeAt(
+		    (int) (playerhitbox[i].x), (int) (playerhitbox[i].y)),
+		    playerhitbox[i].x - Math.floor(playerhitbox[i].x),
+		    playerhitbox[i].y - Math.floor(playerhitbox[i].y))) {
+		return false;
+	    }
+	}
+	return true;
+    }
 }

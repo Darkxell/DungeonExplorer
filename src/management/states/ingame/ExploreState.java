@@ -2,11 +2,13 @@ package management.states.ingame;
 
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
 
+import res.images.Res_FileSelect;
+import res.images.Res_Inventory;
 import management.floors.CurrentFloorHolder;
 import management.player.PlayerInfo;
 import management.states.CanvasState;
+import management.states.GameState;
 
 /**
  * Pretty much the main Canvas state. Displays the player and the environement
@@ -19,10 +21,9 @@ public class ExploreState implements CanvasState {
     private boolean kdown;
     private boolean kup;
 
-    @SuppressWarnings("unused")
-    private CanvasState parent;
+    private GameState parent;
 
-    public ExploreState(CanvasState parent) {
+    public ExploreState(GameState parent) {
 	this.parent = parent;
     }
 
@@ -30,6 +31,10 @@ public class ExploreState implements CanvasState {
     public void print(Graphics2D g2d) {
 
 	CurrentFloorHolder.printFloor(g2d);
+	
+	g2d.drawImage(Res_FileSelect.buttonZ, 215, 5, null);
+	g2d.drawImage(Res_Inventory.ButtonS, 190, 19, null);
+	g2d.drawImage(Res_Inventory.ButtonD, 210, 19, null);
 
     }
 
@@ -39,34 +44,6 @@ public class ExploreState implements CanvasState {
 
 	CurrentFloorHolder.updatePlayerRoom();
 
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent e) {
-    }
-
-    @Override
-    public void mousePressed(MouseEvent e) {
-    }
-
-    @Override
-    public void mouseExited(MouseEvent e) {
-    }
-
-    @Override
-    public void mouseEntered(MouseEvent e) {
-    }
-
-    @Override
-    public void mouseClicked(MouseEvent e) {
-    }
-
-    @Override
-    public void mouseMoved(MouseEvent e) {
-    }
-
-    @Override
-    public void mouseDragged(MouseEvent e) {
     }
 
     @Override
@@ -87,6 +64,9 @@ public class ExploreState implements CanvasState {
 	} else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
 	    kdown = false;
 	    PlayerInfo.downrelease();
+	} else if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+	    parent.menustate.resetOpenAnimation();
+	    parent.substate = parent.menustate;
 	}
     }
 

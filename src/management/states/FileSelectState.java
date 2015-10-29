@@ -2,7 +2,6 @@ package management.states;
 
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 
 import display.sprites.AnimatedSprite;
@@ -74,41 +73,6 @@ public class FileSelectState implements CanvasState {
     /** gets the player sprite accorded to the inner values. */
     public BufferedImage getPlayerSprite() {
 	return player.get();
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent e) {
-	substate.mouseReleased(e);
-    }
-
-    @Override
-    public void mousePressed(MouseEvent e) {
-	substate.mousePressed(e);
-    }
-
-    @Override
-    public void mouseExited(MouseEvent e) {
-	substate.mouseExited(e);
-    }
-
-    @Override
-    public void mouseEntered(MouseEvent e) {
-	substate.mouseEntered(e);
-    }
-
-    @Override
-    public void mouseClicked(MouseEvent e) {
-	substate.mouseClicked(e);
-    }
-
-    @Override
-    public void mouseMoved(MouseEvent e) {
-	substate.mouseMoved(e);
-    }
-
-    @Override
-    public void mouseDragged(MouseEvent e) {
-	substate.mouseDragged(e);
     }
 
     @Override
