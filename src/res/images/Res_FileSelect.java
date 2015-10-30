@@ -119,5 +119,18 @@ public class Res_FileSelect {
     
     public static BufferedImage buttonZ = Res.createimage(
 	    Res.FOLDER_PATH + "mainmenu\\fileselect.png", 51, 302, 24, 14);
+    
+    public static BufferedImage num1 = Res.createimage(
+	    Res.FOLDER_PATH + "mainmenu\\fileselect.png",124, 120, 7, 8);
+    public static BufferedImage num2 = Res.createimage(
+	    Res.FOLDER_PATH + "mainmenu\\fileselect.png",133, 120, 7, 8);
+    public static BufferedImage num3 = Res.createimage(
+	    Res.FOLDER_PATH + "mainmenu\\fileselect.png",143, 120, 7, 8);
+    public static BufferedImage num1active = Res.createimage(
+	    Res.FOLDER_PATH + "mainmenu\\fileselect.png",154, 120, 7, 8);
+    public static BufferedImage num2active = Res.createimage(
+	    Res.FOLDER_PATH + "mainmenu\\fileselect.png",163, 120, 7, 8);
+    public static BufferedImage num3active = Res.createimage(
+	    Res.FOLDER_PATH + "mainmenu\\fileselect.png",173, 120, 7, 8);
 
 }

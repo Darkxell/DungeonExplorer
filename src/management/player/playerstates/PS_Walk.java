@@ -1,19 +1,27 @@
-package management.player;
+package management.player.playerstates;
 
 import management.Position;
 import management.floors.CurrentFloorHolder;
 import management.floors.Tile;
+import management.player.PlayerInfo;
 import display.sprites.entities.PlayerSpriteSheet;
 
-/** Class that holds methods that help the player to walk. */
-public abstract class WalkingUtility {
+public class PS_Walk implements PlayerState {
+
+    @Override
+    public void update() {
+	updateWalksprite();
+	walk();
+	if (!PlayerInfo.isPressingAKey())
+	    PlayerInfo.currentstate = null;
+    }
 
     /**
-     * updates the player sprite if he is walking or not. THis method should not
-     * be called if the player is doing something else than simply idling or
-     * walking as it will reset the player sprite to the walking one.
+     * Updates the player sprite either if he is walking or not. This method
+     * should not be called if the player is doing something else than simply
+     * idling or walking as it will reset the player sprite to the walking one.
      */
-    protected static void updateWalksprite() {
+    private void updateWalksprite() {
 	if (PlayerInfo.isPressingAKey()) {
 	    switch (PlayerInfo.playerdirection) {
 	    case PlayerInfo.LEFT:
@@ -60,32 +68,27 @@ public abstract class WalkingUtility {
      * currently pressing. This only makes the player walk, he doesn't move
      * according to it's knockback ar anything.
      */
-    protected static void walk() {
-	double buffer = PlayerInfo.wspeed;
+    private void walk() {
+	double speed = 0.1d;
 	if (PlayerInfo.isPressingMultipleKeys())
-	    PlayerInfo.wspeed = 0.75 * PlayerInfo.wspeed;
+	    speed = 0.75 * speed;
 	if (PlayerInfo.hold_left
-		&& canWalkTo(PlayerInfo.posX - PlayerInfo.wspeed,
-			PlayerInfo.posY)) {
-	    PlayerInfo.posX -= PlayerInfo.wspeed;
+		&& canWalkTo(PlayerInfo.posX - speed, PlayerInfo.posY)) {
+	    PlayerInfo.posX -= speed;
 
 	}
 	if (PlayerInfo.hold_right
-		&& canWalkTo(PlayerInfo.posX + PlayerInfo.wspeed,
-			PlayerInfo.posY)) {
-	    PlayerInfo.posX += PlayerInfo.wspeed;
+		&& canWalkTo(PlayerInfo.posX + speed, PlayerInfo.posY)) {
+	    PlayerInfo.posX += speed;
 	}
 	if (PlayerInfo.hold_up
-		&& canWalkTo(PlayerInfo.posX, PlayerInfo.posY
-			- PlayerInfo.wspeed)) {
-	    PlayerInfo.posY -= PlayerInfo.wspeed;
+		&& canWalkTo(PlayerInfo.posX, PlayerInfo.posY - speed)) {
+	    PlayerInfo.posY -= speed;
 	}
 	if (PlayerInfo.hold_down
-		&& canWalkTo(PlayerInfo.posX, PlayerInfo.posY
-			+ PlayerInfo.wspeed)) {
-	    PlayerInfo.posY += PlayerInfo.wspeed;
+		&& canWalkTo(PlayerInfo.posX, PlayerInfo.posY + speed)) {
+	    PlayerInfo.posY += speed;
 	}
-	PlayerInfo.wspeed = buffer;
     }
 
     /**
@@ -104,4 +107,29 @@ public abstract class WalkingUtility {
 	}
 	return true;
     }
+
+    @Override
+    public void actionRpress() {
+    }
+
+    @Override
+    public void actionRrelease() {
+    }
+
+    @Override
+    public void action1press() {
+    }
+
+    @Override
+    public void action1release() {
+    }
+
+    @Override
+    public void action2press() {
+    }
+
+    @Override
+    public void action2release() {
+    }
+
 }

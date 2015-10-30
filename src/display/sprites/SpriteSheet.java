@@ -9,9 +9,9 @@ import java.awt.image.BufferedImage;
 public class SpriteSheet {
 
     /** The sprites. */
-    private AnimatedSprite[] sprites;
+    protected AnimatedSprite[] sprites;
 
-    private int currentAnimatedspriteID;
+    protected int currentAnimatedspriteID;
 
     /** Constructs a SpriteSheet using an array of animated Sprites. */
     public SpriteSheet(AnimatedSprite[] sprites) {

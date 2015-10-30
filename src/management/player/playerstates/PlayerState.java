@@ -14,23 +14,54 @@ public interface PlayerState {
     public void update();
 
     /**
-     * Resets this state. For exeple if this state represents the player falling
-     * in a hole, it makes the player on the highest part of the hole to make
-     * him fall from the top again.
+     * Executes the interact script of the player. This is equivalent to
+     * pressing the R button in a GBA.
      */
-    public void reset();
+    public void actionRpress();
 
     /**
-     * This method is called for states that requires a button to stay pushed.
-     * This method is called when the player releases the pressed key.<br/>
-     * Note that this method might not do anything if the player is not in an
-     * item state (for exemple knocked back)
+     * Executes the interact script of the player. This is equivalent to
+     * pressing the R button in a GBA.
      */
-    public void relaseItem();
+    public void actionRrelease();
 
     /**
-     * This method is called at the end of the state if it has a finish. Is
-     * basicaly sets the player to an other state or to be normal again.
+     * Executes the action1 script of the player. This is equivalent to pressing
+     * the A button in a GBA.
      */
-    public void end();
+    public void action1press();
+
+    /**
+     * Executes the action1 release script of the player. This is equivalent to
+     * relasing the A button in a GBA.
+     */
+    public void action1release();
+
+    /**
+     * Executes the action2 script of the player. This is equivalent to pressing
+     * the B button in a GBA.
+     */
+    public void action2press();
+
+    /**
+     * Executes the action2 release script of the player. This is equivalent to
+     * relasing the B button in a GBA.
+     */
+    public void action2release();
+
+    // public void pressLeft();
+
+    // public void pressRight();
+
+    // public void pressUp();
+
+    // public void pressDown();
+
+    // public void releaseLeft();
+
+    // public void releaseRight();
+
+    // public void releaseUp();
+
+    // public void releaseDown();
 }

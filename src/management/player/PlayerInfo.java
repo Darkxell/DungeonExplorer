@@ -1,6 +1,7 @@
 package management.player;
 
 import management.Position;
+import management.player.playerstates.PS_Walk;
 import management.player.playerstates.PlayerState;
 import display.sprites.SpriteSheet;
 import display.sprites.entities.PlayerSpriteSheet;
@@ -43,18 +44,11 @@ public abstract class PlayerInfo {
      * you are not already pressing an other one.
      */
     public static int playerdirection = DOWN;
-    /**
-     * is true if the player direction is locked. pressing keys while the player
-     * direction is locked will not change it.
-     */
-    public static boolean isDirectionLocked;
 
-    public static SpriteSheet playersprite = PlayerSpriteSheet.create();
+    public static SpriteSheet playersprite = new PlayerSpriteSheet();
 
     /** The current player health. */
     public static double health = 3.0d;
-    /** The walking speed of the player. */
-    public static double wspeed = 0.1d;
 
     /**
      * The current state of the player. Is <code>null</code> if the player is
@@ -64,25 +58,36 @@ public abstract class PlayerInfo {
     public static PlayerState currentstate;
 
     /** The id of the item in the player S hand. */
-    public static int hand_S_itemID;
+    public static int hand_S_itemID = Inventory.ITEM_SHIELD;
     /** The id of the item in the player D hand. */
-    public static int hand_D_itemID;
+    public static int hand_D_itemID = Inventory.ITEM_SWORD;
 
     /** Updates the player. */
     public static void update() {
 	ViewCamera.movecamera();
-
 	++playerupdater;
 	if (playerupdater > 2) {
 	    playerupdater = 0;
 	    playersprite.next();
 	}
 
-	if (currentstate == null) {
-	    WalkingUtility.updateWalksprite();
-	    WalkingUtility.walk();
-	} else {
+	if (currentstate != null) {
 	    currentstate.update();
+	} else {
+	    switch (playerdirection) {
+	    case LEFT:
+		playersprite.setSpriteID(PlayerSpriteSheet.ID_STILL_LEFT);
+		break;
+	    case RIGHT:
+		playersprite.setSpriteID(PlayerSpriteSheet.ID_STILL_LEFT);
+		break;
+	    case UP:
+		playersprite.setSpriteID(PlayerSpriteSheet.ID_STILL_UP);
+		break;
+	    case DOWN:
+		playersprite.setSpriteID(PlayerSpriteSheet.ID_STILL_DOWN);
+		break;
+	    }
 	}
     }
 
@@ -91,7 +96,7 @@ public abstract class PlayerInfo {
      * directional keys. Returns true if a dir key is pressed, doesn't check for
      * other dir keys actions.
      */
-    protected static boolean isPressingAKey() {
+    public static boolean isPressingAKey() {
 	return hold_left || hold_right || hold_up || hold_down;
     }
 
@@ -99,7 +104,7 @@ public abstract class PlayerInfo {
      * Same as <code>isPessingAKey()</code> but returns true if the player is
      * holding at least two keys.
      */
-    protected static boolean isPressingMultipleKeys() {
+    public static boolean isPressingMultipleKeys() {
 	if (hold_left)
 	    if (hold_right || hold_up || hold_down)
 		return true;
@@ -143,8 +148,18 @@ public abstract class PlayerInfo {
      * Executes the interact script of the player. This is equivalent to
      * pressing the R button in a GBA.
      */
-    public static void interact() {
+    public static void actionRpress() {
+	if (currentstate != null)
+	    currentstate.actionRpress();
+    }
 
+    /**
+     * Executes the interact script of the player. This is equivalent to
+     * pressing the R button in a GBA.
+     */
+    public static void actionRrelease() {
+	if (currentstate != null)
+	    currentstate.actionRrelease();
     }
 
     /**
@@ -152,7 +167,8 @@ public abstract class PlayerInfo {
      * the A button in a GBA.
      */
     public static void action1press() {
-
+	if (currentstate != null)
+	    currentstate.action1press();
     }
 
     /**
@@ -160,7 +176,8 @@ public abstract class PlayerInfo {
      * relasing the A button in a GBA.
      */
     public static void action1release() {
-
+	if (currentstate != null)
+	    currentstate.action1release();
     }
 
     /**
@@ -168,7 +185,8 @@ public abstract class PlayerInfo {
      * the B button in a GBA.
      */
     public static void action2press() {
-
+	if (currentstate != null)
+	    currentstate.action2press();
     }
 
     /**
@@ -176,18 +194,21 @@ public abstract class PlayerInfo {
      * relasing the B button in a GBA.
      */
     public static void action2release() {
-
+	if (currentstate != null)
+	    currentstate.action2release();
     }
 
     public static void leftpress() {
-	if (!isPressingAKey() && !isDirectionLocked)
+	if (currentstate == null)
+	    currentstate = new PS_Walk();
+	if (!isPressingAKey())
 	    playerdirection = LEFT;
 	hold_left = true;
     }
 
     public static void leftrelease() {
 	hold_left = false;
-	if (isPressingAKey() && !isDirectionLocked) {
+	if (isPressingAKey()) {
 	    if (hold_right)
 		playerdirection = RIGHT;
 	    if (hold_up)
@@ -198,14 +219,16 @@ public abstract class PlayerInfo {
     }
 
     public static void rightpress() {
-	if (!isPressingAKey() && !isDirectionLocked)
+	if (currentstate == null)
+	    currentstate = new PS_Walk();
+	if (!isPressingAKey())
 	    playerdirection = RIGHT;
 	hold_right = true;
     }
 
     public static void rightrelease() {
 	hold_right = false;
-	if (isPressingAKey() && !isDirectionLocked) {
+	if (isPressingAKey()) {
 	    if (hold_left)
 		playerdirection = LEFT;
 	    if (hold_up)
@@ -216,14 +239,16 @@ public abstract class PlayerInfo {
     }
 
     public static void downpress() {
-	if (!isPressingAKey() && !isDirectionLocked)
+	if (currentstate == null)
+	    currentstate = new PS_Walk();
+	if (!isPressingAKey())
 	    playerdirection = DOWN;
 	hold_down = true;
     }
 
     public static void downrelease() {
 	hold_down = false;
-	if (isPressingAKey() && !isDirectionLocked) {
+	if (isPressingAKey()) {
 	    if (hold_left)
 		playerdirection = LEFT;
 	    if (hold_right)
@@ -234,14 +259,16 @@ public abstract class PlayerInfo {
     }
 
     public static void uppress() {
-	if (!isPressingAKey() && !isDirectionLocked)
+	if (currentstate == null)
+	    currentstate = new PS_Walk();
+	if (!isPressingAKey())
 	    playerdirection = UP;
 	hold_up = true;
     }
 
     public static void uprelease() {
 	hold_up = false;
-	if (isPressingAKey() && !isDirectionLocked) {
+	if (isPressingAKey()) {
 	    if (hold_left)
 		playerdirection = LEFT;
 	    if (hold_right)

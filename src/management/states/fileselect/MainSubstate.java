@@ -27,6 +27,7 @@ public class MainSubstate implements CanvasState {
 	if (selectedbox == 1) {
 	    g2d.drawImage(Res_FileSelect.filebox_active, 20, 30, null);
 	    g2d.drawImage(parent.getCristalSprite(), 7, 35, null);
+	    g2d.drawImage(Res_FileSelect.num1active, 11, 39, null);
 	    if (SaveFilesManager.file1set) {
 		g2d.drawImage(parent.getPlayerSprite(), 130, 60, null);
 		g2d.setColor(Color.WHITE);
@@ -34,6 +35,7 @@ public class MainSubstate implements CanvasState {
 	    }
 	} else {
 	    g2d.drawImage(Res_FileSelect.filebox, 20, 30, null);
+	    g2d.drawImage(Res_FileSelect.num1, 11, 39, null);
 	    if (SaveFilesManager.file1set) {
 		g2d.setColor(Palette.MenuFontGreen);
 		g2d.drawString(SaveFilesManager.file1name, 33, 47);
@@ -43,31 +45,35 @@ public class MainSubstate implements CanvasState {
 	if (selectedbox == 2) {
 	    g2d.drawImage(Res_FileSelect.filebox_active, 20, 60, null);
 	    g2d.drawImage(parent.getCristalSprite(), 7, 65, null);
+	    g2d.drawImage(Res_FileSelect.num2active, 11, 69, null);
 	    if (SaveFilesManager.file2set) {
 		g2d.drawImage(parent.getPlayerSprite(), 130, 60, null);
 		g2d.setColor(Color.WHITE);
-		g2d.drawString(SaveFilesManager.file2name, 33, 47);
+		g2d.drawString(SaveFilesManager.file2name, 33, 77);
 	    }
 	} else {
 	    g2d.drawImage(Res_FileSelect.filebox, 20, 60, null);
+	    g2d.drawImage(Res_FileSelect.num2, 11, 69, null);
 	    if (SaveFilesManager.file2set) {
 		g2d.setColor(Palette.MenuFontGreen);
-		g2d.drawString(SaveFilesManager.file2name, 33, 47);
+		g2d.drawString(SaveFilesManager.file2name, 33, 77);
 	    }
 	}
 	if (selectedbox == 3) {
 	    g2d.drawImage(Res_FileSelect.filebox_active, 20, 90, null);
 	    g2d.drawImage(parent.getCristalSprite(), 7, 95, null);
+	    g2d.drawImage(Res_FileSelect.num3active, 11, 99, null);
 	    if (SaveFilesManager.file3set) {
 		g2d.drawImage(parent.getPlayerSprite(), 130, 60, null);
 		g2d.setColor(Color.WHITE);
-		g2d.drawString(SaveFilesManager.file3name, 33, 47);
+		g2d.drawString(SaveFilesManager.file3name, 33, 107);
 	    }
 	} else {
 	    g2d.drawImage(Res_FileSelect.filebox, 20, 90, null);
+	    g2d.drawImage(Res_FileSelect.num3, 11, 99, null);
 	    if (SaveFilesManager.file3set) {
 		g2d.setColor(Palette.MenuFontGreen);
-		g2d.drawString(SaveFilesManager.file3name, 33, 47);
+		g2d.drawString(SaveFilesManager.file3name, 33, 107);
 	    }
 	}
 	if (selectedbox == 4) {

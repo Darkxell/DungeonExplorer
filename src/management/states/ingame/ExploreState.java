@@ -5,6 +5,7 @@ import java.awt.event.KeyEvent;
 
 import res.images.Res_FileSelect;
 import res.images.Res_Inventory;
+import util.ItemsUtility;
 import management.floors.CurrentFloorHolder;
 import management.player.PlayerInfo;
 import management.states.CanvasState;
@@ -31,10 +32,14 @@ public class ExploreState implements CanvasState {
     public void print(Graphics2D g2d) {
 
 	CurrentFloorHolder.printFloor(g2d);
-	
+
 	g2d.drawImage(Res_FileSelect.buttonZ, 215, 5, null);
 	g2d.drawImage(Res_Inventory.ButtonS, 190, 19, null);
+	g2d.drawImage(ItemsUtility.getSpriteFromID(PlayerInfo.hand_S_itemID),
+		180, 9, null);
 	g2d.drawImage(Res_Inventory.ButtonD, 210, 19, null);
+	g2d.drawImage(ItemsUtility.getSpriteFromID(PlayerInfo.hand_D_itemID),
+		200, 9, null);
 
     }
 

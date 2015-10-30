@@ -45,10 +45,10 @@ public class Inventory {
     public int maxbombs = 10;
     public int maxarrows = 30;
 
-    public int level_sword = 4;
+    public int level_sword = 5;
     public int level_gustjar = 1;
     public int level_stick = 1;
-    public int level_boomerang = 1;
+    public int level_boomerang = 2;
     public int level_shield = 2;
     public int level_mits = 1;
     public int level_lantern = 1;

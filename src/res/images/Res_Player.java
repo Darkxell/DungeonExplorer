@@ -15,10 +15,28 @@ public class Res_Player {
 	    + "entities\\player.png", 64, 0, 32, 32);
 
     public static BufferedImage[] walk_down = getPlayerSpriteRow(0, 32, 32, 10);
-
     public static BufferedImage[] walk_left = getPlayerSpriteRow(0, 64, 32, 10);
-
     public static BufferedImage[] walk_up = getPlayerSpriteRow(0, 96, 32, 10);
+
+    public static BufferedImage[] slash_down_1 = getPlayerSpriteRow(0, 128, 64, 8);
+    public static BufferedImage[] slash_left_1 = getPlayerSpriteRow(0, 192, 64, 8);
+    public static BufferedImage[] slash_up_1 = getPlayerSpriteRow(0, 256, 64, 8);
+    
+    public static BufferedImage[] slash_down_2 = getPlayerSpriteRow(0, 320, 64, 8);
+    public static BufferedImage[] slash_left_2 = getPlayerSpriteRow(0, 384, 64, 8);
+    public static BufferedImage[] slash_up_2 = getPlayerSpriteRow(0, 448, 64, 8);
+    
+    public static BufferedImage[] slash_down_3 = getPlayerSpriteRow(0, 512, 64, 8);
+    public static BufferedImage[] slash_left_3 = getPlayerSpriteRow(0, 576, 64, 8);
+    public static BufferedImage[] slash_up_3 = getPlayerSpriteRow(0, 640, 64, 8);
+    
+    public static BufferedImage[] slash_down_4 = getPlayerSpriteRow(0, 704, 64, 8);
+    public static BufferedImage[] slash_left_4 = getPlayerSpriteRow(0, 768, 64, 8);
+    public static BufferedImage[] slash_up_4 = getPlayerSpriteRow(0, 832, 64, 8);
+    
+    public static BufferedImage[] slash_down_5 = getPlayerSpriteRow(0, 896, 64, 8);
+    public static BufferedImage[] slash_left_5 = getPlayerSpriteRow(0, 960, 64, 8);
+    public static BufferedImage[] slash_up_5 = getPlayerSpriteRow(0, 1024, 64, 8);
 
     /**
      * Gets multiple player sprites next to each other in the player.png file

@@ -5,6 +5,7 @@ import java.awt.event.KeyEvent;
 
 import res.images.Res_FileSelect;
 import main.DungeonExplorer;
+import management.saves.SaveFilesManager;
 import management.states.CanvasState;
 import management.states.CanvasStatesHolder;
 import management.states.FileSelectState;
@@ -26,6 +27,20 @@ public class FileOpenerSubstate implements CanvasState {
 	g2d.drawImage(Res_FileSelect.displayarea1, 120, 40, null);
 	g2d.drawImage(Res_FileSelect.filebox_active, 50, 40, null);
 	g2d.drawImage(parent.getCristalSprite(), 37, 45, null);
+	switch (SaveFilesManager.currentFile) {
+	case 1:
+	    g2d.drawImage(Res_FileSelect.num1active, 41, 49, null);
+	    g2d.drawString(SaveFilesManager.file1name, 63, 57);
+	    break;
+	case 2:
+	    g2d.drawImage(Res_FileSelect.num2active, 41, 49, null);
+	    g2d.drawString(SaveFilesManager.file2name, 63, 57);
+	    break;
+	case 3:
+	    g2d.drawImage(Res_FileSelect.num3active, 41, 49, null);
+	    g2d.drawString(SaveFilesManager.file3name, 63, 57);
+	    break;
+	}
 	g2d.drawImage(parent.getPlayerSprite(), 130, 60, null);
 	if (button == 1) {
 	    g2d.drawImage(Res_FileSelect.button_START_active, 30, 130, null);
@@ -61,7 +76,10 @@ public class FileOpenerSubstate implements CanvasState {
 
     @Override
     public void keyReleased(KeyEvent e) {
-	if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+	if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE||e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+	    button = 1;
+	    parent.substate = parent.main;
+	} else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
 	    ++button;
 	} else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
 	    --button;

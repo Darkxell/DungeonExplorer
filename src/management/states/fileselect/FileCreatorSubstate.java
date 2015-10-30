@@ -60,6 +60,18 @@ public class FileCreatorSubstate implements CanvasState {
 	g2d.setColor(Color.WHITE);
 	g2d.drawString(name, 27, 38);
 	g2d.drawImage(parent.getCristalSprite(), 2, 27, null);
+	switch (SaveFilesManager.currentFile) {
+	case 1:
+	    g2d.drawImage(Res_FileSelect.num1active, 6, 31, null);
+	    break;
+	case 2:
+	    g2d.drawImage(Res_FileSelect.num2active, 6, 31, null);
+	    break;
+	case 3:
+	    g2d.drawImage(Res_FileSelect.num3active, 6, 31, null);
+	    break;
+	}
+
 	// Draws the entername text
 	g2d.drawImage(Res_FileSelect.textOverlay_ENTERNAME, 10, 0, null);
     }

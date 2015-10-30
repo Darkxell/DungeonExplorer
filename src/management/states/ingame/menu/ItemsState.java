@@ -69,7 +69,11 @@ public class ItemsState implements CanvasState {
      */
     private void drawHandButtons(Graphics2D g2d) {
 	g2d.drawImage(Res_Inventory.ButtonS, 170, 13, null);
+	g2d.drawImage(ItemsUtility.getSpriteFromID(PlayerInfo.hand_S_itemID),
+		160, 3, null);
 	g2d.drawImage(Res_Inventory.ButtonD, 200, 13, null);
+	g2d.drawImage(ItemsUtility.getSpriteFromID(PlayerInfo.hand_D_itemID),
+		190, 3, null);
     }
 
     /** Draws all of the items in the state if they need to be drawn. */
@@ -131,9 +135,21 @@ public class ItemsState implements CanvasState {
     @Override
     public void keyPressed(KeyEvent e) {
 	if (e.getKeyCode() == KeyEvent.VK_S && cursorposition != 16) {
-	    PlayerInfo.hand_S_itemID = cursorposition;
+	    if (PlayerInfo.hand_D_itemID != cursorposition)
+		PlayerInfo.hand_S_itemID = cursorposition;
+	    else {
+		PlayerInfo.hand_D_itemID = PlayerInfo.hand_S_itemID;
+		PlayerInfo.hand_S_itemID = cursorposition;
+	    }
+
 	} else if (e.getKeyCode() == KeyEvent.VK_D && cursorposition != 16) {
-	    PlayerInfo.hand_D_itemID = cursorposition;
+	    if (PlayerInfo.hand_S_itemID != cursorposition)
+		PlayerInfo.hand_D_itemID = cursorposition;
+	    else {
+		PlayerInfo.hand_S_itemID = PlayerInfo.hand_D_itemID;
+		PlayerInfo.hand_D_itemID = cursorposition;
+	    }
+
 	} else if (e.getKeyCode() == KeyEvent.VK_A) {
 	    parent.resetOpenAnimation();
 	    parent.SubState = parent.S_MAP;
