@@ -1,5 +1,7 @@
 package management.player.playerstates;
 
+import java.awt.image.BufferedImage;
+
 /**
  * A state of the player. During this state the player don't have his normal
  * behavior. He is for exemple swinging his sword, using an item, knocked back
@@ -49,19 +51,39 @@ public interface PlayerState {
      */
     public void action2release();
 
-    // public void pressLeft();
+    /** Called when the player presses the left key. */
+    public void pressLeft();
 
-    // public void pressRight();
+    /** Called when the player presses the right key. */
+    public void pressRight();
 
-    // public void pressUp();
+    /** Called when the player presses the up key. */
+    public void pressUp();
 
-    // public void pressDown();
+    /** Called when the player presses the down key. */
+    public void pressDown();
 
-    // public void releaseLeft();
+    /** Called when the player releases the left key. */
+    public void releaseLeft();
 
-    // public void releaseRight();
+    /** Called when the player releases the right key. */
+    public void releaseRight();
 
-    // public void releaseUp();
+    /** Called when the player releases the up key. */
+    public void releaseUp();
 
-    // public void releaseDown();
+    /** Called when the player releases the down key. */
+    public void releaseDown();
+
+    /**
+     * Returns true if the sprite you get fom the player spritesheet is the lset
+     * one and need horisontal reversing.
+     */
+    public boolean isInvertedRight();
+
+    /**
+     * Gets the action text above the R(Z) button. This might return
+     * <code>NULL</code> in some cases
+     */
+    public BufferedImage getRightPText();
 }

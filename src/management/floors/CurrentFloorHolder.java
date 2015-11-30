@@ -3,27 +3,38 @@ package management.floors;
 import java.awt.Graphics2D;
 
 import display.GameCanvas;
+import management.floors.floorsmanagers.FloorManager;
+import management.floors.floorsmanagers.TestDungeonManager;
 import management.player.PlayerInfo;
 import management.player.ViewCamera;
-import res.Res;
 
 /** Static class that hold the current floor. */
 public abstract class CurrentFloorHolder {
 
-    /** The depth of the current floor. */
-    public static int depth = 0;
-
-    public static Floor CurrentFloor = new Floor(Res.FOLDER_PATH
-	    + "maps\\testdungeon");
-
-    // TODO: set the default floor here.
+    public static Floor CurrentFloor;
+    public static FloorManager manager = new TestDungeonManager();
 
     /** Updates the room the player is currently in. */
     public static void updatePlayerRoom() {
-	CurrentFloor.getPlayerRoom().update();
+	try {
+	    Room cpr = null;
+	    try {
+		cpr = CurrentFloor.getPlayerRoom();
+	    } catch (Exception e) {
+		System.err
+			.println("Error in updater : couldn't locate player room. No room updated.");
+	    }
+	    cpr.update();
+	} catch (Exception e) {
+	    e.printStackTrace();
+	}
+	manager.update();
     }
 
-    /** Prints the whole floor on the specified Graphics2D object. */
+    /**
+     * Prints the whole floor on the specified Graphics2D object. This prints
+     * the tiles and the entities, including the player.
+     */
     public static void printFloor(Graphics2D g2d) {
 	int translateX = (int) (-ViewCamera.cameraX * 16 + GameCanvas.ScreenWidth / 2);
 	int translateY = (int) (-ViewCamera.cameraY * 16 + GameCanvas.ScreenHeight / 2);
@@ -37,7 +48,7 @@ public abstract class CurrentFloorHolder {
 
 	int pSpriteSize = PlayerInfo.playersprite.getCurrentSprite()
 		.getHeight();
-	if (PlayerInfo.playerdirection == PlayerInfo.RIGHT) {
+	if (PlayerInfo.currentstate.isInvertedRight()) {
 	    g2d.drawImage(PlayerInfo.playersprite.getCurrentSprite(),
 		    (int) (PlayerInfo.posX * 16 + (pSpriteSize / 2)),
 		    (int) (PlayerInfo.posY * 16 - pSpriteSize / 2),

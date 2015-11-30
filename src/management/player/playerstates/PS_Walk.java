@@ -1,8 +1,12 @@
 package management.player.playerstates;
 
+import java.awt.image.BufferedImage;
+
+import res.images.Res_Player;
 import management.Position;
 import management.floors.CurrentFloorHolder;
 import management.floors.Tile;
+import management.player.Inventory;
 import management.player.PlayerInfo;
 import display.sprites.entities.PlayerSpriteSheet;
 
@@ -13,7 +17,7 @@ public class PS_Walk implements PlayerState {
 	updateWalksprite();
 	walk();
 	if (!PlayerInfo.isPressingAKey())
-	    PlayerInfo.currentstate = null;
+	    PlayerInfo.currentstate = new PS_Iddle();
     }
 
     /**
@@ -22,7 +26,6 @@ public class PS_Walk implements PlayerState {
      * idling or walking as it will reset the player sprite to the walking one.
      */
     private void updateWalksprite() {
-	if (PlayerInfo.isPressingAKey()) {
 	    switch (PlayerInfo.playerdirection) {
 	    case PlayerInfo.LEFT:
 		PlayerInfo.playersprite
@@ -41,26 +44,6 @@ public class PS_Walk implements PlayerState {
 			.setSpriteID(PlayerSpriteSheet.ID_WALK_DOWN);
 		break;
 	    }
-	} else {
-	    switch (PlayerInfo.playerdirection) {
-	    case PlayerInfo.LEFT:
-		PlayerInfo.playersprite
-			.setSpriteID(PlayerSpriteSheet.ID_STILL_LEFT);
-		break;
-	    case PlayerInfo.RIGHT:
-		PlayerInfo.playersprite
-			.setSpriteID(PlayerSpriteSheet.ID_STILL_LEFT);
-		break;
-	    case PlayerInfo.UP:
-		PlayerInfo.playersprite
-			.setSpriteID(PlayerSpriteSheet.ID_STILL_UP);
-		break;
-	    case PlayerInfo.DOWN:
-		PlayerInfo.playersprite
-			.setSpriteID(PlayerSpriteSheet.ID_STILL_DOWN);
-		break;
-	    }
-	}
     }
 
     /**
@@ -75,7 +58,6 @@ public class PS_Walk implements PlayerState {
 	if (PlayerInfo.hold_left
 		&& canWalkTo(PlayerInfo.posX - speed, PlayerInfo.posY)) {
 	    PlayerInfo.posX -= speed;
-
 	}
 	if (PlayerInfo.hold_right
 		&& canWalkTo(PlayerInfo.posX + speed, PlayerInfo.posY)) {
@@ -95,10 +77,10 @@ public class PS_Walk implements PlayerState {
      * Predicate that returns true if the player can walk in the wanted
      * coordinates.
      */
-    private static boolean canWalkTo(double toX, double toY) {
+    public static boolean canWalkTo(double toX, double toY) {
 	Position[] playerhitbox = PlayerInfo.getPlayerHitbox(toX, toY);
 	for (int i = 0; i < playerhitbox.length; i++) {
-	    if (!Tile.canWalkOn(CurrentFloorHolder.CurrentFloor.getTileTypeAt(
+		 if (!Tile.canWalkOn(CurrentFloorHolder.CurrentFloor.getTileTypeAt(
 		    (int) (playerhitbox[i].x), (int) (playerhitbox[i].y)),
 		    playerhitbox[i].x - Math.floor(playerhitbox[i].x),
 		    playerhitbox[i].y - Math.floor(playerhitbox[i].y))) {
@@ -110,6 +92,7 @@ public class PS_Walk implements PlayerState {
 
     @Override
     public void actionRpress() {
+	 PlayerInfo.currentstate = new PS_Roll();
     }
 
     @Override
@@ -118,6 +101,8 @@ public class PS_Walk implements PlayerState {
 
     @Override
     public void action1press() {
+	if (PlayerInfo.hand_S_itemID == Inventory.ITEM_SWORD)
+	    PlayerInfo.currentstate = new PS_Slash();
     }
 
     @Override
@@ -126,10 +111,54 @@ public class PS_Walk implements PlayerState {
 
     @Override
     public void action2press() {
+	if (PlayerInfo.hand_D_itemID == Inventory.ITEM_SWORD)
+	    PlayerInfo.currentstate = new PS_Slash();
     }
 
     @Override
     public void action2release() {
+    }
+
+    @Override
+    public void pressLeft() {
+    }
+
+    @Override
+    public void pressRight() {
+    }
+
+    @Override
+    public void pressUp() {
+    }
+
+    @Override
+    public void pressDown() {
+    }
+
+    @Override
+    public void releaseLeft() {
+    }
+
+    @Override
+    public void releaseRight() {
+    }
+
+    @Override
+    public void releaseUp() {
+    }
+
+    @Override
+    public void releaseDown() {
+    }
+
+    @Override
+    public boolean isInvertedRight() {
+	return PlayerInfo.playerdirection == PlayerInfo.RIGHT;
+    }
+
+    @Override
+    public BufferedImage getRightPText() {
+	return Res_Player.text_roll;
     }
 
 }

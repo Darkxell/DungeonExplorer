@@ -14,16 +14,13 @@ public abstract class Res_Tiles {
 
     /** Returns an array containing all the tiles in the game. */
     private static BufferedImage[] initialize() {
-	BufferedImage[] toreturn = new BufferedImage[NUMBEROFCOLUMNS * NUMBEROFROWS];
-	for (int i = 0; i < NUMBEROFROWS; i++) {
-	    
-	    for (int j = 0; j < NUMBEROFCOLUMNS; j++) {
-		toreturn[(NUMBEROFCOLUMNS * i) + j] = Res.createimage(Res.FOLDER_PATH
-			+ "tiles\\tileset.png", 16 * j, 16 * i, 16, 16);
-	    }
-	    
-	}
+	BufferedImage[] toreturn = new BufferedImage[NUMBEROFCOLUMNS
+		* NUMBEROFROWS];
+	for (int i = 0; i < NUMBEROFROWS; i++)
+	    for (int j = 0; j < NUMBEROFCOLUMNS; j++)
+		toreturn[(NUMBEROFCOLUMNS * i) + j] = Res.createimage(
+			ImagesHolder.TILES, 16 * j, 16 * i,
+			16, 16);
 	return toreturn;
     }
-
 }

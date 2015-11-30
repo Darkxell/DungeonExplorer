@@ -1,9 +1,8 @@
 package management.player;
 
 import management.Position;
-import management.player.playerstates.PS_Walk;
+import management.player.playerstates.PS_Iddle;
 import management.player.playerstates.PlayerState;
-import display.sprites.SpriteSheet;
 import display.sprites.entities.PlayerSpriteSheet;
 
 /**
@@ -45,7 +44,7 @@ public abstract class PlayerInfo {
      */
     public static int playerdirection = DOWN;
 
-    public static SpriteSheet playersprite = new PlayerSpriteSheet();
+    public static PlayerSpriteSheet playersprite = new PlayerSpriteSheet();
 
     /** The current player health. */
     public static double health = 3.0d;
@@ -55,7 +54,7 @@ public abstract class PlayerInfo {
      * not using an item, not rolling, knocked back or using an item, meaning
      * that he is standing still or walking.
      */
-    public static PlayerState currentstate;
+    public static PlayerState currentstate = new PS_Iddle();
 
     /** The id of the item in the player S hand. */
     public static int hand_S_itemID = Inventory.ITEM_SHIELD;
@@ -66,29 +65,11 @@ public abstract class PlayerInfo {
     public static void update() {
 	ViewCamera.movecamera();
 	++playerupdater;
-	if (playerupdater > 2) {
+	if (playerupdater >= playersprite.getFramesPerSprite()) {
 	    playerupdater = 0;
 	    playersprite.next();
 	}
-
-	if (currentstate != null) {
-	    currentstate.update();
-	} else {
-	    switch (playerdirection) {
-	    case LEFT:
-		playersprite.setSpriteID(PlayerSpriteSheet.ID_STILL_LEFT);
-		break;
-	    case RIGHT:
-		playersprite.setSpriteID(PlayerSpriteSheet.ID_STILL_LEFT);
-		break;
-	    case UP:
-		playersprite.setSpriteID(PlayerSpriteSheet.ID_STILL_UP);
-		break;
-	    case DOWN:
-		playersprite.setSpriteID(PlayerSpriteSheet.ID_STILL_DOWN);
-		break;
-	    }
-	}
+	currentstate.update();
     }
 
     /**
@@ -149,8 +130,7 @@ public abstract class PlayerInfo {
      * pressing the R button in a GBA.
      */
     public static void actionRpress() {
-	if (currentstate != null)
-	    currentstate.actionRpress();
+	currentstate.actionRpress();
     }
 
     /**
@@ -158,8 +138,7 @@ public abstract class PlayerInfo {
      * pressing the R button in a GBA.
      */
     public static void actionRrelease() {
-	if (currentstate != null)
-	    currentstate.actionRrelease();
+	currentstate.actionRrelease();
     }
 
     /**
@@ -167,8 +146,7 @@ public abstract class PlayerInfo {
      * the A button in a GBA.
      */
     public static void action1press() {
-	if (currentstate != null)
-	    currentstate.action1press();
+	currentstate.action1press();
     }
 
     /**
@@ -176,8 +154,7 @@ public abstract class PlayerInfo {
      * relasing the A button in a GBA.
      */
     public static void action1release() {
-	if (currentstate != null)
-	    currentstate.action1release();
+	currentstate.action1release();
     }
 
     /**
@@ -185,8 +162,7 @@ public abstract class PlayerInfo {
      * the B button in a GBA.
      */
     public static void action2press() {
-	if (currentstate != null)
-	    currentstate.action2press();
+	currentstate.action2press();
     }
 
     /**
@@ -194,16 +170,14 @@ public abstract class PlayerInfo {
      * relasing the B button in a GBA.
      */
     public static void action2release() {
-	if (currentstate != null)
-	    currentstate.action2release();
+	currentstate.action2release();
     }
 
     public static void leftpress() {
-	if (currentstate == null)
-	    currentstate = new PS_Walk();
 	if (!isPressingAKey())
 	    playerdirection = LEFT;
 	hold_left = true;
+	currentstate.pressLeft();
     }
 
     public static void leftrelease() {
@@ -216,17 +190,18 @@ public abstract class PlayerInfo {
 	    if (hold_down)
 		playerdirection = DOWN;
 	}
+	currentstate.releaseLeft();
     }
 
     public static void rightpress() {
-	if (currentstate == null)
-	    currentstate = new PS_Walk();
+	currentstate.pressRight();
 	if (!isPressingAKey())
 	    playerdirection = RIGHT;
 	hold_right = true;
     }
 
     public static void rightrelease() {
+	currentstate.releaseRight();
 	hold_right = false;
 	if (isPressingAKey()) {
 	    if (hold_left)
@@ -239,14 +214,14 @@ public abstract class PlayerInfo {
     }
 
     public static void downpress() {
-	if (currentstate == null)
-	    currentstate = new PS_Walk();
+	currentstate.pressDown();
 	if (!isPressingAKey())
 	    playerdirection = DOWN;
 	hold_down = true;
     }
 
     public static void downrelease() {
+	currentstate.releaseDown();
 	hold_down = false;
 	if (isPressingAKey()) {
 	    if (hold_left)
@@ -259,14 +234,14 @@ public abstract class PlayerInfo {
     }
 
     public static void uppress() {
-	if (currentstate == null)
-	    currentstate = new PS_Walk();
+	currentstate.pressUp();
 	if (!isPressingAKey())
 	    playerdirection = UP;
 	hold_up = true;
     }
 
     public static void uprelease() {
+	currentstate.releaseUp();
 	hold_up = false;
 	if (isPressingAKey()) {
 	    if (hold_left)

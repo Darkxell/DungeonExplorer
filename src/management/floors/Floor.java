@@ -6,9 +6,10 @@ import management.player.PlayerInfo;
 import util.StringMatcher;
 import util.TextFileUtility;
 
+/** Object that stores all of the rooms (tiles array of a floor.) */
 public class Floor {
 
-    Room[] rooms;
+    public Room[] rooms;
 
     /**
      * Generates a floor using a map folder.<br/>
@@ -44,12 +45,11 @@ public class Floor {
 
     /** Gets the tile type at the wanted coordinates. */
     public int getTileTypeAt(int tileX, int tileY) {
-
 	for (int i = 0; i < rooms.length; i++)
 	    try {
 		if (tileX >= rooms[i].posX && tileY >= rooms[i].posY
-			&& tileX <= rooms[i].posX + rooms[i].width
-			&& tileY <= rooms[i].posY + rooms[i].height)
+			&& tileX < rooms[i].posX + rooms[i].width
+			&& tileY < rooms[i].posY + rooms[i].height)
 		    return rooms[i].getTile(tileX - rooms[i].posX, tileY
 			    - rooms[i].posY).type;
 	    } catch (Exception e) {
@@ -57,6 +57,15 @@ public class Floor {
 	System.err.println("No room found at coordinates : " + tileX + "/"
 		+ tileY + " , Tile type returned : 0.");
 	return 0;
+    }
+
+    /**
+     * Predicate that returns true if the player center is on the tile at the
+     * specified coordinates
+     */
+    public boolean isPlayerOnTile(int tileX, int tileY) {
+	return (PlayerInfo.posX >= tileX && PlayerInfo.posY >= tileY
+		&& PlayerInfo.posX < tileX + 1 && PlayerInfo.posY < tileY + 1);
     }
 
 }

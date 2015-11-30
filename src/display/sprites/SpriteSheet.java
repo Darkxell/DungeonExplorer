@@ -30,6 +30,8 @@ public class SpriteSheet {
 
     /** sets the sprite to this ID. */
     public void setSpriteID(int id) {
+	if(!sprites[id].isRepetable())
+	    sprites[id].offset = 0;
 	this.currentAnimatedspriteID = id;
     }
 

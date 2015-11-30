@@ -30,6 +30,9 @@ public class PlayerSpriteSheet extends SpriteSheet {
     public static final int ID_SLASH_DOWN_5 = 18;
     public static final int ID_SLASH_LEFT_5 = 19;
     public static final int ID_SLASH_UP_5 = 20;
+    public static final int ID_ROLL_DOWN = 21;
+    public static final int ID_ROLL_LEFT = 22;
+    public static final int ID_ROLL_UP = 23;
 
     /** Creates a new player PlayerSpriteSheet and returns it. */
     public PlayerSpriteSheet() {
@@ -57,8 +60,28 @@ public class PlayerSpriteSheet extends SpriteSheet {
 		new AnimatedSprite(Res_Player.slash_up_4, ID_STILL_UP, this),
 		new AnimatedSprite(Res_Player.slash_down_5, ID_STILL_DOWN, this),
 		new AnimatedSprite(Res_Player.slash_left_5, ID_STILL_LEFT, this),
-		new AnimatedSprite(Res_Player.slash_up_5, ID_STILL_UP, this), };
+		new AnimatedSprite(Res_Player.slash_up_5, ID_STILL_UP, this),
+		new AnimatedSprite(Res_Player.roll_down, ID_STILL_DOWN, this),
+		new AnimatedSprite(Res_Player.roll_left, ID_STILL_LEFT, this),
+		new AnimatedSprite(Res_Player.roll_up, ID_STILL_UP, this) };
 
+    }
+
+    /**
+     * Returns the ammount of frames the current image is supposed to stay, only
+     * according to the current AnimatedSprite ID being displayed. If the value
+     * is not specified, returns 1.
+     */
+    public int getFramesPerSprite() {
+	int sID = super.getSpriteID();
+	if (sID >= 0 && sID <= 5)
+	    return 3;
+	if (sID >= 6 && sID <= 20)
+	    return 1;
+	if (sID >= 21 && sID <= 23)
+	    return 2;
+
+	return 1;
     }
 
 }

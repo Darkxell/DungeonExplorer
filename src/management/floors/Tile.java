@@ -65,7 +65,7 @@ public class Tile {
      */
     public void update() {
 	++updater;
-	if (updater > 2) {
+	if (updater > 4) {
 	    sprite.next();
 	    updater = 0;
 	}
@@ -84,6 +84,10 @@ public class Tile {
 		|| tileType == TYPE_LAVA || tileType == TYPE_VOID) {
 	    return true;
 	}
+	if (tileType == TYPE_SOLID) {
+	    return false;
+	}
+	System.out.println("test");
 	return false; // TODO : add all the weird tiles.
     }
 

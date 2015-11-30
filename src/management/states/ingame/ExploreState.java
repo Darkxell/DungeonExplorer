@@ -5,7 +5,9 @@ import java.awt.event.KeyEvent;
 
 import res.images.Res_FileSelect;
 import res.images.Res_Inventory;
+import res.images.Res_Items;
 import util.ItemsUtility;
+import util.NumberUtil;
 import management.floors.CurrentFloorHolder;
 import management.player.PlayerInfo;
 import management.states.CanvasState;
@@ -21,6 +23,9 @@ public class ExploreState implements CanvasState {
     private boolean kright;
     private boolean kdown;
     private boolean kup;
+    private boolean kD;
+    private boolean kS;
+    private boolean kR;
 
     private GameState parent;
 
@@ -32,14 +37,21 @@ public class ExploreState implements CanvasState {
     public void print(Graphics2D g2d) {
 
 	CurrentFloorHolder.printFloor(g2d);
-
-	g2d.drawImage(Res_FileSelect.buttonZ, 215, 5, null);
-	g2d.drawImage(Res_Inventory.ButtonS, 190, 19, null);
+	g2d.drawImage(Res_FileSelect.buttonZ, 215, 10, null);
+	g2d.drawImage(PlayerInfo.currentstate.getRightPText(), 205, 5, null);
+	g2d.drawImage(Res_Inventory.ButtonS, 190, 27, null);
 	g2d.drawImage(ItemsUtility.getSpriteFromID(PlayerInfo.hand_S_itemID),
-		180, 9, null);
-	g2d.drawImage(Res_Inventory.ButtonD, 210, 19, null);
+		180, 17, null);
+	g2d.drawImage(Res_Inventory.ButtonD, 210, 27, null);
 	g2d.drawImage(ItemsUtility.getSpriteFromID(PlayerInfo.hand_D_itemID),
-		200, 9, null);
+		200, 17, null);
+
+	g2d.drawImage(Res_Items.hud_key, 210, 130, null);
+	g2d.drawImage(Res_Items.hud_rupee_green, 200, 146, null);
+	NumberUtil.printNumberWithFont(g2d, NumberUtil.FONT_WHITESQUARES, 211,
+		147, PlayerInfo.playerInventory.ruppees);
+	NumberUtil.printNumberWithFont(g2d, NumberUtil.FONT_WHITESQUARES, 230,
+		133, PlayerInfo.playerInventory.keys);
 
     }
 
@@ -69,6 +81,15 @@ public class ExploreState implements CanvasState {
 	} else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
 	    kdown = false;
 	    PlayerInfo.downrelease();
+	} else if (e.getKeyCode() == KeyEvent.VK_D) {
+	    kD = false;
+	    PlayerInfo.action2release();
+	} else if (e.getKeyCode() == KeyEvent.VK_S) {
+	    kdown = false;
+	    PlayerInfo.action1release();
+	} else if (e.getKeyCode() == KeyEvent.VK_Z) {
+	    kR = false;
+	    PlayerInfo.actionRrelease();
 	} else if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 	    parent.menustate.resetOpenAnimation();
 	    parent.substate = parent.menustate;
@@ -96,6 +117,21 @@ public class ExploreState implements CanvasState {
 	    if (!kdown) {
 		kdown = true;
 		PlayerInfo.downpress();
+	    }
+	} else if (e.getKeyCode() == KeyEvent.VK_D) {
+	    if (!kD) {
+		kD = true;
+		PlayerInfo.action2press();
+	    }
+	} else if (e.getKeyCode() == KeyEvent.VK_S) {
+	    if (!kS) {
+		kdown = true;
+		PlayerInfo.action1press();
+	    }
+	} else if (e.getKeyCode() == KeyEvent.VK_Z) {
+	    if (!kR) {
+		kR = true;
+		PlayerInfo.actionRpress();
 	    }
 	}
     }

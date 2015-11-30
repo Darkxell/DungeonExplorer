@@ -18,13 +18,17 @@ public abstract class ViewCamera {
     /** Moves the camera smartly towards the player. */
     protected static void movecamera() {
 	if (iscaminboundsat(cameraX, cameraY)) {
-	    if (cameraX > PlayerInfo.posX + 1 && iscaminboundsat(cameraX - 0.1, cameraY))
+	    if (cameraX > PlayerInfo.posX + 1
+		    && iscaminboundsat(cameraX - 0.1, cameraY))
 		cameraX -= 0.1;
-	    if (cameraX < PlayerInfo.posX - 1 && iscaminboundsat(cameraX + 0.1, cameraY))
+	    if (cameraX < PlayerInfo.posX - 1
+		    && iscaminboundsat(cameraX + 0.1, cameraY))
 		cameraX += 0.1;
-	    if (cameraY > PlayerInfo.posY + 1 && iscaminboundsat(cameraX, cameraY - 0.1))
+	    if (cameraY > PlayerInfo.posY + 1
+		    && iscaminboundsat(cameraX, cameraY - 0.1))
 		cameraY -= 0.1;
-	    if (cameraY < PlayerInfo.posY - 1 && iscaminboundsat(cameraX, cameraY + 0.1))
+	    if (cameraY < PlayerInfo.posY - 1
+		    && iscaminboundsat(cameraX, cameraY + 0.1))
 		cameraY += 0.1;
 	} else {
 	    if (cameraX < CurrentFloorHolder.CurrentFloor.getPlayerRoom().posX
@@ -49,15 +53,24 @@ public abstract class ViewCamera {
      * the room.
      */
     private static boolean iscaminboundsat(double cameraX2, double cameraY2) {
-	return cameraX2 > CurrentFloorHolder.CurrentFloor.getPlayerRoom().posX
-		+ ((double) GameCanvas.ScreenWidth / 32)
-		&& cameraX2 < CurrentFloorHolder.CurrentFloor.getPlayerRoom().posX
-			+ CurrentFloorHolder.CurrentFloor.getPlayerRoom().width
-			- ((double) GameCanvas.ScreenWidth / 32)
-		&& cameraY2 > CurrentFloorHolder.CurrentFloor.getPlayerRoom().posY
-			+ (GameCanvas.ScreenHeight / 32)
-		&& cameraY2 < CurrentFloorHolder.CurrentFloor.getPlayerRoom().posY
-			+ CurrentFloorHolder.CurrentFloor.getPlayerRoom().height
-			- (GameCanvas.ScreenHeight / 32);
+	try {
+	    return cameraX2 > CurrentFloorHolder.CurrentFloor.getPlayerRoom().posX
+		    + ((double) GameCanvas.ScreenWidth / 32)
+		    && cameraX2 < CurrentFloorHolder.CurrentFloor
+			    .getPlayerRoom().posX
+			    + CurrentFloorHolder.CurrentFloor.getPlayerRoom().width
+			    - ((double) GameCanvas.ScreenWidth / 32)
+		    && cameraY2 > CurrentFloorHolder.CurrentFloor
+			    .getPlayerRoom().posY
+			    + (GameCanvas.ScreenHeight / 32)
+		    && cameraY2 < CurrentFloorHolder.CurrentFloor
+			    .getPlayerRoom().posY
+			    + CurrentFloorHolder.CurrentFloor.getPlayerRoom().height
+			    - (GameCanvas.ScreenHeight / 32);
+	} catch (Exception e) {
+	    System.err
+		    .println("Error in camera : couldn't locate player room. Camera follows the player.");
+	    return true;
+	}
     }
 }

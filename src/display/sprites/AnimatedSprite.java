@@ -66,4 +66,9 @@ public class AnimatedSprite {
 	    this.offset = 0;
 	}
     }
+
+    /** Returns treue if this sprite is repetable. */
+    public boolean isRepetable() {
+	return this.repeatable;
+    }
 }
