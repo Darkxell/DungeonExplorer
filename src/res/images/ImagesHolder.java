@@ -43,6 +43,9 @@ public abstract class ImagesHolder {
 
     public static final BufferedImage TILES = readfile(Res.FOLDER_PATH
 	    + "tiles/tileset.png");
+    
+    public static final BufferedImage FRAMESHADOW = readfile(Res.FOLDER_PATH
+	    + "tiles/frameshadow.png");
 
     public static BufferedImage readfile(String filepath) {
 	try {
