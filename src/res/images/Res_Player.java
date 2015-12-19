@@ -38,6 +38,8 @@ public class Res_Player {
     public static BufferedImage[] roll_left = getPlayerSpriteRow(0, 1120, 32, 8);
     public static BufferedImage[] roll_up = getPlayerSpriteRow(0, 1152, 32, 8);
     
+    public static BufferedImage[] faint = getPlayerSpriteRow(352, 0, 32, 5);
+    
     /**
      * Gets multiple player sprites next to each other in the player.png file
      * and returns them inside an array.

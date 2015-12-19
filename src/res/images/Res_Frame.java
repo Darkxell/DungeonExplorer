@@ -27,4 +27,17 @@ public abstract class Res_Frame {
 	    ImagesHolder.FRAMESHADOW, 0, 22, 10, 1);
     public static BufferedImage swadow_right = Res.createimage(
 	    ImagesHolder.FRAMESHADOW, 11, 22, 10, 1);
+    
+    public static BufferedImage close = Res.createimage(
+	    ImagesHolder.FRAMEICONS, 0, 0, 29, 20);
+    public static BufferedImage close_active = Res.createimage(
+	    ImagesHolder.FRAMEICONS, 30, 0, 29, 20);
+    public static BufferedImage minimize = Res.createimage(
+	    ImagesHolder.FRAMEICONS, 0, 21, 29, 20);
+    public static BufferedImage minimize_active = Res.createimage(
+	    ImagesHolder.FRAMEICONS, 30, 21, 29, 20);
+    public static BufferedImage controls = Res.createimage(
+	    ImagesHolder.FRAMEICONS, 0, 42, 29, 20);
+    public static BufferedImage controls_active = Res.createimage(
+	    ImagesHolder.FRAMEICONS, 30, 42, 29, 20);
 }

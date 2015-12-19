@@ -29,5 +29,8 @@ public abstract class Res_MainMenu {
     
     public static BufferedImage title = Res.createimage(
 	    ImagesHolder.MENU_TITLE, 0, 0, 167, 88);
+    
+    public static BufferedImage controls = Res.createimage(
+	    ImagesHolder.CONTROLS, 0, 0, 240, 160);
 
 }

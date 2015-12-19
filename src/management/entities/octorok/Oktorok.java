@@ -3,11 +3,12 @@ package management.entities.octorok;
 import java.awt.Graphics2D;
 
 import management.Position;
-import management.entities.Entity;
+import management.entities.Hitbox;
+import management.entities.Monster;
 import management.floors.Room;
 import management.player.PlayerInfo;
 
-public class Oktorok extends Entity {
+public class Oktorok extends Monster {
 
     public Oktorok(Room roompointer, double x, double y) {
 	super(roompointer, x, y);
@@ -15,7 +16,7 @@ public class Oktorok extends Entity {
     }
 
     @Override
-    public void update() {
+    public void updateM() {
 	super.state.update();
     }
 
@@ -29,7 +30,8 @@ public class Oktorok extends Entity {
 
     }
 
-    public Position[] getHitbox(double posX, double posY) {
+    @Override
+    public Hitbox getHitbox(double posX, double posY) {
 	Position[] points = new Position[9];
 	double halfsize = 0.45d;
 	points[0] = new Position(posX - halfsize, posY - halfsize);
@@ -41,7 +43,7 @@ public class Oktorok extends Entity {
 	points[6] = new Position(posX - halfsize, posY + halfsize);
 	points[7] = new Position(posX, posY + halfsize);
 	points[8] = new Position(posX + halfsize, posY + halfsize);
-	return points;
+	return new Hitbox(points);
     }
 
     /**

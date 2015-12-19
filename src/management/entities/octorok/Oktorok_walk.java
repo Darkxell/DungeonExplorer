@@ -87,7 +87,7 @@ public class Oktorok_walk extends EntityState {
     }
 
     private boolean canWalkTo(double toX, double toY) {
-	Position[] hitbox = ((Oktorok) parententity).getHitbox(toX, toY);
+	Position[] hitbox = ((Oktorok) parententity).getHitbox(toX, toY).cardinals;
 	for (int i = 0; i < hitbox.length; i++) {
 	    if (CurrentFloorHolder.CurrentFloor.getTileTypeAt(
 		    (int) (hitbox[i].x), (int) (hitbox[i].y)) != Tile.TYPE_NORMAL) {

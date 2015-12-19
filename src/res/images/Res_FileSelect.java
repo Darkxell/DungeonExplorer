@@ -132,5 +132,26 @@ public class Res_FileSelect {
 	    ImagesHolder.MENU_FILESELECT, 163, 120, 7, 8);
     public static BufferedImage num3active = Res.createimage(
 	    ImagesHolder.MENU_FILESELECT, 173, 120, 7, 8);
+    
+    public static BufferedImage hearth_small_4 = Res.createimage(
+	    ImagesHolder.MENU_FILESELECT, 1, 154, 11, 10);
+    public static BufferedImage hearth_small_3 = Res.createimage(
+	    ImagesHolder.MENU_FILESELECT, 12, 154, 11, 10);
+    public static BufferedImage hearth_small_2 = Res.createimage(
+	    ImagesHolder.MENU_FILESELECT, 23, 154, 11, 10);
+    public static BufferedImage hearth_small_1 = Res.createimage(
+	    ImagesHolder.MENU_FILESELECT, 34, 154, 11, 10);
+    public static BufferedImage hearth_small_0 = Res.createimage(
+	    ImagesHolder.MENU_FILESELECT, 45, 154, 11, 10);
+    public static BufferedImage hearth_big_4 = Res.createimage(
+	    ImagesHolder.MENU_FILESELECT, 1, 166, 11, 10);
+    public static BufferedImage hearth_big_3 = Res.createimage(
+	    ImagesHolder.MENU_FILESELECT, 12, 166, 11, 10);
+    public static BufferedImage hearth_big_2 = Res.createimage(
+	    ImagesHolder.MENU_FILESELECT, 23, 166, 11, 10);
+    public static BufferedImage hearth_big_1 = Res.createimage(
+	    ImagesHolder.MENU_FILESELECT, 34, 166, 11, 10);
+    public static BufferedImage hearth_big_0 = Res.createimage(
+	    ImagesHolder.MENU_FILESELECT, 45, 166, 11, 10);
 
 }

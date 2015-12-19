@@ -42,7 +42,27 @@ public class GameFrame {
     /** Moves the frame to the specified X and Y coordinates on your screen. */
     public void moveTo(int x, int y) {
 	this.frame.setLocation(x, y);
-	this.shadows.setLocation(x-10, y-10);
+	this.shadows.setLocation(x - 10, y - 10);
     }
 
+    public void minimize() {
+	shadows.setVisible(false);
+	frame.setState(JFrame.ICONIFIED);
+    }
+
+    /** Bump this frame to the top. */
+    public void bump() {
+	shadows.setVisible(true);
+	frame.setVisible(true);
+    }
+
+    /**
+     * Changes the size of the frame the the desired value. This method changes
+     * the size of the frame, the inner canvas and the shadows.
+     */
+    public void changeSize(int width, int height) {
+	this.frame.setSize(width, height);
+	this.shadows.setSize(width + 20, height + 20);
+	this.canvas.setSize(width, height);
+    }
 }

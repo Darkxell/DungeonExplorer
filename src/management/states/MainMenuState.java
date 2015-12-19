@@ -10,13 +10,9 @@ import res.images.Res_MainMenu;
 public class MainMenuState implements CanvasState {
 
     public int frame;
-
     public double swordsize;
-
     public int raystate;
-
     public int startcounter;
-
     public int swordshine;
 
     @Override

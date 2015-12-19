@@ -53,6 +53,23 @@ public class ExploreState implements CanvasState {
 	NumberUtil.printNumberWithFont(g2d, NumberUtil.FONT_WHITESQUARES, 230,
 		133, PlayerInfo.playerInventory.keys);
 
+	
+	    for (int i = 0; i < PlayerInfo.playerInventory.maxhealth; ++i) {
+		if(PlayerInfo.health > 1+i)
+		    g2d.drawImage(Res_FileSelect.hearth_small_4, 10 + (9*i), 5, null);
+		else if(PlayerInfo.health <= i)
+		    g2d.drawImage(Res_FileSelect.hearth_small_0, 10 + (9*i), 5, null);
+		else if(PlayerInfo.health == i+1)
+		    g2d.drawImage(Res_FileSelect.hearth_big_4, 10 + (9*i), 5, null);
+		else if(PlayerInfo.health == i+0.75)
+		    g2d.drawImage(Res_FileSelect.hearth_big_3, 10 + (9*i), 5, null);
+		else if(PlayerInfo.health == i+0.5)
+		    g2d.drawImage(Res_FileSelect.hearth_big_2, 10 + (9*i), 5, null);
+		else if(PlayerInfo.health == i+0.25)
+		    g2d.drawImage(Res_FileSelect.hearth_big_1, 10 + (9*i), 5, null);
+	    }
+	
+
     }
 
     @Override

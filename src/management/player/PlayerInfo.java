@@ -47,7 +47,7 @@ public abstract class PlayerInfo {
     public static PlayerSpriteSheet playersprite = new PlayerSpriteSheet();
 
     /** The current player health. */
-    public static double health = 3.0d;
+    public static double health = playerInventory.maxhealth;
 
     /**
      * The current state of the player. Is <code>null</code> if the player is

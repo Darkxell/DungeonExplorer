@@ -6,10 +6,11 @@ import res.images.mobs.Res_Oktorok;
 import display.sprites.AnimatedSprite;
 import display.sprites.SpriteSheet;
 import management.Position;
-import management.entities.Entity;
+import management.entities.Hitbox;
+import management.entities.Monster;
 import management.floors.Room;
 
-public class Boulder extends Entity {
+public class Boulder extends Monster {
 
     public Boulder(Room roompointer, double x, double y, int direction) {
 	super(roompointer, x, y);
@@ -22,7 +23,7 @@ public class Boulder extends Entity {
     private int supdater = 3;
 
     @Override
-    public void update() {
+    public void updateM() {
 	super.state.update();
 	--supdater;
 	if (supdater < 0) {
@@ -40,7 +41,8 @@ public class Boulder extends Entity {
     public void onhit() {
     }
 
-    public Position[] getHitbox(double posX, double posY) {
+    @Override
+    public Hitbox getHitbox(double posX, double posY) {
 	Position[] points = new Position[9];
 	double halfsize = 0.2d;
 	points[0] = new Position(posX - halfsize, posY - halfsize);
@@ -52,7 +54,7 @@ public class Boulder extends Entity {
 	points[6] = new Position(posX - halfsize, posY + halfsize);
 	points[7] = new Position(posX, posY + halfsize);
 	points[8] = new Position(posX + halfsize, posY + halfsize);
-	return points;
+	return new Hitbox(points);
     }
 
 }

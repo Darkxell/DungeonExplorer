@@ -46,6 +46,10 @@ public abstract class ImagesHolder {
     
     public static final BufferedImage FRAMESHADOW = readfile(Res.FOLDER_PATH
 	    + "tiles/frameshadow.png");
+    public static final BufferedImage FRAMEICONS = readfile(Res.FOLDER_PATH
+	    + "tiles/frameicons.png");
+    public static final BufferedImage CONTROLS = readfile(Res.FOLDER_PATH
+	    + "tiles/controls.png");
 
     public static BufferedImage readfile(String filepath) {
 	try {

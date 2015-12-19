@@ -36,14 +36,14 @@ public class ShadowUtil {
 	g.drawImage(Res_Frame.swadow_topleft, 0, 0, null);
 	for (int i = 10; i < width - 10; ++i) {
 	    g.drawImage(Res_Frame.swadow_top, i, 0, null);
-	    g.drawImage(Res_Frame.swadow_bot, i, height - 9, null);
+	    g.drawImage(Res_Frame.swadow_bot, i, height - 10, null);
 	}
 	g.drawImage(Res_Frame.swadow_topright, width - 10, 0, null);
 	g.drawImage(Res_Frame.swadow_botleft, 0, height - 10, null);
 	g.drawImage(Res_Frame.swadow_botright, width - 10, height - 10, null);
 	for (int i = 10; i < height - 10; ++i) {
 	    g.drawImage(Res_Frame.swadow_left, 0, i, null);
-	    g.drawImage(Res_Frame.swadow_right, width - 9, i, null);
+	    g.drawImage(Res_Frame.swadow_right, width - 10, i, null);
 	}
 	return toreturn;
     }

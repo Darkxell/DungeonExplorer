@@ -76,7 +76,7 @@ public interface PlayerState {
     public void releaseDown();
 
     /**
-     * Returns true if the sprite you get fom the player spritesheet is the lset
+     * Returns true if the sprite you get fom the player spritesheet is the left
      * one and need horisontal reversing.
      */
     public boolean isInvertedRight();

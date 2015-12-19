@@ -67,7 +67,7 @@ public class Boulder_Roll extends EntityState {
     }
 
     private boolean canRollTo(double toX, double toY) {
-	Position[] hitbox = ((Boulder) parententity).getHitbox(toX, toY);
+	Position[] hitbox = ((Boulder) parententity).getHitbox(toX, toY).cardinals;
 	for (int i = 0; i < hitbox.length; i++)
 	    if (CurrentFloorHolder.CurrentFloor.getTileTypeAt(
 		    (int) (hitbox[i].x), (int) (hitbox[i].y)) != Tile.TYPE_NORMAL)

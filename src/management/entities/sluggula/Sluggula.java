@@ -5,11 +5,13 @@ import java.awt.Graphics2D;
 import display.sprites.entities.SluggulaSpriteSheet;
 import management.Position;
 import management.entities.Entity;
+import management.entities.Hitbox;
+import management.entities.Monster;
 import management.floors.CurrentFloorHolder;
 import management.floors.Room;
 import management.floors.Tile;
 
-public class Sluggula extends Entity {
+public class Sluggula extends Monster {
 
     private int updater;
     private int direction = Entity.DOWN;
@@ -20,7 +22,7 @@ public class Sluggula extends Entity {
     }
 
     @Override
-    public void update() {
+    public void updateM() {
 	++updater;
 	if (updater > 16) {
 	    updater = 0;
@@ -83,7 +85,8 @@ public class Sluggula extends Entity {
 	}
     }
 
-    public Position[] getHitbox(double posX, double posY) {
+    @Override
+    public Hitbox getHitbox(double posX, double posY) {
 	Position[] points = new Position[9];
 	double halfsize = 0.3d;
 	points[0] = new Position(posX - halfsize, posY - halfsize);
@@ -95,11 +98,11 @@ public class Sluggula extends Entity {
 	points[6] = new Position(posX - halfsize, posY + halfsize);
 	points[7] = new Position(posX, posY + halfsize);
 	points[8] = new Position(posX + halfsize, posY + halfsize);
-	return points;
+	return new Hitbox(points);
     }
 
     private boolean canWalkTo(double toX, double toY) {
-	Position[] hitbox = getHitbox(toX, toY);
+	Position[] hitbox = getHitbox(toX, toY).cardinals;
 	for (int i = 0; i < hitbox.length; i++) {
 	    if (CurrentFloorHolder.CurrentFloor.getTileTypeAt(
 		    (int) (hitbox[i].x), (int) (hitbox[i].y)) != Tile.TYPE_NORMAL) {

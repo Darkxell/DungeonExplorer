@@ -50,6 +50,9 @@ public abstract class Entity {
     /** prints the entity on the graphics object. */
     public abstract void print(Graphics2D g2d);
 
+    /** Returns the hitbox of this entity. */
+    public abstract Hitbox getHitbox(double posX, double posY);
+
     /** Called when the entity is hit by the player sword. */
     public abstract void onhit();
 
