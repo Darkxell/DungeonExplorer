@@ -18,6 +18,8 @@ public class PS_Walk implements PlayerState {
 	walk();
 	if (!PlayerInfo.isPressingAKey())
 	    PlayerInfo.currentstate = new PS_Iddle();
+	if (PlayerInfo.health <= 0)
+	    PlayerInfo.currentstate = new PS_Faint();
     }
 
     /**
@@ -26,24 +28,20 @@ public class PS_Walk implements PlayerState {
      * idling or walking as it will reset the player sprite to the walking one.
      */
     private void updateWalksprite() {
-	    switch (PlayerInfo.playerdirection) {
-	    case PlayerInfo.LEFT:
-		PlayerInfo.playersprite
-			.setSpriteID(PlayerSpriteSheet.ID_WALK_LEFT);
-		break;
-	    case PlayerInfo.RIGHT:
-		PlayerInfo.playersprite
-			.setSpriteID(PlayerSpriteSheet.ID_WALK_LEFT);
-		break;
-	    case PlayerInfo.UP:
-		PlayerInfo.playersprite
-			.setSpriteID(PlayerSpriteSheet.ID_WALK_UP);
-		break;
-	    case PlayerInfo.DOWN:
-		PlayerInfo.playersprite
-			.setSpriteID(PlayerSpriteSheet.ID_WALK_DOWN);
-		break;
-	    }
+	switch (PlayerInfo.playerdirection) {
+	case PlayerInfo.LEFT:
+	    PlayerInfo.playersprite.setSpriteID(PlayerSpriteSheet.ID_WALK_LEFT);
+	    break;
+	case PlayerInfo.RIGHT:
+	    PlayerInfo.playersprite.setSpriteID(PlayerSpriteSheet.ID_WALK_LEFT);
+	    break;
+	case PlayerInfo.UP:
+	    PlayerInfo.playersprite.setSpriteID(PlayerSpriteSheet.ID_WALK_UP);
+	    break;
+	case PlayerInfo.DOWN:
+	    PlayerInfo.playersprite.setSpriteID(PlayerSpriteSheet.ID_WALK_DOWN);
+	    break;
+	}
     }
 
     /**
@@ -80,7 +78,7 @@ public class PS_Walk implements PlayerState {
     public static boolean canWalkTo(double toX, double toY) {
 	Position[] playerhitbox = PlayerInfo.getPlayerHitbox(toX, toY);
 	for (int i = 0; i < playerhitbox.length; i++) {
-		 if (!Tile.canWalkOn(CurrentFloorHolder.CurrentFloor.getTileTypeAt(
+	    if (!Tile.canWalkOn(CurrentFloorHolder.CurrentFloor.getTileTypeAt(
 		    (int) (playerhitbox[i].x), (int) (playerhitbox[i].y)),
 		    playerhitbox[i].x - Math.floor(playerhitbox[i].x),
 		    playerhitbox[i].y - Math.floor(playerhitbox[i].y))) {
@@ -92,7 +90,7 @@ public class PS_Walk implements PlayerState {
 
     @Override
     public void actionRpress() {
-	 PlayerInfo.currentstate = new PS_Roll();
+	PlayerInfo.currentstate = new PS_Roll();
     }
 
     @Override

@@ -32,7 +32,7 @@ public abstract class Monster extends Entity {
     public abstract void onhit();
 
     /**
-     * knockback the player from this monster if it commides with the player
+     * knockback the player from this monster if it collides with the player
      * hitbox.
      */
     public void knockback() {

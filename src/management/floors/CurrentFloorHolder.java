@@ -48,17 +48,15 @@ public abstract class CurrentFloorHolder {
 
 	int pSpriteSize = PlayerInfo.playersprite.getCurrentSprite()
 		.getHeight();
-	if (PlayerInfo.currentstate.isInvertedRight()) {
+	if (PlayerInfo.currentstate.isInvertedRight())
 	    g2d.drawImage(PlayerInfo.playersprite.getCurrentSprite(),
 		    (int) (PlayerInfo.posX * 16 + (pSpriteSize / 2)),
 		    (int) (PlayerInfo.posY * 16 - pSpriteSize / 2),
 		    -pSpriteSize, pSpriteSize, null);
-	} else {
+	else
 	    g2d.drawImage(PlayerInfo.playersprite.getCurrentSprite(),
 		    (int) (PlayerInfo.posX * 16 - pSpriteSize / 2),
 		    (int) (PlayerInfo.posY * 16 - pSpriteSize / 2), null);
-	}
-
 	g2d.translate(-translateX, -translateY);
 
     }

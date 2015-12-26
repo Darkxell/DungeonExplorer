@@ -1,9 +1,12 @@
 package management.entities;
 
 import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 
+import util.DoubleRectangle;
 import management.Position;
 import management.floors.Room;
+import management.player.PlayerInfo;
 
 public abstract class Item extends Entity {
 
@@ -23,14 +26,44 @@ public abstract class Item extends Entity {
 	super(roompointer, x, y);
     }
 
-    @Override
-    public void update() {
-	// TODO Auto-generated method stub
-
+    public Item(Room roompointer, double x, double y, double height) {
+	super(roompointer, x, y);
+	this.height = height;
     }
 
     @Override
-    public abstract void print(Graphics2D g2d);
+    public void update() {
+	height += motion;
+	motion -= height / 10;
+	motion /= 1.05;
+	// Item bouncyness. The closest to 1 this value is, the bouncyer the
+	// item is.
+	if (Math.abs(motion) < 1 && Math.abs(height) < 1) {
+	    motion = 0;
+	    height = 0;
+	}
+	DoubleRectangle hitbox = getHitbox(super.posX, super.posY)
+		.getRectHitbox();
+	boolean collide = false;
+	Position[] poses = PlayerInfo.getPlayerHitbox(PlayerInfo.posX,
+		PlayerInfo.posY);
+	for (int i = 0; i < poses.length; i++)
+	    if (hitbox.isInside(poses[i]))
+		collide = true;
+	if (collide)
+	    this.pickup();
+    }
+
+    /** Returns the sprite of the item. */
+    public abstract BufferedImage getSprite();
+
+    @Override
+    public void print(Graphics2D g2d) {
+	g2d.drawImage(getSprite(),
+		(int) ((super.roompointer.posX + super.posX) * 16 - 8),
+		(int) ((super.roompointer.posY + super.posY) * 16 - 8 - Math
+			.abs(height)), null);
+    }
 
     /**
      * Picks this item up. This method should do the pickup action (give you
@@ -41,11 +74,18 @@ public abstract class Item extends Entity {
 
     @Override
     public Hitbox getHitbox(double posX, double posY) {
-	return new Hitbox(new Position[] { new Position(-0.2, -0.2),
-		new Position(0, -0.2), new Position(0.2, -0.2),
-		new Position(-0.2, 0), new Position(0, 0),
-		new Position(0.2, 0), new Position(-0.2, 0.2),
-		new Position(0, 0.2), new Position(0.2, 0.2) });
+	Position[] points = new Position[9];
+	double halfsize = 0.26d;
+	points[0] = new Position(posX - halfsize, posY - halfsize);
+	points[1] = new Position(posX, posY - halfsize);
+	points[2] = new Position(posX + halfsize, posY - halfsize);
+	points[3] = new Position(posX - halfsize, posY);
+	points[4] = new Position(posX, posY);
+	points[5] = new Position(posX + halfsize, posY);
+	points[6] = new Position(posX - halfsize, posY + halfsize);
+	points[7] = new Position(posX, posY + halfsize);
+	points[8] = new Position(posX + halfsize, posY + halfsize);
+	return new Hitbox(points);
     }
 
     @Override

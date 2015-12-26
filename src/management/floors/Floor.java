@@ -9,7 +9,10 @@ import util.TextFileUtility;
 /** Object that stores all of the rooms (tiles array of a floor.) */
 public class Floor {
 
+    /** The Rooms of this floor. */
     public Room[] rooms;
+    /** All of the textures printed above the tiles and entities on this floor. */
+    public Overtexture[] hovering;
 
     /**
      * Generates a floor using a map folder.<br/>

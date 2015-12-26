@@ -33,6 +33,7 @@ public class PlayerSpriteSheet extends SpriteSheet {
     public static final int ID_ROLL_DOWN = 21;
     public static final int ID_ROLL_LEFT = 22;
     public static final int ID_ROLL_UP = 23;
+    public static final int ID_FAINT = 24;
 
     /** Creates a new player PlayerSpriteSheet and returns it. */
     public PlayerSpriteSheet() {
@@ -63,7 +64,8 @@ public class PlayerSpriteSheet extends SpriteSheet {
 		new AnimatedSprite(Res_Player.slash_up_5, ID_STILL_UP, this),
 		new AnimatedSprite(Res_Player.roll_down, ID_STILL_DOWN, this),
 		new AnimatedSprite(Res_Player.roll_left, ID_STILL_LEFT, this),
-		new AnimatedSprite(Res_Player.roll_up, ID_STILL_UP, this) };
+		new AnimatedSprite(Res_Player.roll_up, ID_STILL_UP, this),
+		new AnimatedSprite(Res_Player.faint) };
 
     }
 
@@ -80,6 +82,8 @@ public class PlayerSpriteSheet extends SpriteSheet {
 	    return 1;
 	if (sID >= 21 && sID <= 23)
 	    return 2;
+	if(sID == 24)
+	    return 10;
 
 	return 1;
     }

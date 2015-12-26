@@ -2,33 +2,17 @@ package management.player.playerstates;
 
 import java.awt.image.BufferedImage;
 
-import management.player.Inventory;
 import management.player.PlayerInfo;
 import display.sprites.entities.PlayerSpriteSheet;
 
-public class PS_Iddle implements PlayerState {
+public class PS_Faint implements PlayerState {
+
+    public boolean setter = true;
 
     @Override
     public void update() {
-	switch (PlayerInfo.playerdirection) {
-	case PlayerInfo.LEFT:
-	    PlayerInfo.playersprite
-		    .setSpriteID(PlayerSpriteSheet.ID_STILL_LEFT);
-	    break;
-	case PlayerInfo.RIGHT:
-	    PlayerInfo.playersprite
-		    .setSpriteID(PlayerSpriteSheet.ID_STILL_LEFT);
-	    break;
-	case PlayerInfo.UP:
-	    PlayerInfo.playersprite.setSpriteID(PlayerSpriteSheet.ID_STILL_UP);
-	    break;
-	case PlayerInfo.DOWN:
-	    PlayerInfo.playersprite
-		    .setSpriteID(PlayerSpriteSheet.ID_STILL_DOWN);
-	    break;
-	}
-	if (PlayerInfo.health <= 0)
-	    PlayerInfo.currentstate = new PS_Faint();
+	if (setter)
+	    PlayerInfo.playersprite.setSpriteID(PlayerSpriteSheet.ID_FAINT);
 
     }
 
@@ -42,8 +26,6 @@ public class PS_Iddle implements PlayerState {
 
     @Override
     public void action1press() {
-	if (PlayerInfo.hand_S_itemID == Inventory.ITEM_SWORD)
-	    PlayerInfo.currentstate = new PS_Slash();
     }
 
     @Override
@@ -52,8 +34,6 @@ public class PS_Iddle implements PlayerState {
 
     @Override
     public void action2press() {
-	if (PlayerInfo.hand_D_itemID == Inventory.ITEM_SWORD)
-	    PlayerInfo.currentstate = new PS_Slash();
     }
 
     @Override
@@ -62,22 +42,18 @@ public class PS_Iddle implements PlayerState {
 
     @Override
     public void pressLeft() {
-	PlayerInfo.currentstate = new PS_Walk();
     }
 
     @Override
     public void pressRight() {
-	PlayerInfo.currentstate = new PS_Walk();
     }
 
     @Override
     public void pressUp() {
-	PlayerInfo.currentstate = new PS_Walk();
     }
 
     @Override
     public void pressDown() {
-	PlayerInfo.currentstate = new PS_Walk();
     }
 
     @Override
@@ -98,7 +74,7 @@ public class PS_Iddle implements PlayerState {
 
     @Override
     public boolean isInvertedRight() {
-	return PlayerInfo.playerdirection == PlayerInfo.RIGHT;
+	return false;
     }
 
     @Override
