@@ -24,9 +24,17 @@ public abstract class ImagesHolder {
 	    + "entities/boulder.png");
     public static final BufferedImage ENTITIES_TTEMS = readfile(Res.FOLDER_PATH
 	    + "entities/itemdrops.png");
+    public static final BufferedImage ENTITIES_UNKNOWN = readfile(Res.FOLDER_PATH
+	    + "entities/unknown.png");
+    public static final BufferedImage ENTITIES_MEAT = readfile(Res.FOLDER_PATH
+	    + "entities/meat.png");
     
     public static final BufferedImage PARTICLE_MOBDEATH = readfile(Res.FOLDER_PATH
 	    + "particles/mobdeath.png");
+    public static final BufferedImage PARTICLE_BOULDERCOLLAPSE = readfile(Res.FOLDER_PATH
+	    + "particles/bouldercollapse.png");
+    public static final BufferedImage PARTICLE_MOBHIT = readfile(Res.FOLDER_PATH
+	    + "particles/mobhit.png");
 
     public static final BufferedImage INVENTORY_INVENTORY = readfile(Res.FOLDER_PATH
 	    + "inventory/inventory.png");

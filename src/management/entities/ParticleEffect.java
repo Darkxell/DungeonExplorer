@@ -18,13 +18,13 @@ public abstract class ParticleEffect extends Entity {
     }
 
     /** the ammount of frames per sprite of the particle annimation. */
-    private int counter;
+    protected int counter;
 
     /**
      * the ammount of time the particle exists. This value is increased by one
      * each update.
      */
-    private int lifetime;
+    protected int lifetime;
 
     @Override
     public void update() {
@@ -43,7 +43,6 @@ public abstract class ParticleEffect extends Entity {
 			.getWidth() / 2)),
 		(int) ((super.roompointer.posY + super.posY) * 16 - (getSpriteArray()[id]
 			.getHeight() / 2)), null);
-
     }
 
     /** Returns an array containing all of the sprites */

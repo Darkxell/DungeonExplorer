@@ -1,10 +1,14 @@
-package management.entities.octorok;
+package management.entities.monsters.octorok;
 
 import java.awt.Graphics2D;
 
+import util.NumberUtil;
 import management.Position;
 import management.entities.Hitbox;
 import management.entities.Monster;
+import management.entities.items.Heart;
+import management.entities.particle.MobDeath;
+import management.entities.particle.MobHit;
 import management.floors.Room;
 import management.player.PlayerInfo;
 
@@ -27,7 +31,11 @@ public class Oktorok extends Monster {
 
     @Override
     public void onhit() {
-
+	kill();
+	if (NumberUtil.randomINT(1, 3) == 1)
+	    roompointer.addEntity(new Heart(roompointer, posX, posY,20));
+	roompointer.addEntity(new MobDeath(roompointer, posX, posY));
+	roompointer.addEntity(new MobHit(roompointer, posX, posY - 0.2));
     }
 
     @Override
@@ -52,27 +60,28 @@ public class Oktorok extends Monster {
      */
     public boolean isLookingAtPlayer() {
 	int viewdistance = 5;// in tiles
-	int x = (int) super.posX, y = (int) super.posY;
+	int x = (int) super.posX + roompointer.posX, y = (int) super.posY
+		+ roompointer.posY;
 	int px = (int) PlayerInfo.posX, py = (int) PlayerInfo.posY;
 	switch (super.facing) {
 	case UP:
 	    for (int i = 0; i < viewdistance; i++)
-		if (x == px && y-i == py)
+		if (x == px && y - i == py)
 		    return true;
 	    return false;
 	case DOWN:
 	    for (int i = 0; i < viewdistance; i++)
-		if (x == px && y+i == py)
+		if (x == px && y + i == py)
 		    return true;
 	    return false;
 	case RIGHT:
 	    for (int i = 0; i < viewdistance; i++)
-		if (x+i == px && y == py)
+		if (x + i == px && y == py)
 		    return true;
 	    return false;
 	case LEFT:
 	    for (int i = 0; i < viewdistance; i++)
-		if (x-i == px && y == py)
+		if (x - i == px && y == py)
 		    return true;
 	    return false;
 	default:

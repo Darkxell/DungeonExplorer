@@ -12,6 +12,8 @@ import display.sprites.entities.PlayerSpriteSheet;
 
 public class PS_Walk implements PlayerState {
 
+    private static final boolean walktroughwallscheat = false;
+
     @Override
     public void update() {
 	updateWalksprite();
@@ -76,6 +78,8 @@ public class PS_Walk implements PlayerState {
      * coordinates.
      */
     public static boolean canWalkTo(double toX, double toY) {
+	if (walktroughwallscheat)
+	    return true;
 	Position[] playerhitbox = PlayerInfo.getPlayerHitbox(toX, toY);
 	for (int i = 0; i < playerhitbox.length; i++) {
 	    if (!Tile.canWalkOn(CurrentFloorHolder.CurrentFloor.getTileTypeAt(

@@ -16,16 +16,13 @@ public abstract class CurrentFloorHolder {
 
     /** Updates the room the player is currently in. */
     public static void updatePlayerRoom() {
+
 	try {
-	    Room cpr = null;
-	    try {
-		cpr = CurrentFloor.getPlayerRoom();
-	    } catch (Exception e) {
-		System.err
-			.println("Error in updater : couldn't locate player room. No room updated.");
-	    }
+	    Room cpr = CurrentFloor.getPlayerRoom();
 	    cpr.update();
 	} catch (Exception e) {
+	    System.err
+		    .println("Error in updater : couldn't locate player room. No room updated.");
 	    e.printStackTrace();
 	}
 	manager.update();

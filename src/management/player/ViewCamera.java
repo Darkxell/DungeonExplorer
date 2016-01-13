@@ -8,28 +8,29 @@ public abstract class ViewCamera {
      * The X position of the camera in the floor. Pretty much follows the player
      * Xpos at set speed.
      */
-    public static double cameraX;
+    public static double cameraX = PlayerInfo.posX;
     /**
      * The Y position of the camera in the floor. Pretty much follows the player
      * Ypos at set speed.
      */
-    public static double cameraY;
+    public static double cameraY = PlayerInfo.posY;
 
     /** Moves the camera smartly towards the player. */
     protected static void movecamera() {
 	if (iscaminboundsat(cameraX, cameraY)) {
+	    double dist = isCameraFarFromPlayer()?0.2:0.1;
 	    if (cameraX > PlayerInfo.posX + 1
-		    && iscaminboundsat(cameraX - 0.1, cameraY))
-		cameraX -= 0.1;
+		    && iscaminboundsat(cameraX - dist, cameraY))
+		cameraX -= dist;
 	    if (cameraX < PlayerInfo.posX - 1
-		    && iscaminboundsat(cameraX + 0.1, cameraY))
-		cameraX += 0.1;
+		    && iscaminboundsat(cameraX + dist, cameraY))
+		cameraX += dist;
 	    if (cameraY > PlayerInfo.posY + 1
-		    && iscaminboundsat(cameraX, cameraY - 0.1))
-		cameraY -= 0.1;
+		    && iscaminboundsat(cameraX, cameraY - dist))
+		cameraY -= dist;
 	    if (cameraY < PlayerInfo.posY - 1
-		    && iscaminboundsat(cameraX, cameraY + 0.1))
-		cameraY += 0.1;
+		    && iscaminboundsat(cameraX, cameraY + dist))
+		cameraY += dist;
 	} else {
 	    if (cameraX < CurrentFloorHolder.CurrentFloor.getPlayerRoom().posX
 		    + ((double) GameCanvas.ScreenWidth / 32))
@@ -72,5 +73,14 @@ public abstract class ViewCamera {
 		    .println("Error in camera : couldn't locate player room. Camera follows the player.");
 	    return true;
 	}
+    }
+
+    /** Predicate that returns true if the camera is far from the player. */
+    private static boolean isCameraFarFromPlayer() {
+	if ((cameraX > PlayerInfo.posX + 5) || (cameraX < PlayerInfo.posX - 5)
+		|| (cameraY > PlayerInfo.posY + 4)
+		|| (cameraY < PlayerInfo.posY - 4))
+	    return true;
+	return false;
     }
 }

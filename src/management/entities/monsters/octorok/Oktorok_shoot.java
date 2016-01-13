@@ -1,4 +1,4 @@
-package management.entities.octorok;
+package management.entities.monsters.octorok;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
@@ -6,26 +6,28 @@ import java.awt.image.BufferedImage;
 import res.images.mobs.Res_Oktorok;
 import management.entities.Entity;
 import management.entities.EntityState;
+import management.entities.monsters.boulder.Boulder;
 
-public class Oktorok_still extends EntityState {
+public class Oktorok_shoot extends EntityState {
 
-    public Oktorok_still(Entity parent) {
+    public Oktorok_shoot(Entity parent) {
 	super(parent);
     }
 
+    private int countdown = 10;
+
     @Override
     public void print(Graphics2D g2d) {
-	BufferedImage sprite = Res_Oktorok.still_down;
-	;
+	BufferedImage sprite = Res_Oktorok.shoot_down;
 	switch (super.parententity.facing) {
 	case Entity.UP:
-	    sprite = Res_Oktorok.still_up;
+	    sprite = Res_Oktorok.shoot_up;
 	    break;
 	case Entity.LEFT:
-	    sprite = Res_Oktorok.still_left;
+	    sprite = Res_Oktorok.shoot_left;
 	    break;
 	case Entity.RIGHT:
-	    sprite = Res_Oktorok.still_right;
+	    sprite = Res_Oktorok.shoot_right;
 	    break;
 	}
 	g2d.drawImage(
@@ -37,10 +39,13 @@ public class Oktorok_still extends EntityState {
 
     @Override
     public void update() {
-	if (Math.random() < 0.04)
-	    super.parententity.state = new Oktorok_walk(super.parententity);
-	if (((Oktorok) parententity).isLookingAtPlayer() && Math.random() < 0.1)
-	    super.parententity.state = new Oktorok_shoot(super.parententity);
+	--countdown;
+	if (countdown <= 0) {
+	    super.parententity.state = new Oktorok_still(super.parententity);
+	    parententity.roompointer.addEntity(new Boulder(
+		    parententity.roompointer, parententity.posX,
+		    parententity.posY, parententity.facing));
+	}
     }
 
 }

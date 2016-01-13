@@ -42,7 +42,7 @@ public abstract class Item extends Entity {
 	    motion = 0;
 	    height = 0;
 	}
-	DoubleRectangle hitbox = getHitbox(super.posX, super.posY)
+	DoubleRectangle hitbox = getHitbox(super.posX + roompointer.posX, super.posY + roompointer.posY)
 		.getRectHitbox();
 	boolean collide = false;
 	Position[] poses = PlayerInfo.getPlayerHitbox(PlayerInfo.posX,

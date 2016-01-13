@@ -7,7 +7,7 @@ import res.Res;
 /** Holds all of the sprites for the tiles in the game. */
 public abstract class Res_Tiles {
 
-    private static final int NUMBEROFROWS = 16;
+    private static final int NUMBEROFROWS = 32;
     private static final int NUMBEROFCOLUMNS = 20;
 
     public static BufferedImage[] tilessprites = initialize();

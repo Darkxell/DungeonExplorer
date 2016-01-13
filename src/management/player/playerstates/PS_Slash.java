@@ -2,7 +2,9 @@ package management.player.playerstates;
 
 import java.awt.image.BufferedImage;
 
+import util.DoubleRectangle;
 import display.sprites.entities.PlayerSpriteSheet;
+import management.floors.CurrentFloorHolder;
 import management.player.Inventory;
 import management.player.PlayerInfo;
 
@@ -34,6 +36,7 @@ public class PS_Slash implements PlayerState {
 			.setSpriteID(PlayerSpriteSheet.ID_SLASH_LEFT_1);
 		break;
 	    }
+	    slash();
 	}
 	--countdown;
 	if (countdown <= 0)
@@ -41,6 +44,27 @@ public class PS_Slash implements PlayerState {
 		PlayerInfo.currentstate = new PS_Iddle();
 	    else
 		PlayerInfo.currentstate = new PS_Walk();
+    }
+
+    /** Creates particle effects on monsters and diminish their health. */
+    private void slash() {
+	DoubleRectangle slashhitbox = new DoubleRectangle(
+		PlayerInfo.posX - 1.5, PlayerInfo.posY - 1.5, 3, 3);
+	for (int i = 0; i < CurrentFloorHolder.CurrentFloor.getPlayerRoom().entities.length; i++)
+	    try {
+		if (CurrentFloorHolder.CurrentFloor.getPlayerRoom().entities[i]
+			.getHitbox(
+				CurrentFloorHolder.CurrentFloor.getPlayerRoom().entities[i].posX
+					+ CurrentFloorHolder.CurrentFloor
+						.getPlayerRoom().posX,
+				CurrentFloorHolder.CurrentFloor.getPlayerRoom().entities[i].posY
+					+ CurrentFloorHolder.CurrentFloor
+						.getPlayerRoom().posY)
+			.intersects(slashhitbox))
+		    CurrentFloorHolder.CurrentFloor.getPlayerRoom().entities[i]
+			    .onhit();
+	    } catch (Exception e) {
+	    }
     }
 
     @Override

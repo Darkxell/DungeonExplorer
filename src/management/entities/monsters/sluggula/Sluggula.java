@@ -1,4 +1,4 @@
-package management.entities.sluggula;
+package management.entities.monsters.sluggula;
 
 import java.awt.Graphics2D;
 
@@ -7,6 +7,8 @@ import management.Position;
 import management.entities.Entity;
 import management.entities.Hitbox;
 import management.entities.Monster;
+import management.entities.particle.MobDeath;
+import management.entities.particle.MobHit;
 import management.floors.CurrentFloorHolder;
 import management.floors.Room;
 import management.floors.Tile;
@@ -56,7 +58,9 @@ public class Sluggula extends Monster {
 
     @Override
     public void onhit() {
-
+	kill();
+	roompointer.addEntity(new MobDeath(roompointer, posX, posY));
+	roompointer.addEntity(new MobHit(roompointer, posX, posY-0.2));
     }
 
     /**
@@ -105,7 +109,7 @@ public class Sluggula extends Monster {
 	Position[] hitbox = getHitbox(toX, toY).cardinals;
 	for (int i = 0; i < hitbox.length; i++) {
 	    if (CurrentFloorHolder.CurrentFloor.getTileTypeAt(
-		    (int) (hitbox[i].x), (int) (hitbox[i].y)) != Tile.TYPE_NORMAL) {
+		    (int) (hitbox[i].x + roompointer.posX), (int) (hitbox[i].y + roompointer.posY)) != Tile.TYPE_NORMAL) {
 		return false;
 	    }
 	}

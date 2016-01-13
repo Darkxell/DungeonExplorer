@@ -1,40 +1,28 @@
-package management.entities.boulder;
+package management.entities.monsters.unknown;
 
 import java.awt.Graphics2D;
 
-import res.images.mobs.Res_Oktorok;
-import display.sprites.AnimatedSprite;
-import display.sprites.SpriteSheet;
+import res.images.ImagesHolder;
 import management.Position;
 import management.entities.Hitbox;
 import management.entities.Monster;
 import management.floors.Room;
 
-public class Boulder extends Monster {
+public class Unknown extends Monster {
 
-    public Boulder(Room roompointer, double x, double y, int direction) {
+    public Unknown(Room roompointer, double x, double y) {
 	super(roompointer, x, y);
-	super.facing = direction;
-	super.state = new Boulder_Roll(this);
-	super.entityDesign = new SpriteSheet(
-		new AnimatedSprite[] { new AnimatedSprite(Res_Oktorok.boulder) });
     }
-
-    private int supdater = 3;
 
     @Override
     public void updateM() {
-	super.state.update();
-	--supdater;
-	if (supdater < 0) {
-	    supdater = 3;
-	    super.entityDesign.next();
-	}
     }
 
     @Override
     public void print(Graphics2D g2d) {
-	super.state.print(g2d);
+	g2d.drawImage(ImagesHolder.ENTITIES_UNKNOWN,
+		(int) ((super.roompointer.posX + super.posX) * 16 - 16),
+		(int) ((super.roompointer.posY + super.posY) * 16 - 16), null);
     }
 
     @Override
@@ -44,7 +32,7 @@ public class Boulder extends Monster {
     @Override
     public Hitbox getHitbox(double posX, double posY) {
 	Position[] points = new Position[9];
-	double halfsize = 0.2d;
+	double halfsize = 0.3d;
 	points[0] = new Position(posX - halfsize, posY - halfsize);
 	points[1] = new Position(posX, posY - halfsize);
 	points[2] = new Position(posX + halfsize, posY - halfsize);

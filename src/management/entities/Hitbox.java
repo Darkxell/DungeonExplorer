@@ -30,4 +30,20 @@ public class Hitbox {
 			- cardinals[0].y);
     }
 
+    /**
+     * Predicate that return true if and only if this hitbox has one or more
+     * intersection points with the rectangle in parametters.<br/>
+     * This method uses a doublelength calculation.
+     */
+    public boolean intersects(DoubleRectangle other) {
+	return ( (cardinals[0].x > other.x && cardinals[0].x < other.x + other.width)
+		||(cardinals[2].x > other.x && cardinals[2].x < other.x + other.width)
+		||(cardinals[0].x < other.x && cardinals[2].x >other.x + other.width)
+		) && (
+			(cardinals[0].y > other.y && cardinals[0].y < other.y + other.height)
+			||(cardinals[6].y > other.y && cardinals[6].y < other.y + other.height)
+			||(cardinals[0].y < other.y && cardinals[6].y >other.y + other.height)
+		);
+    }
+
 }

@@ -15,6 +15,7 @@ import java.awt.image.BufferedImage;
 
 import res.images.Res_Frame;
 import main.DungeonExplorer;
+import management.player.PlayerInfo;
 import management.states.CanvasState;
 import management.states.CanvasStatesHolder;
 import management.states.ControlState;
@@ -24,6 +25,8 @@ public class GameCanvas extends Canvas {
     private static final long serialVersionUID = 1L;
 
     public CanvasState state = CanvasStatesHolder.MAINMENUSTATE;
+
+    private boolean coordsHack = true;
 
     private boolean isCursorExtends;
 
@@ -145,7 +148,12 @@ public class GameCanvas extends Canvas {
 		(isMouseInside && mouseY < 20 && mouseX > getWidth() - 58 && mouseX < getWidth() - 29) ? Res_Frame.minimize_active
 			: Res_Frame.minimize, getWidth() - 58, 0, null);
 	gr.setColor(Color.GRAY);
-	gr.drawString("Zelda : the minish cap", 35, 15);
+	if (coordsHack)
+	    gr.drawString("Zelda : the minish cap | Coords Hack : x"
+		    + (int) (PlayerInfo.posX) + " / y:"
+		    + (int) (PlayerInfo.posY), 35, 15);
+	else
+	    gr.drawString("Zelda : the minish cap", 35, 15);
 	BufferedImage doublebuffer = new BufferedImage(ScreenWidth,
 		ScreenHeight, BufferedImage.TYPE_INT_RGB);
 	Graphics2D doublebuffergraphics = doublebuffer.createGraphics();

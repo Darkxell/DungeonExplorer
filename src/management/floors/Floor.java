@@ -28,8 +28,8 @@ public class Floor {
 	for (int i = 0; i < rooms.length; i++) {
 	    String name = StringMatcher.getRawFilename(roomsfiles[i].getName());
 	    String[] indexes = StringMatcher.split(name, '-');
-	    x = Integer.parseInt(indexes[0]);
-	    y = Integer.parseInt(indexes[1]);
+	    x = Integer.parseInt(indexes[1]);
+	    y = Integer.parseInt(indexes[2]);
 	    rooms[i] = new Room(
 		    TextFileUtility.getTextFileContent(roomsfiles[i]), x, y);
 	}

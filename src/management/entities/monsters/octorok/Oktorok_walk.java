@@ -1,4 +1,4 @@
-package management.entities.octorok;
+package management.entities.monsters.octorok;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
@@ -90,7 +90,7 @@ public class Oktorok_walk extends EntityState {
 	Position[] hitbox = ((Oktorok) parententity).getHitbox(toX, toY).cardinals;
 	for (int i = 0; i < hitbox.length; i++) {
 	    if (CurrentFloorHolder.CurrentFloor.getTileTypeAt(
-		    (int) (hitbox[i].x), (int) (hitbox[i].y)) != Tile.TYPE_NORMAL) {
+		    (int) (hitbox[i].x + parententity.roompointer.posX), (int) (hitbox[i].y + parententity.roompointer.posY)) != Tile.TYPE_NORMAL) {
 		return false;
 	    }
 	}

@@ -1,10 +1,11 @@
-package management.entities.boulder;
+package management.entities.monsters.boulder;
 
 import java.awt.Graphics2D;
 
 import management.Position;
 import management.entities.Entity;
 import management.entities.EntityState;
+import management.entities.particle.BoulderCollapse;
 import management.floors.CurrentFloorHolder;
 import management.floors.Tile;
 
@@ -39,29 +40,45 @@ public class Boulder_Roll extends EntityState {
 	    if (canRollTo(super.parententity.posX + speed,
 		    super.parententity.posY))
 		super.parententity.posX += speed;
-	    else
+	    else {
 		parententity.kill();
+		parententity.roompointer.addEntity(new BoulderCollapse(
+			parententity.roompointer, parententity.posX,
+			parententity.posY));
+	    }
 	    break;
 	case Entity.LEFT:
 	    if (canRollTo(super.parententity.posX - speed,
 		    super.parententity.posY))
 		super.parententity.posX -= speed;
-	    else
+	    else {
 		parententity.kill();
+		parententity.roompointer.addEntity(new BoulderCollapse(
+			parententity.roompointer, parententity.posX,
+			parententity.posY));
+	    }
 	    break;
 	case Entity.UP:
 	    if (canRollTo(super.parententity.posX, super.parententity.posY
 		    - speed))
 		super.parententity.posY -= speed;
-	    else
+	    else {
 		parententity.kill();
+		parententity.roompointer.addEntity(new BoulderCollapse(
+			parententity.roompointer, parententity.posX,
+			parententity.posY));
+	    }
 	    break;
 	case Entity.DOWN:
 	    if (canRollTo(super.parententity.posX, super.parententity.posY
 		    + speed))
 		super.parententity.posY += speed;
-	    else
+	    else {
 		parententity.kill();
+		parententity.roompointer.addEntity(new BoulderCollapse(
+			parententity.roompointer, parententity.posX,
+			parententity.posY));
+	    }
 	    break;
 	}
     }
@@ -70,7 +87,7 @@ public class Boulder_Roll extends EntityState {
 	Position[] hitbox = ((Boulder) parententity).getHitbox(toX, toY).cardinals;
 	for (int i = 0; i < hitbox.length; i++)
 	    if (CurrentFloorHolder.CurrentFloor.getTileTypeAt(
-		    (int) (hitbox[i].x), (int) (hitbox[i].y)) != Tile.TYPE_NORMAL)
+		    (int) (hitbox[i].x + parententity.roompointer.posX), (int) (hitbox[i].y + parententity.roompointer.posY)) != Tile.TYPE_NORMAL)
 		return false;
 	return true;
     }

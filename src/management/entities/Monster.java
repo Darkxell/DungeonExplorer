@@ -17,14 +17,14 @@ public abstract class Monster extends Entity {
     }
 
     @Override
-    public final void update(){
+    public final void update() {
 	updateM();
 	knockback();
     }
 
     /** updates the monster. */
     public abstract void updateM();
-    
+
     @Override
     public abstract void print(Graphics2D g2d);
 
@@ -36,19 +36,21 @@ public abstract class Monster extends Entity {
      * hitbox.
      */
     public void knockback() {
-	DoubleRectangle hitbox = getHitbox(super.posX, super.posY)
-		.getRectHitbox();
+	DoubleRectangle hitbox = getHitbox(super.posX + roompointer.posX,
+		super.posY + roompointer.posY).getRectHitbox();
 	boolean collide = false;
 	Position[] poses = PlayerInfo.getPlayerHitbox(PlayerInfo.posX,
 		PlayerInfo.posY);
 	for (int i = 0; i < poses.length; i++)
 	    if (hitbox.isInside(poses[i]))
 		collide = true;
-	if (collide && !(PlayerInfo.currentstate instanceof PS_Knockback)){
-	    PlayerInfo.currentstate = new PS_Knockback(new MathVector(PlayerInfo.posX-super.posX,PlayerInfo.posY-super.posY), 9);
+	if (collide && !(PlayerInfo.currentstate instanceof PS_Knockback)) {
+	    PlayerInfo.currentstate = new PS_Knockback(
+		    new MathVector(PlayerInfo.posX - super.posX,
+			    PlayerInfo.posY - super.posY), 9);
 	    PlayerInfo.health -= 0.25;
 	}
-	    
+
     }
 
 }
