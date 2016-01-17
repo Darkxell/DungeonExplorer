@@ -4,8 +4,10 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 
+import res.audio.SoundsHolder;
 import res.images.Res_FileSelect;
 import util.UTF8StringUtility;
+import main.DungeonExplorer;
 import management.saves.SaveFilesManager;
 import management.states.CanvasState;
 import management.states.FileSelectState;
@@ -119,35 +121,53 @@ public class FileCreatorSubstate implements CanvasState {
     @Override
     public void keyReleased(KeyEvent e) {
 	if (e.getKeyCode() == KeyEvent.VK_SHIFT) {
+	    DungeonExplorer.sm.playSound(SoundsHolder
+		    .getSong("MC_Menu_Cursor.mp3"));
 	    uppercase = !uppercase;
 	} else if (e.getKeyCode() == KeyEvent.VK_ENTER
 		|| (e.getKeyCode() == KeyEvent.VK_SPACE && letterX == 3 && letterY == 5)
 		|| (e.getKeyCode() == KeyEvent.VK_D && letterX == 3 && letterY == 5)) {
+	    DungeonExplorer.sm.playSound(SoundsHolder
+		    .getSong("MC_Menu_Select.mp3"));
 	    this.end(!name.equals(""));
 	} else if ((e.getKeyCode() == KeyEvent.VK_SPACE && letterX == 0 && letterY == 5)
 		|| (e.getKeyCode() == KeyEvent.VK_D && letterX == 0 && letterY == 5)
 		|| e.getKeyCode() == KeyEvent.VK_A) {
+	    DungeonExplorer.sm.playSound(SoundsHolder
+		    .getSong("MC_Menu_Cursor.mp3"));
 	    uppercase = true;
 	} else if ((e.getKeyCode() == KeyEvent.VK_SPACE && letterX == 1 && letterY == 5)
 		|| (e.getKeyCode() == KeyEvent.VK_D && letterX == 1 && letterY == 5)
 		|| e.getKeyCode() == KeyEvent.VK_Z) {
+	    DungeonExplorer.sm.playSound(SoundsHolder
+		    .getSong("MC_Menu_Cursor.mp3"));
 	    uppercase = false;
 	} else if ((e.getKeyCode() == KeyEvent.VK_SPACE && letterX == 2 && letterY == 5)
 		|| (e.getKeyCode() == KeyEvent.VK_D && letterX == 2 && letterY == 5)
 		|| e.getKeyCode() == KeyEvent.VK_BACK_SPACE
 		|| e.getKeyCode() == KeyEvent.VK_S) {
+	    DungeonExplorer.sm.playSound(SoundsHolder
+		    .getSong("MC_Menu_Erase.mp3"));
 	    name = UTF8StringUtility.removeLastChar(name);
 	} else if ((e.getKeyCode() == KeyEvent.VK_SPACE && letterY != 5)
 		|| (e.getKeyCode() == KeyEvent.VK_D && letterY != 5)) {
-	    if (name.length() < 6)
+	    if (name.length() < 6) {
 		name += UTF8StringUtility.getCharFrom(letterX, letterY,
 			uppercase);
+		DungeonExplorer.sm.playSound(SoundsHolder
+			.getSong("MC_Menu_Letter.mp3"));
+	    } else {
+		DungeonExplorer.sm.playSound(SoundsHolder
+			.getSong("MC_Menu_Erase.mp3"));
+	    }
 	}
     }
 
     @Override
     public void keyPressed(KeyEvent e) {
 	if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+	    DungeonExplorer.sm.playSound(SoundsHolder
+		    .getSong("MC_Menu_Cursor2.mp3"));
 	    letterX--;
 	    if (letterY == 5) {
 		if (letterX < 0)
@@ -155,6 +175,8 @@ public class FileCreatorSubstate implements CanvasState {
 	    } else if (letterX < 0)
 		letterX = 12;
 	} else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+	    DungeonExplorer.sm.playSound(SoundsHolder
+		    .getSong("MC_Menu_Cursor2.mp3"));
 	    letterX++;
 	    if (letterY == 5) {
 		if (letterX > 3)
@@ -162,12 +184,16 @@ public class FileCreatorSubstate implements CanvasState {
 	    } else if (letterX > 12)
 		letterX = 0;
 	} else if (e.getKeyCode() == KeyEvent.VK_UP) {
+	    DungeonExplorer.sm.playSound(SoundsHolder
+		    .getSong("MC_Menu_Cursor2.mp3"));
 	    letterY--;
 	    if (letterY < 0) {
 		letterY = 5;
 		letterX = 0;
 	    }
 	} else if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+	    DungeonExplorer.sm.playSound(SoundsHolder
+		    .getSong("MC_Menu_Cursor2.mp3"));
 	    letterY++;
 	    if (letterY == 5)
 		letterX = 0;

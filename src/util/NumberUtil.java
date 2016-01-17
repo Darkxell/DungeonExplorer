@@ -41,6 +41,8 @@ public abstract class NumberUtil {
     public static void printNumberWithFont(Graphics2D g2d, byte font, int x,
 	    int y, int number) {
 	int l = (int) (Math.log10(number) + 1);
+	if (number == 0)
+	    l = 1;
 	switch (font) {
 	case FONT_WHITESQUARES:
 	    g2d.drawImage(Res_Inventory.numbers_whitesquares[number % 10], x

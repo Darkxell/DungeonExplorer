@@ -39,6 +39,8 @@ public class Oktorok_shoot extends EntityState {
 
     @Override
     public void update() {
+	//if(countdown==10)
+	//	 DungeonExplorer.sm.playSound(SoundsHolder.getSong(" FIXME:find the appropriate sound "));
 	--countdown;
 	if (countdown <= 0) {
 	    super.parententity.state = new Oktorok_still(super.parententity);

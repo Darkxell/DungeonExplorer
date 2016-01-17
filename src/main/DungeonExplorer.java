@@ -1,11 +1,14 @@
 package main;
 
+import audio.SoundManager;
 import management.Updater;
 import display.GameFrame;
 
 /** Static class that holds the main methods. */
 public abstract class DungeonExplorer {
 
+    public static SoundManager sm;
+    
     public static GameFrame frame;
 
     public static Updater updater;
@@ -13,6 +16,7 @@ public abstract class DungeonExplorer {
 
     /** Launching method. */
     public static void main(String[] args) {
+	sm = new SoundManager();
 	frame = new GameFrame();
 	updater = new Updater();
 	updaterthread = new Thread(updater);
@@ -24,5 +28,5 @@ public abstract class DungeonExplorer {
     // Right=> Z
     // Dirs => Keys
     // Start=> ENTER
-    // Select=>BACKSPACE
+    // Select=>BACKSPACE 
 }

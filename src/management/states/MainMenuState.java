@@ -5,6 +5,8 @@ import java.awt.event.KeyEvent;
 
 import main.DungeonExplorer;
 import display.GameCanvas;
+import res.audio.MusicHolder;
+import res.audio.SoundsHolder;
 import res.images.Res_MainMenu;
 
 public class MainMenuState implements CanvasState {
@@ -35,6 +37,9 @@ public class MainMenuState implements CanvasState {
 	default:
 	    break;
 	}
+	if (frame == 120)
+	    DungeonExplorer.sm.playSound(SoundsHolder
+		    .getSong("MC_TitleScreen.mp3"));
 	// Draws the sword.
 	if (frame > 150) {
 	    int swidth = (int) (Res_MainMenu.sword1.getWidth() * swordsize);
@@ -81,7 +86,7 @@ public class MainMenuState implements CanvasState {
 	    swordshine = 0;
     }
 
-    /** Resets the annimation. */
+    /** Resets the animation. */
     public void reset() {
 	this.frame = 0;
     }
@@ -92,7 +97,11 @@ public class MainMenuState implements CanvasState {
 
     @Override
     public void keyReleased(KeyEvent e) {
-	if (e.getKeyCode() == KeyEvent.VK_SPACE /* && frame>400 */) {
+	if (e.getKeyCode() == KeyEvent.VK_SPACE && frame > 400) {
+	    DungeonExplorer.sm.playSound(SoundsHolder
+		    .getSong("MC_Menu_Select.mp3"));
+	    DungeonExplorer.sm.setBackgroundMusic(MusicHolder
+		    .getSong("MC_FairyFountain1.mp3"));
 	    DungeonExplorer.frame.getCanvas().state = CanvasStatesHolder.FILESELECTSTATE;
 	    this.reset();
 	}

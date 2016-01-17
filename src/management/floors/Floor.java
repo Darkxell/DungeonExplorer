@@ -62,6 +62,22 @@ public class Floor {
 	return 0;
     }
 
+    /** Gets the tile at the wanted coordinates. */
+    public Tile getTileAt(int tileX, int tileY) {
+	for (int i = 0; i < rooms.length; i++)
+	    try {
+		if (tileX >= rooms[i].posX && tileY >= rooms[i].posY
+			&& tileX < rooms[i].posX + rooms[i].width
+			&& tileY < rooms[i].posY + rooms[i].height)
+		    return rooms[i].getTile(tileX - rooms[i].posX, tileY
+			    - rooms[i].posY);
+	    } catch (Exception e) {
+	    }
+	System.err.println("No room found at coordinates : " + tileX + "/"
+		+ tileY + " , Tile returned : null.");
+	return null;
+    }
+
     /**
      * Predicate that returns true if the player center is on the tile at the
      * specified coordinates

@@ -2,6 +2,8 @@ package management.player.playerstates;
 
 import java.awt.image.BufferedImage;
 
+import res.audio.SoundsHolder;
+import main.DungeonExplorer;
 import management.player.PlayerInfo;
 import display.sprites.entities.PlayerSpriteSheet;
 
@@ -11,9 +13,11 @@ public class PS_Faint implements PlayerState {
 
     @Override
     public void update() {
-	if (setter)
+	if (setter) {
+	    setter = false;
 	    PlayerInfo.playersprite.setSpriteID(PlayerSpriteSheet.ID_FAINT);
-
+	    DungeonExplorer.sm.playSound(SoundsHolder.getSong("MC_Link_Fall.mp3"));
+	}
     }
 
     @Override

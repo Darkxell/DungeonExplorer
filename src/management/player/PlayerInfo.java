@@ -1,6 +1,9 @@
 package management.player;
 
 import management.Position;
+import management.entities.Hitbox;
+import management.floors.CurrentFloorHolder;
+import management.floors.Tile;
 import management.player.playerstates.PS_Iddle;
 import management.player.playerstates.PlayerState;
 import display.sprites.entities.PlayerSpriteSheet;
@@ -110,7 +113,7 @@ public abstract class PlayerInfo {
      * coordinates. If you want the straight up player hitbox, use
      * <code>getplayerHitbox(PlayerInfo.posX,PlayerInfo.posY)</code>;
      */
-    public static Position[] getPlayerHitbox(double posX, double posY) {
+    public static Hitbox getPlayerHitbox(double posX, double posY) {
 	Position[] points = new Position[9];
 	double halfsize = 0.3d;
 	points[0] = new Position(posX - halfsize, posY - halfsize);
@@ -122,7 +125,28 @@ public abstract class PlayerInfo {
 	points[6] = new Position(posX - halfsize, posY + halfsize);
 	points[7] = new Position(posX, posY + halfsize);
 	points[8] = new Position(posX + halfsize, posY + halfsize);
-	return points;
+	return new Hitbox(points);
+    }
+
+    /** Gets the tile straight in front of the player. */
+    public static Tile getTileFacingPlayer() {
+	switch (playerdirection) {
+	case RIGHT:
+	    return CurrentFloorHolder.CurrentFloor.getTileAt((int) posX+1,
+		    (int) posY );
+	case LEFT:
+	    return CurrentFloorHolder.CurrentFloor.getTileAt((int) posX-1,
+		    (int) posY);
+	case UP:
+	    return CurrentFloorHolder.CurrentFloor.getTileAt((int) posX,
+		    (int) posY - 1);
+	case DOWN:
+	    return CurrentFloorHolder.CurrentFloor.getTileAt((int) posX,
+		    (int) posY + 1);
+	}
+	System.err
+		.println("Weird player direction. Unable to locate the tile in front of the player.");
+	return null;
     }
 
     /**

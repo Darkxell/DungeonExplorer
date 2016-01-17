@@ -2,8 +2,11 @@ package management.player.playerstates;
 
 import java.awt.image.BufferedImage;
 
+import res.audio.SoundsHolder;
 import util.DoubleRectangle;
+import util.NumberUtil;
 import display.sprites.entities.PlayerSpriteSheet;
+import main.DungeonExplorer;
 import management.floors.CurrentFloorHolder;
 import management.player.Inventory;
 import management.player.PlayerInfo;
@@ -17,6 +20,8 @@ public class PS_Slash implements PlayerState {
     @Override
     public void update() {
 	if (countdown == 8) {
+	    DungeonExplorer.sm.playSound(SoundsHolder
+		    .getSong("MC_Link_Sword.mp3"));
 	    slashdirection = PlayerInfo.playerdirection;
 	    switch (PlayerInfo.playerdirection) {
 	    case PlayerInfo.DOWN:
@@ -38,6 +43,21 @@ public class PS_Slash implements PlayerState {
 	    }
 	    slash();
 	}
+	if (countdown == 6)
+	    switch (NumberUtil.randomINT(1, 3)) {
+	    case 1:
+		DungeonExplorer.sm.playSound(SoundsHolder
+			.getSong("MC_Link_Sword1.mp3"));
+		break;
+	    case 2:
+		DungeonExplorer.sm.playSound(SoundsHolder
+			.getSong("MC_Link_Sword2.mp3"));
+		break;
+	    case 3:
+		DungeonExplorer.sm.playSound(SoundsHolder
+			.getSong("MC_Link_Sword3.mp3"));
+		break;
+	    }
 	--countdown;
 	if (countdown <= 0)
 	    if (!PlayerInfo.isPressingAKey())

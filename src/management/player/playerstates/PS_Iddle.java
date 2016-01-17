@@ -2,6 +2,8 @@ package management.player.playerstates;
 
 import java.awt.image.BufferedImage;
 
+import res.images.Res_Player;
+import management.floors.specialtiles.KeyDoor;
 import management.player.Inventory;
 import management.player.PlayerInfo;
 import display.sprites.entities.PlayerSpriteSheet;
@@ -34,6 +36,11 @@ public class PS_Iddle implements PlayerState {
 
     @Override
     public void actionRpress() {
+	if (PlayerInfo.getTileFacingPlayer() instanceof KeyDoor
+		&& PlayerInfo.playerInventory.keys >= 1) {
+	    ((KeyDoor) PlayerInfo.getTileFacingPlayer()).open();
+	    PlayerInfo.playerInventory.keys--;
+	}
     }
 
     @Override
@@ -103,6 +110,9 @@ public class PS_Iddle implements PlayerState {
 
     @Override
     public BufferedImage getRightPText() {
+	if (PlayerInfo.getTileFacingPlayer() instanceof KeyDoor
+		&& PlayerInfo.playerInventory.keys >= 1)
+	    return Res_Player.text_open;
 	return null;
     }
 

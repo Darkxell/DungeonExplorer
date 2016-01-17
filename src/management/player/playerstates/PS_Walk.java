@@ -6,6 +6,7 @@ import res.images.Res_Player;
 import management.Position;
 import management.floors.CurrentFloorHolder;
 import management.floors.Tile;
+import management.floors.specialtiles.KeyDoor;
 import management.player.Inventory;
 import management.player.PlayerInfo;
 import display.sprites.entities.PlayerSpriteSheet;
@@ -80,7 +81,7 @@ public class PS_Walk implements PlayerState {
     public static boolean canWalkTo(double toX, double toY) {
 	if (walktroughwallscheat)
 	    return true;
-	Position[] playerhitbox = PlayerInfo.getPlayerHitbox(toX, toY);
+	Position[] playerhitbox = PlayerInfo.getPlayerHitbox(toX, toY).cardinals;
 	for (int i = 0; i < playerhitbox.length; i++) {
 	    if (!Tile.canWalkOn(CurrentFloorHolder.CurrentFloor.getTileTypeAt(
 		    (int) (playerhitbox[i].x), (int) (playerhitbox[i].y)),
@@ -94,6 +95,11 @@ public class PS_Walk implements PlayerState {
 
     @Override
     public void actionRpress() {
+	if (PlayerInfo.getTileFacingPlayer() instanceof KeyDoor
+		&& PlayerInfo.playerInventory.keys >= 1) {
+	    ((KeyDoor) PlayerInfo.getTileFacingPlayer()).open();
+	    PlayerInfo.playerInventory.keys--;
+	} else
 	PlayerInfo.currentstate = new PS_Roll();
     }
 
@@ -160,6 +166,8 @@ public class PS_Walk implements PlayerState {
 
     @Override
     public BufferedImage getRightPText() {
+	if(PlayerInfo.getTileFacingPlayer() instanceof KeyDoor && PlayerInfo.playerInventory.keys >= 1)
+	    return Res_Player.text_open;
 	return Res_Player.text_roll;
     }
 

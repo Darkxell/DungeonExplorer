@@ -3,6 +3,7 @@ package management.states.fileselect;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 
+import res.audio.SoundsHolder;
 import res.images.Res_FileSelect;
 import main.DungeonExplorer;
 import management.saves.SaveFilesManager;
@@ -76,18 +77,25 @@ public class FileOpenerSubstate implements CanvasState {
 
     @Override
     public void keyReleased(KeyEvent e) {
-	if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE||e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+	if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE
+		|| e.getKeyCode() == KeyEvent.VK_ESCAPE
+		|| e.getKeyCode() == KeyEvent.VK_S) {
+	    DungeonExplorer.sm.playSound(SoundsHolder
+		    .getSong("MC_Menu_Erase.mp3"));
 	    button = 1;
 	    parent.substate = parent.main;
 	} else if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+	    DungeonExplorer.sm.playSound(SoundsHolder
+		    .getSong("MC_Menu_Cursor.mp3"));
 	    ++button;
 	} else if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+	    DungeonExplorer.sm.playSound(SoundsHolder
+		    .getSong("MC_Menu_Cursor.mp3"));
 	    --button;
-	} else if (e.getKeyCode() == KeyEvent.VK_BACK_SPACE
-		|| e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-	    parent.substate = parent.main;
-	    button = 1;
-	} else if (e.getKeyCode() == KeyEvent.VK_SPACE && button == 1) {
+	} else if ((e.getKeyCode() == KeyEvent.VK_SPACE && button == 1)
+		|| (e.getKeyCode() == KeyEvent.VK_D && button == 1)) {
+	    DungeonExplorer.sm.playSound(SoundsHolder
+		    .getSong("MC_Menu_Select.mp3"));
 	    DungeonExplorer.frame.getCanvas().state = CanvasStatesHolder.GAMESTATE;
 	}
     }

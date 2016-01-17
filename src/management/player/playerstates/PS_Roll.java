@@ -2,7 +2,10 @@ package management.player.playerstates;
 
 import java.awt.image.BufferedImage;
 
+import res.audio.SoundsHolder;
+import util.NumberUtil;
 import display.sprites.entities.PlayerSpriteSheet;
+import main.DungeonExplorer;
 import management.player.PlayerInfo;
 
 public class PS_Roll implements PlayerState {
@@ -12,7 +15,17 @@ public class PS_Roll implements PlayerState {
 
     @Override
     public void update() {
+	if (countdown == 13)
+	    if (NumberUtil.randomINT(1, 2) == 1)
+		DungeonExplorer.sm.playSound(SoundsHolder
+			.getSong("MC_Link_Roll1.mp3"));
+	    else
+		DungeonExplorer.sm.playSound(SoundsHolder
+			.getSong("MC_Link_Roll2.mp3"));
+
 	if (countdown == 15) {
+	    DungeonExplorer.sm.playSound(SoundsHolder
+		    .getSong("MC_Link_Roll.mp3"));
 	    rolldirection = PlayerInfo.playerdirection;
 	    switch (PlayerInfo.playerdirection) {
 	    case PlayerInfo.DOWN:

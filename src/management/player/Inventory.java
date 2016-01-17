@@ -38,8 +38,8 @@ public class Inventory {
     public static final int JAR_BLUEAMULET = 11;
 
     public double maxhealth = 3.0d;
-    public int ruppees = 1337;
-    public int keys = 42;
+    public int ruppees = 0;
+    public int keys = 0;
     public int bombs;
     public int arrows;
     public int maxbombs = 10;

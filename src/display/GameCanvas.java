@@ -26,7 +26,11 @@ public class GameCanvas extends Canvas {
 
     public CanvasState state = CanvasStatesHolder.MAINMENUSTATE;
 
-    private boolean coordsHack = true;
+    /**
+     * Set this to true to display the coordinates of the player in the current
+     * floor on the title bar.
+     */
+    private boolean coordsHack = false;
 
     private boolean isCursorExtends;
 

@@ -5,7 +5,9 @@ import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 
 import res.Palette;
+import res.audio.SoundsHolder;
 import res.images.Res_FileSelect;
+import main.DungeonExplorer;
 import management.saves.SaveFilesManager;
 import management.states.CanvasState;
 import management.states.FileSelectState;
@@ -101,12 +103,17 @@ public class MainSubstate implements CanvasState {
     @Override
     public void keyReleased(KeyEvent e) {
 	if (e.getKeyCode() == KeyEvent.VK_DOWN
-		|| e.getKeyCode() == KeyEvent.VK_RIGHT)
+		|| e.getKeyCode() == KeyEvent.VK_RIGHT) {
 	    selectedbox++;
+	    DungeonExplorer.sm.playSound(SoundsHolder.getSong("MC_Menu_Cursor.mp3"));
+	}
 	if (e.getKeyCode() == KeyEvent.VK_UP
-		|| e.getKeyCode() == KeyEvent.VK_LEFT)
+		|| e.getKeyCode() == KeyEvent.VK_LEFT) {
 	    selectedbox--;
-	if (e.getKeyCode() == KeyEvent.VK_SPACE) {
+	    DungeonExplorer.sm.playSound(SoundsHolder.getSong("MC_Menu_Cursor.mp3"));
+	}
+	if (e.getKeyCode() == KeyEvent.VK_SPACE || e.getKeyCode() == KeyEvent.VK_D) {
+	    DungeonExplorer.sm.playSound(SoundsHolder.getSong("MC_Menu_Select.mp3"));
 	    switch (selectedbox) {
 	    case 1:
 		if (SaveFilesManager.file1set) {

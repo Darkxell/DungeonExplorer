@@ -2,6 +2,8 @@ package management.player.playerstates;
 
 import java.awt.image.BufferedImage;
 
+import res.audio.SoundsHolder;
+import main.DungeonExplorer;
 import management.Position;
 import management.player.PlayerInfo;
 import util.MathVector;
@@ -18,6 +20,7 @@ public class PS_Knockback implements PlayerState {
     public PS_Knockback(MathVector direction, int length) {
 	time = length;
 	this.direction = direction;
+	DungeonExplorer.sm.playSound(SoundsHolder.getSong("MC_Link_Hurt.mp3"));
     }
 
     @Override

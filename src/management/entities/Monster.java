@@ -4,7 +4,6 @@ import java.awt.Graphics2D;
 
 import util.DoubleRectangle;
 import util.MathVector;
-import management.Position;
 import management.floors.Room;
 import management.player.PlayerInfo;
 import management.player.playerstates.PS_Knockback;
@@ -39,10 +38,9 @@ public abstract class Monster extends Entity {
 	DoubleRectangle hitbox = getHitbox(super.posX + roompointer.posX,
 		super.posY + roompointer.posY).getRectHitbox();
 	boolean collide = false;
-	Position[] poses = PlayerInfo.getPlayerHitbox(PlayerInfo.posX,
+	Hitbox ph = PlayerInfo.getPlayerHitbox(PlayerInfo.posX,
 		PlayerInfo.posY);
-	for (int i = 0; i < poses.length; i++)
-	    if (hitbox.isInside(poses[i]))
+	    if (ph.intersects(hitbox))
 		collide = true;
 	if (collide && !(PlayerInfo.currentstate instanceof PS_Knockback)) {
 	    PlayerInfo.currentstate = new PS_Knockback(

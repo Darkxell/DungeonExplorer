@@ -48,9 +48,9 @@ public class ExploreState implements CanvasState {
 
 	g2d.drawImage(Res_Items.hud_key, 210, 130, null);
 	g2d.drawImage(Res_Items.hud_rupee_green, 200, 146, null);
-	NumberUtil.printNumberWithFont(g2d, NumberUtil.FONT_WHITESQUARES, 211,
+	NumberUtil.printNumberWithFont(g2d, NumberUtil.FONT_WHITESQUARES, 212,
 		147, PlayerInfo.playerInventory.ruppees);
-	NumberUtil.printNumberWithFont(g2d, NumberUtil.FONT_WHITESQUARES, 230,
+	NumberUtil.printNumberWithFont(g2d, NumberUtil.FONT_WHITESQUARES, 225,
 		133, PlayerInfo.playerInventory.keys);
 
 	

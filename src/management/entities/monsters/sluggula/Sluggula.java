@@ -2,7 +2,9 @@ package management.entities.monsters.sluggula;
 
 import java.awt.Graphics2D;
 
+import res.audio.SoundsHolder;
 import display.sprites.entities.SluggulaSpriteSheet;
+import main.DungeonExplorer;
 import management.Position;
 import management.entities.Entity;
 import management.entities.Hitbox;
@@ -46,7 +48,7 @@ public class Sluggula extends Monster {
 	}
 	walk();
 	if (Math.random() < 0.01)
-	    direction = (int) (Math.random()*4);
+	    direction = (int) (Math.random() * 4);
     }
 
     @Override
@@ -60,7 +62,8 @@ public class Sluggula extends Monster {
     public void onhit() {
 	kill();
 	roompointer.addEntity(new MobDeath(roompointer, posX, posY));
-	roompointer.addEntity(new MobHit(roompointer, posX, posY-0.2));
+	roompointer.addEntity(new MobHit(roompointer, posX, posY - 0.2));
+	DungeonExplorer.sm.playSound(SoundsHolder.getSong("MC_Enemy_Kill.mp3"));
     }
 
     /**
@@ -109,7 +112,8 @@ public class Sluggula extends Monster {
 	Position[] hitbox = getHitbox(toX, toY).cardinals;
 	for (int i = 0; i < hitbox.length; i++) {
 	    if (CurrentFloorHolder.CurrentFloor.getTileTypeAt(
-		    (int) (hitbox[i].x + roompointer.posX), (int) (hitbox[i].y + roompointer.posY)) != Tile.TYPE_NORMAL) {
+		    (int) (hitbox[i].x + roompointer.posX),
+		    (int) (hitbox[i].y + roompointer.posY)) != Tile.TYPE_NORMAL) {
 		return false;
 	    }
 	}

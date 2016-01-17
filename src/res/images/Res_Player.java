@@ -8,6 +8,7 @@ import res.Res;
 public class Res_Player {
 
     public static BufferedImage text_roll = Res.createimage(ImagesHolder.INVENTORY_INVENTORY, 220, 125, 26, 11);
+    public static BufferedImage text_open = Res.createimage(ImagesHolder.INVENTORY_INVENTORY, 220, 139, 26, 11);
     
     public static BufferedImage still_down = Res.createimage(ImagesHolder.ENTITIES_PLAYER, 0, 0, 32, 32);
     public static BufferedImage still_left = Res.createimage(ImagesHolder.ENTITIES_PLAYER, 32, 0, 32, 32);

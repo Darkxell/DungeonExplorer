@@ -45,10 +45,9 @@ public abstract class Item extends Entity {
 	DoubleRectangle hitbox = getHitbox(super.posX + roompointer.posX, super.posY + roompointer.posY)
 		.getRectHitbox();
 	boolean collide = false;
-	Position[] poses = PlayerInfo.getPlayerHitbox(PlayerInfo.posX,
+	Hitbox ph = PlayerInfo.getPlayerHitbox(PlayerInfo.posX,
 		PlayerInfo.posY);
-	for (int i = 0; i < poses.length; i++)
-	    if (hitbox.isInside(poses[i]))
+	    if (ph.intersects(hitbox))
 		collide = true;
 	if (collide)
 	    this.pickup();
