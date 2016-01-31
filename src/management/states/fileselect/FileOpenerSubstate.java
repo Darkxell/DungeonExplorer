@@ -8,8 +8,8 @@ import res.images.Res_FileSelect;
 import main.DungeonExplorer;
 import management.saves.SaveFilesManager;
 import management.states.CanvasState;
-import management.states.CanvasStatesHolder;
 import management.states.FileSelectState;
+import management.states.GameState;
 
 public class FileOpenerSubstate implements CanvasState {
 
@@ -96,7 +96,7 @@ public class FileOpenerSubstate implements CanvasState {
 		|| (e.getKeyCode() == KeyEvent.VK_D && button == 1)) {
 	    DungeonExplorer.sm.playSound(SoundsHolder
 		    .getSong("MC_Menu_Select.mp3"));
-	    DungeonExplorer.frame.getCanvas().state = CanvasStatesHolder.GAMESTATE;
+	    DungeonExplorer.frame.getCanvas().state = new GameState();
 	}
     }
 

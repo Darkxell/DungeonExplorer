@@ -1,7 +1,10 @@
 package management.floors;
 
 import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 
+import res.images.Res_Tiles;
+import display.sprites.AnimatedSprite;
 import util.StringMatcher;
 import management.entities.Entity;
 
@@ -16,6 +19,8 @@ public class Room {
 
     /** The tiles in this room. */
     private Tile[] tiles;
+    /** The overtexture of this room. */
+    private Overtexture[] overtextures;
 
     /** The X position of the room in the roomMap. */
     public int posX;
@@ -30,25 +35,40 @@ public class Room {
      * ! [tilecode] ;  ... ; [tilecode] ;<br/>
      * ...<br/>
      * ! [tilecode] ;  ... ; [tilecode] ;<br/>
+     * overtexture <br/>
+     * (x,y,i) ; ... ; (xn,yn,in)
      * </code>
      */
     public Room(String roomCode, int posX, int posY) {
 	this.posX = posX;
 	this.posY = posY;
 	this.entities = new Entity[] {};
-	String[] lines = StringMatcher.split(roomCode, '!');
+	String[] splittedcode = roomCode.split("overtexture");
+	String[] lines = StringMatcher.split(splittedcode[0], '!');
 	this.height = lines.length - 1;
 	this.width = StringMatcher.split(lines[1], ';').length;
-
 	this.tiles = new Tile[height * width];
 	for (int i = 1; i < height + 1; i++) {
 	    String[] splittedline = StringMatcher.split(lines[i], ';');
-	    for (int j = 0; j < splittedline.length; j++) {
-
+	    for (int j = 0; j < splittedline.length; j++)
 		this.tiles[width * (i - 1) + j] = new Tile(
 			StringMatcher.getAbsoluteContent(splittedline[j]));
-
+	}
+	try {
+	    String[] ovtxts = splittedcode[1].split(";");
+	    overtextures = new Overtexture[ovtxts.length];
+	    for (int i = 0; i < ovtxts.length; i++) {
+		String[] single = StringMatcher.getAbsoluteContent(
+			StringMatcher.getBracketsContent(ovtxts[i], 1)).split(
+			",");
+		overtextures[i] = new Overtexture(new AnimatedSprite(
+			new BufferedImage[] { Res_Tiles.tilessprites[Integer
+				.parseInt(single[2])] }),
+			Integer.parseInt(single[0]),
+			Integer.parseInt(single[1]));
 	    }
+	} catch (Exception e) {
+	    overtextures = new Overtexture[] {};
 	}
 
     }
@@ -78,11 +98,26 @@ public class Room {
 			    .println("Tile not printed in the current room at coordinates : "
 				    + i + " / " + j);
 		}
-	for (int i = 0; i < entities.length; i++) {
+	for (int i = 0; i < entities.length; i++)
 	    entities[i].print(g2d);
-	}
 
 	// TODO : draw the tileentities.
+    }
+
+    /**
+     * Prints the overtexture of this room. The x and x coordinates define the
+     * top corner of the room. This is basically the same as the
+     * <code>Room.print()</code> method, but only for the overtexture.
+     */
+    public void printOvertexture(Graphics2D g2d, int x, int y) {
+	for (int i = 0; i < overtextures.length; i++)
+	    try {
+		g2d.drawImage(overtextures[i].sprite.get(), 16
+			* overtextures[i].x + x, 16 * overtextures[i].y + y,
+			null);
+	    } catch (Exception e) {
+		System.err.println("Overtexture couldn't be printed.");
+	    }
     }
 
     /** Updates everything in the room. */
@@ -95,6 +130,8 @@ public class Room {
 	    }
 	for (int i = 0; i < entities.length; i++)
 	    entities[i].update();
+	for (int i = 0; i < overtextures.length; i++)
+	    overtextures[i].sprite.next();// FIXME : not 50 ups here
     }
 
     /** Deletes the entity pointed in the argument from this room. */

@@ -17,14 +17,14 @@ import res.images.Res_Frame;
 import main.DungeonExplorer;
 import management.player.PlayerInfo;
 import management.states.CanvasState;
-import management.states.CanvasStatesHolder;
 import management.states.ControlState;
+import management.states.MainMenuState;
 
 public class GameCanvas extends Canvas {
 
     private static final long serialVersionUID = 1L;
 
-    public CanvasState state = CanvasStatesHolder.MAINMENUSTATE;
+    public CanvasState state = new MainMenuState();
 
     /**
      * Set this to true to display the coordinates of the player in the current
@@ -49,7 +49,7 @@ public class GameCanvas extends Canvas {
     private int mouseY;
     private boolean isMouseInside;
     private boolean isMouseOnCorner;
-
+    
     public GameCanvas() {
 	this.addMouseListener(new MouseListener() {
 
@@ -153,9 +153,9 @@ public class GameCanvas extends Canvas {
 			: Res_Frame.minimize, getWidth() - 58, 0, null);
 	gr.setColor(Color.GRAY);
 	if (coordsHack)
-	    gr.drawString("Zelda : the minish cap | Coords Hack : x"
-		    + (int) (PlayerInfo.posX) + " / y:"
-		    + (int) (PlayerInfo.posY), 35, 15);
+	    gr.drawString("Zelda : the minish cap | Coords Hack : "
+		    + (int) (PlayerInfo.posX) + "/" + (int) (PlayerInfo.posY),
+		    35, 15);
 	else
 	    gr.drawString("Zelda : the minish cap", 35, 15);
 	BufferedImage doublebuffer = new BufferedImage(ScreenWidth,

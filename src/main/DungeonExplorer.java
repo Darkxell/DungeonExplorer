@@ -8,7 +8,7 @@ import display.GameFrame;
 public abstract class DungeonExplorer {
 
     public static SoundManager sm;
-    
+
     public static GameFrame frame;
 
     public static Updater updater;
@@ -22,11 +22,11 @@ public abstract class DungeonExplorer {
 	updaterthread = new Thread(updater);
 	updaterthread.start();
     }
-    //  A   => D
-    //  B   => S
+    // A => D
+    // B => S
     // Left => A
     // Right=> Z
     // Dirs => Keys
     // Start=> ENTER
-    // Select=>BACKSPACE 
+    // Select=>BACKSPACE
 }

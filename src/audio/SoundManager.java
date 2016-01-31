@@ -118,8 +118,7 @@ public class SoundManager implements Runnable {
 		try {
 		    new Player(new FileInputStream(sound.getfilepath())).play();
 		} catch (Exception e) {
-		    System.err.println("Sound couldn't be played : "
-			    + sound.getdipsplayname());
+		    System.err.println("Sound couldn't be played.");
 		    e.printStackTrace();
 		}
 	    }

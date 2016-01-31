@@ -3,6 +3,7 @@ package management.player.playerstates;
 import java.awt.image.BufferedImage;
 
 import res.images.Res_Player;
+import management.floors.CurrentFloorHolder;
 import management.floors.specialtiles.KeyDoor;
 import management.player.Inventory;
 import management.player.PlayerInfo;
@@ -38,7 +39,9 @@ public class PS_Iddle implements PlayerState {
     public void actionRpress() {
 	if (PlayerInfo.getTileFacingPlayer() instanceof KeyDoor
 		&& PlayerInfo.playerInventory.keys >= 1) {
-	    ((KeyDoor) PlayerInfo.getTileFacingPlayer()).open();
+	    KeyDoor.openDoorAt((int) PlayerInfo.getCoordsFacingPlayer().x,
+		    (int) PlayerInfo.getCoordsFacingPlayer().y,
+		    CurrentFloorHolder.CurrentFloor.getPlayerRoom());
 	    PlayerInfo.playerInventory.keys--;
 	}
     }

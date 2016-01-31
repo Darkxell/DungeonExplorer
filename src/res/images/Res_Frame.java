@@ -9,7 +9,7 @@ import res.Res;
  * are not related to the game but to the container.
  */
 public abstract class Res_Frame {
-
+    
     public static BufferedImage swadow_topleft = Res.createimage(
 	    ImagesHolder.FRAMESHADOW, 0, 0, 10, 10);
     public static BufferedImage swadow_topright = Res.createimage(

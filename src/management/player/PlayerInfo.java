@@ -132,10 +132,10 @@ public abstract class PlayerInfo {
     public static Tile getTileFacingPlayer() {
 	switch (playerdirection) {
 	case RIGHT:
-	    return CurrentFloorHolder.CurrentFloor.getTileAt((int) posX+1,
-		    (int) posY );
+	    return CurrentFloorHolder.CurrentFloor.getTileAt((int) posX + 1,
+		    (int) posY);
 	case LEFT:
-	    return CurrentFloorHolder.CurrentFloor.getTileAt((int) posX-1,
+	    return CurrentFloorHolder.CurrentFloor.getTileAt((int) posX - 1,
 		    (int) posY);
 	case UP:
 	    return CurrentFloorHolder.CurrentFloor.getTileAt((int) posX,
@@ -143,6 +143,23 @@ public abstract class PlayerInfo {
 	case DOWN:
 	    return CurrentFloorHolder.CurrentFloor.getTileAt((int) posX,
 		    (int) posY + 1);
+	}
+	System.err
+		.println("Weird player direction. Unable to locate the tile in front of the player.");
+	return null;
+    }
+
+    /** Gets the coordinates straight in front of the player. */
+    public static Position getCoordsFacingPlayer() {
+	switch (playerdirection) {
+	case RIGHT:
+	    return new Position(posX + 1, (int) posY);
+	case LEFT:
+	    return new Position((int) posX - 1, (int) posY);
+	case UP:
+	    return new Position((int) posX, (int) posY - 1);
+	case DOWN:
+	    return new Position((int) posX, (int) posY + 1);
 	}
 	System.err
 		.println("Weird player direction. Unable to locate the tile in front of the player.");

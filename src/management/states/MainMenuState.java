@@ -86,24 +86,20 @@ public class MainMenuState implements CanvasState {
 	    swordshine = 0;
     }
 
-    /** Resets the animation. */
-    public void reset() {
-	this.frame = 0;
-    }
-
     @Override
     public void keyTyped(KeyEvent e) {
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
-	if (e.getKeyCode() == KeyEvent.VK_SPACE && frame > 400) {
+	if ((e.getKeyCode() == KeyEvent.VK_SPACE
+		|| e.getKeyCode() == KeyEvent.VK_ENTER || e.getKeyCode() == KeyEvent.VK_D)
+		&& frame > 400) {
 	    DungeonExplorer.sm.playSound(SoundsHolder
 		    .getSong("MC_Menu_Select.mp3"));
 	    DungeonExplorer.sm.setBackgroundMusic(MusicHolder
 		    .getSong("MC_FairyFountain1.mp3"));
-	    DungeonExplorer.frame.getCanvas().state = CanvasStatesHolder.FILESELECTSTATE;
-	    this.reset();
+	    DungeonExplorer.frame.getCanvas().state = new FileSelectState();
 	}
     }
 

@@ -3,7 +3,9 @@ package management.entities.monsters.octorok;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
+import res.audio.SoundsHolder;
 import res.images.mobs.Res_Oktorok;
+import main.DungeonExplorer;
 import management.entities.Entity;
 import management.entities.EntityState;
 import management.entities.monsters.boulder.Boulder;
@@ -39,8 +41,8 @@ public class Oktorok_shoot extends EntityState {
 
     @Override
     public void update() {
-	//if(countdown==10)
-	//	 DungeonExplorer.sm.playSound(SoundsHolder.getSong(" FIXME:find the appropriate sound "));
+	if(countdown==10)
+		 DungeonExplorer.sm.playSound(SoundsHolder.getSong("MC_Octorok_Spit.mp3"));
 	--countdown;
 	if (countdown <= 0) {
 	    super.parententity.state = new Oktorok_still(super.parententity);

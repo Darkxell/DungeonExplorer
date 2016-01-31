@@ -105,15 +105,20 @@ public class MainSubstate implements CanvasState {
 	if (e.getKeyCode() == KeyEvent.VK_DOWN
 		|| e.getKeyCode() == KeyEvent.VK_RIGHT) {
 	    selectedbox++;
-	    DungeonExplorer.sm.playSound(SoundsHolder.getSong("MC_Menu_Cursor.mp3"));
+	    DungeonExplorer.sm.playSound(SoundsHolder
+		    .getSong("MC_Menu_Cursor.mp3"));
 	}
 	if (e.getKeyCode() == KeyEvent.VK_UP
 		|| e.getKeyCode() == KeyEvent.VK_LEFT) {
 	    selectedbox--;
-	    DungeonExplorer.sm.playSound(SoundsHolder.getSong("MC_Menu_Cursor.mp3"));
+	    DungeonExplorer.sm.playSound(SoundsHolder
+		    .getSong("MC_Menu_Cursor.mp3"));
 	}
-	if (e.getKeyCode() == KeyEvent.VK_SPACE || e.getKeyCode() == KeyEvent.VK_D) {
-	    DungeonExplorer.sm.playSound(SoundsHolder.getSong("MC_Menu_Select.mp3"));
+	if (e.getKeyCode() == KeyEvent.VK_SPACE
+		|| e.getKeyCode() == KeyEvent.VK_D
+		|| e.getKeyCode() == KeyEvent.VK_ENTER) {
+	    DungeonExplorer.sm.playSound(SoundsHolder
+		    .getSong("MC_Menu_Select.mp3"));
 	    switch (selectedbox) {
 	    case 1:
 		if (SaveFilesManager.file1set) {
@@ -140,7 +145,7 @@ public class MainSubstate implements CanvasState {
 		}
 		break;
 	    case 4:
-
+		
 		break;
 	    }
 	}

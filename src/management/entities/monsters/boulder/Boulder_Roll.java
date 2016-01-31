@@ -2,6 +2,8 @@ package management.entities.monsters.boulder;
 
 import java.awt.Graphics2D;
 
+import res.audio.SoundsHolder;
+import main.DungeonExplorer;
 import management.Position;
 import management.entities.Entity;
 import management.entities.EntityState;
@@ -41,6 +43,8 @@ public class Boulder_Roll extends EntityState {
 		    super.parententity.posY))
 		super.parententity.posX += speed;
 	    else {
+		DungeonExplorer.sm.playSound(SoundsHolder
+			.getSong("MC_Octorok_Spit_Hit.mp3"));
 		parententity.kill();
 		parententity.roompointer.addEntity(new BoulderCollapse(
 			parententity.roompointer, parententity.posX,
@@ -52,6 +56,8 @@ public class Boulder_Roll extends EntityState {
 		    super.parententity.posY))
 		super.parententity.posX -= speed;
 	    else {
+		DungeonExplorer.sm.playSound(SoundsHolder
+			.getSong("MC_Octorok_Spit_Hit.mp3"));
 		parententity.kill();
 		parententity.roompointer.addEntity(new BoulderCollapse(
 			parententity.roompointer, parententity.posX,
@@ -63,6 +69,8 @@ public class Boulder_Roll extends EntityState {
 		    - speed))
 		super.parententity.posY -= speed;
 	    else {
+		DungeonExplorer.sm.playSound(SoundsHolder
+			.getSong("MC_Octorok_Spit_Hit.mp3"));
 		parententity.kill();
 		parententity.roompointer.addEntity(new BoulderCollapse(
 			parententity.roompointer, parententity.posX,
@@ -74,6 +82,8 @@ public class Boulder_Roll extends EntityState {
 		    + speed))
 		super.parententity.posY += speed;
 	    else {
+		DungeonExplorer.sm.playSound(SoundsHolder
+			.getSong("MC_Octorok_Spit_Hit.mp3"));
 		parententity.kill();
 		parententity.roompointer.addEntity(new BoulderCollapse(
 			parententity.roompointer, parententity.posX,
@@ -87,7 +97,8 @@ public class Boulder_Roll extends EntityState {
 	Position[] hitbox = ((Boulder) parententity).getHitbox(toX, toY).cardinals;
 	for (int i = 0; i < hitbox.length; i++)
 	    if (CurrentFloorHolder.CurrentFloor.getTileTypeAt(
-		    (int) (hitbox[i].x + parententity.roompointer.posX), (int) (hitbox[i].y + parententity.roompointer.posY)) != Tile.TYPE_NORMAL)
+		    (int) (hitbox[i].x + parententity.roompointer.posX),
+		    (int) (hitbox[i].y + parententity.roompointer.posY)) != Tile.TYPE_NORMAL)
 		return false;
 	return true;
     }

@@ -2,6 +2,8 @@ package display;
 
 import javax.swing.JFrame;
 
+import res.images.ImagesHolder;
+
 /** The game frame */
 public class GameFrame {
 
@@ -15,12 +17,13 @@ public class GameFrame {
     public static final int HEIGHT = 500;
 
     public GameFrame() {
-	this.frame = new JFrame("Dungeon Explorer");
+	this.frame = new JFrame("ZELDA");
 	this.frame.setSize(WIDTH, HEIGHT);
 	this.frame.setUndecorated(true);
 	this.frame.setLocationRelativeTo(null);
 	this.frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
+	this.frame.setIconImage(ImagesHolder.ICON);
+	
 	this.shadows = new ShadowWindow(WIDTH, HEIGHT);
 	this.shadows.setLocationRelativeTo(null);
 

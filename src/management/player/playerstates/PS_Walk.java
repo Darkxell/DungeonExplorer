@@ -97,10 +97,12 @@ public class PS_Walk implements PlayerState {
     public void actionRpress() {
 	if (PlayerInfo.getTileFacingPlayer() instanceof KeyDoor
 		&& PlayerInfo.playerInventory.keys >= 1) {
-	    ((KeyDoor) PlayerInfo.getTileFacingPlayer()).open();
+	    KeyDoor.openDoorAt((int) PlayerInfo.getCoordsFacingPlayer().x,
+		    (int) PlayerInfo.getCoordsFacingPlayer().y,
+		    CurrentFloorHolder.CurrentFloor.getPlayerRoom());
 	    PlayerInfo.playerInventory.keys--;
 	} else
-	PlayerInfo.currentstate = new PS_Roll();
+	    PlayerInfo.currentstate = new PS_Roll();
     }
 
     @Override
@@ -166,7 +168,8 @@ public class PS_Walk implements PlayerState {
 
     @Override
     public BufferedImage getRightPText() {
-	if(PlayerInfo.getTileFacingPlayer() instanceof KeyDoor && PlayerInfo.playerInventory.keys >= 1)
+	if (PlayerInfo.getTileFacingPlayer() instanceof KeyDoor
+		&& PlayerInfo.playerInventory.keys >= 1)
 	    return Res_Player.text_open;
 	return Res_Player.text_roll;
     }

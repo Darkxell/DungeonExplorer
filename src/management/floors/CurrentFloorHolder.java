@@ -54,6 +54,12 @@ public abstract class CurrentFloorHolder {
 	    g2d.drawImage(PlayerInfo.playersprite.getCurrentSprite(),
 		    (int) (PlayerInfo.posX * 16 - pSpriteSize / 2),
 		    (int) (PlayerInfo.posY * 16 - pSpriteSize / 2), null);
+	
+	for (int i = 0; i < CurrentFloor.rooms.length; i++) {
+	    CurrentFloor.rooms[i].printOvertexture(g2d, CurrentFloor.rooms[i].posX * 16,
+		    CurrentFloor.rooms[i].posY * 16);
+	}
+	
 	g2d.translate(-translateX, -translateY);
 
     }
