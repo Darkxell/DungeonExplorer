@@ -1,7 +1,7 @@
 # Eclipse things
 .project
 .classpath
-/bin/*
+# /bin/*
 .settings/*
 
 # Windows image file caches
