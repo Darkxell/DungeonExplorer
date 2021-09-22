@@ -121,6 +121,8 @@ public class GameCanvas extends Canvas {
 	    @Override
 	    public void keyPressed(KeyEvent e) {
 		state.keyPressed(e);
+		if(e.getKeyCode() == KeyEvent.VK_F11)
+			PlayerInfo.DEBUGMODE = !PlayerInfo.DEBUGMODE;
 	    }
 	});
     }

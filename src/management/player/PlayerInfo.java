@@ -26,7 +26,9 @@ public abstract class PlayerInfo {
     public static boolean hold_down;
 
     private static int playerupdater;
-
+    
+    public static boolean DEBUGMODE = false;
+    
     /** The player inventory. */
     public static Inventory playerInventory = new Inventory();
 
