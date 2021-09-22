@@ -1,5 +1,6 @@
 package management.states.ingame;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 
@@ -64,12 +65,20 @@ public class ExploreState implements CanvasState {
 			else if (PlayerInfo.health == i + 0.25)
 				g2d.drawImage(Res_FileSelect.hearth_big_1, 10 + (9 * i), 5, null);
 		}
+		
+		if(PlayerInfo.DEBUGMODE)
+			printDebug(g2d);
 
 	}
 
 	/** Prints a layer of debug info on the screen */
-	private void printDebug() {
-
+	private void printDebug(Graphics2D g2d) {
+		if(PlayerInfo.DEBUGMODE) {
+			g2d.setColor(Color.WHITE);
+			g2d.drawString("DEBUG MODE ON", 5, 155);
+			g2d.setColor(Color.BLACK);
+			g2d.drawString("DEBUG MODE ON", 6, 154);
+		}
 	}
 
 	@Override
