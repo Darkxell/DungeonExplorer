@@ -19,7 +19,7 @@ public abstract class ViewCamera {
 	protected static void movecamera() {
 		double dist = 0.1;
 		if (iscaminboundsat(cameraX, cameraY)) {
-			dist = isCameraFarFromPlayer() ? 0.3 : 0.15;
+			dist = isCameraFarFromPlayer() ? 0.3 : 0.1;
 			if (cameraX > PlayerInfo.posX + 1 && iscaminboundsat(cameraX - dist, cameraY))
 				cameraX -= dist;
 			if (cameraX < PlayerInfo.posX - 1 && iscaminboundsat(cameraX + dist, cameraY))

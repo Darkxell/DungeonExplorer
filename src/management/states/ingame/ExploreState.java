@@ -74,10 +74,8 @@ public class ExploreState implements CanvasState {
 
     @Override
     public void update() {
-	PlayerInfo.update();
-
-	CurrentFloorHolder.updatePlayerRoom();
-
+    	PlayerInfo.update();
+		CurrentFloorHolder.updatePlayerRoom();
     }
 
     @Override
