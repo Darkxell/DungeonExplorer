@@ -7,7 +7,7 @@ import util.StringMatcher;
 import display.sprites.AnimatedSprite;
 
 /**
- * Object that represents the phisical 16x16 area on the ground. Thoose tiles
+ * Object that represents the physical 16x16 area on the ground. Thoose tiles
  * are only the most common ones, see TileEvent for more interesting things.
  */
 public class Tile {
