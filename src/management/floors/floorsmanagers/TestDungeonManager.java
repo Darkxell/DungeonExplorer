@@ -9,6 +9,7 @@ import res.images.Res_Tiles;
 import display.sprites.AnimatedSprite;
 import main.DungeonExplorer;
 import management.entities.items.Key;
+import management.entities.monsters.floormaster.Floormaster;
 import management.entities.monsters.octorok.Oktorok;
 import management.entities.monsters.sluggula.Sluggula;
 import management.entities.monsters.unknown.Meat;
@@ -40,6 +41,8 @@ public class TestDungeonManager implements FloorManager {
 	r.addEntity(new Meat(r,9,9));
 	r = CurrentFloorHolder.CurrentFloor.rooms[2];
 	r.addEntity(new Key(r,6,6,0));
+	r = CurrentFloorHolder.CurrentFloor.rooms[7];
+	r.addEntity(new Floormaster(r,9.5,6));
 	DungeonExplorer.sm.setBackgroundMusic(MusicHolder.getSong("MC_DeepwoodShrine.mp3"));
 	CurrentFloorHolder.CurrentFloor.rooms[7].setTileAt(17, 10, new KeyDoor(KeyDoor.stone_left));
 	// TODO : set the testdungeon state from the save file
