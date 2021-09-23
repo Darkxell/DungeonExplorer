@@ -75,9 +75,9 @@ public class ExploreState implements CanvasState {
 	private void printDebug(Graphics2D g2d) {
 		if(PlayerInfo.DEBUGMODE) {
 			g2d.setColor(Color.WHITE);
-			g2d.drawString("DEBUG MODE ON", 5, 155);
-			g2d.setColor(Color.BLACK);
-			g2d.drawString("DEBUG MODE ON", 6, 154);
+			g2d.drawString("X:" + ((float)(int)(PlayerInfo.posX*10))/10 + "/Y:" + ((float)(int)(PlayerInfo.posY*10))/10, 5, 155);
+			g2d.setColor(Color.RED);
+			g2d.drawString("NOCLIP ON", 5, 145);
 		}
 	}
 
