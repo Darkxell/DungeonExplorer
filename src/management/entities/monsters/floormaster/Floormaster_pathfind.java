@@ -33,6 +33,9 @@ public class Floormaster_pathfind extends EntityState {
 				g2d.setColor(Color.MAGENTA);
 				g2d.fillRect(16 * pmap.path.get(following).x + pmap.x + 6, 16 * pmap.path.get(following).y  + pmap.y + 6, 4, 4);
 			}
+			g2d.setColor(Color.RED);
+			g2d.fillRect((int) (16 * this.parententity.posX) -1 ,(int) (16 * this.parententity.posY) -1 , 2, 2);
+			
 		}
 	}
 
@@ -50,7 +53,7 @@ public class Floormaster_pathfind extends EntityState {
 		}
 
 		++maprefresh;
-		if (maprefresh > 50) {
+		if (maprefresh > 150) {
 			maprefresh = 0;
 			pmap = new AstarMap(super.parententity.roompointer, (int) super.parententity.posX,
 					(int) super.parententity.posY, (int) PlayerInfo.posX - super.parententity.roompointer.posX,
@@ -60,43 +63,23 @@ public class Floormaster_pathfind extends EntityState {
 		if (pmap.path != null) {
 			if (following == -1)
 				following = pmap.path.size() - 1;
-			if (following > 0 && MathUtils.dist2(pmap.path.get(following).x, pmap.path.get(following).y,
-					this.parententity.posX, this.parententity.posX) > 0.5)
+			double distppp = MathUtils.dist2(pmap.path.get(following).x, pmap.path.get(following).y,
+					this.parententity.posX, this.parententity.posY);
+			if (following > 0 && distppp < 0.3) 
 				following -= 1;
 			moveto(pmap.path.get(following).x, pmap.path.get(following).y);
 		}
 	}
 
-//		if (pmap.path != null) {
-//			double tpdist = Double.MAX_VALUE;
-//			AstarTile closest = pmap.path.get(pmap.path.size() - 1);
-//			int closestindex = Integer.MAX_VALUE;
-//			for (int i = 0; i < pmap.path.size(); i++)
-//				if (MathUtils.dist2(pmap.path.get(i).x, pmap.path.get(i).y, this.parententity.posX,
-//						this.parententity.posX) < tpdist) {
-//					tpdist = MathUtils.dist2(pmap.path.get(i).x, pmap.path.get(i).y, this.parententity.posX,
-//							this.parententity.posX);
-//					closest = pmap.path.get(i);
-//					closestindex = i;
-//				}
-//			if (closest == pmap.path.get(0)) {
-//				moveto(closest.x, closest.y);
-//				System.out.println("Moving to : " + closest.x + "/" + closest.y + "to end up in " + pmap.path.get(0).x
-//						+ "/" + pmap.path.get(0).y);
-//			} else {
-//				moveto(pmap.path.get(closestindex - 1).x, pmap.path.get(closestindex - 1).y);
-//			}
-//		}
-
 	private void moveto(double x, double y) {
 		double speed = 0.015;
-		if (parententity.posX - x > 0.5)
+		if (parententity.posX - x > 0.1)
 			parententity.posX -= speed;
-		if (parententity.posX - x < 0.5)
+		if (parententity.posX - x < 0.1)
 			parententity.posX += speed;
-		if (parententity.posY - y > 0.5)
+		if (parententity.posY - y > 0.1)
 			parententity.posY -= speed;
-		if (parententity.posY - y < 0.5)
+		if (parententity.posY - y < 0.1)
 			parententity.posY += speed;
 	}
 
