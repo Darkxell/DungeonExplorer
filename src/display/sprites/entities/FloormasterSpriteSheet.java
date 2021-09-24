@@ -7,7 +7,7 @@ import res.images.mobs.Res_Floormaster;
 public class FloormasterSpriteSheet extends SpriteSheet {
 
 	public static final int ID_BREATH = 0;
-	public static final int ID_GRAB = 0;
+	public static final int ID_GRAB = 1;
 
 	public FloormasterSpriteSheet() {
 		super(null);
