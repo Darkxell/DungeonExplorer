@@ -11,6 +11,8 @@ import management.player.playerstates.PS_Knockback;
 /** A class that represents a certain entity made to be a monster. */
 public abstract class Monster extends Entity {
 
+	public double damage = 0.25d;
+	
     public Monster(Room roompointer, double x, double y) {
 	super(roompointer, x, y);
     }
@@ -46,7 +48,7 @@ public abstract class Monster extends Entity {
 	    PlayerInfo.currentstate = new PS_Knockback(
 		    new MathVector(PlayerInfo.posX - super.posX,
 			    PlayerInfo.posY - super.posY), 9);
-	    PlayerInfo.health -= 0.25;
+	    PlayerInfo.health -= this.damage;
 	}
 
     }

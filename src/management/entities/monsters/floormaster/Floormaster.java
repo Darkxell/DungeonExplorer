@@ -3,10 +3,17 @@ package management.entities.monsters.floormaster;
 import java.awt.Graphics2D;
 
 import display.sprites.entities.FloormasterSpriteSheet;
+import main.DungeonExplorer;
 import management.Position;
 import management.entities.Hitbox;
 import management.entities.Monster;
+import management.entities.items.Heart;
+import management.entities.items.Rupee;
+import management.entities.particle.MobDeath;
+import management.entities.particle.MobHit;
 import management.floors.Room;
+import res.audio.SoundsHolder;
+import util.NumberUtil;
 
 public class Floormaster extends Monster {
 
@@ -14,6 +21,7 @@ public class Floormaster extends Monster {
 		super(roompointer, x, y);
 		super.state = new Floormaster_idle(this);
 		super.entityDesign = new FloormasterSpriteSheet();
+		super.damage = 0.5d;
 	}
 
 	@Override
@@ -28,6 +36,15 @@ public class Floormaster extends Monster {
 
 	@Override
 	public void onhit() {
+		kill();
+		int r = NumberUtil.randomINT(1, 6);
+		if (r == 1)
+		    roompointer.addEntity(new Heart(roompointer, posX, posY,20));
+		if (r == 3)
+		    roompointer.addEntity(new Rupee(roompointer, posX, posY,20));
+		roompointer.addEntity(new MobDeath(roompointer, posX, posY));
+		roompointer.addEntity(new MobHit(roompointer, posX, posY - 0.2));
+		 DungeonExplorer.sm.playSound(SoundsHolder.getSong("MC_Enemy_Kill.mp3"));
 	}
 
 	@Override

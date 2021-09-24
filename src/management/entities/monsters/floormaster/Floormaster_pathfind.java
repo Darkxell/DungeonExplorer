@@ -31,11 +31,13 @@ public class Floormaster_pathfind extends EntityState {
 			pmap.print(g2d);
 			if (pmap.path != null && following != -1) {
 				g2d.setColor(Color.MAGENTA);
-				g2d.fillRect(16 * pmap.path.get(following).x + pmap.x + 6, 16 * pmap.path.get(following).y  + pmap.y + 6, 4, 4);
+				g2d.fillRect(16 * pmap.path.get(following).x + pmap.x + 6, 16 * pmap.path.get(following).y + pmap.y + 6,
+						4, 4);
 			}
 			g2d.setColor(Color.RED);
-			g2d.fillRect((int) (16 * this.parententity.posX) -1 ,(int) (16 * this.parententity.posY) -1 , 2, 2);
-			
+			g2d.fillRect( (int) (16*(this.parententity.posX + this.parententity.roompointer.posX)) - 1,
+					(int) (16*(this.parententity.posY + this.parententity.roompointer.posY)) - 1, 2, 2);
+
 		}
 	}
 
@@ -63,11 +65,11 @@ public class Floormaster_pathfind extends EntityState {
 		if (pmap.path != null) {
 			if (following == -1)
 				following = pmap.path.size() - 1;
-			double distppp = MathUtils.dist2(pmap.path.get(following).x, pmap.path.get(following).y,
+			double distppp = MathUtils.dist2(pmap.path.get(following).x + 0.5, pmap.path.get(following).y + 0.5,
 					this.parententity.posX, this.parententity.posY);
-			if (following > 0 && distppp < 0.3) 
+			if (following > 0 && distppp < 0.15)
 				following -= 1;
-			moveto(pmap.path.get(following).x, pmap.path.get(following).y);
+			moveto(pmap.path.get(following).x + 0.5, pmap.path.get(following).y + 0.5);
 		}
 	}
 
