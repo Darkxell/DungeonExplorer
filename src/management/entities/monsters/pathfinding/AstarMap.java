@@ -20,6 +20,12 @@ public class AstarMap {
 
 	public final AstarTile[] nodes;
 
+	/**
+	 * The shortest path, from end to start. This object is null if nothing has been
+	 * found.
+	 */
+	public ArrayList<AstarTile> path;
+
 	public AstarMap(Room r, int startX, int startY, int endX, int endY) {
 		this.width = r.width;
 		this.height = r.height;
@@ -38,6 +44,7 @@ public class AstarMap {
 		try {
 			compute();
 		} catch (Exception e) {
+			System.err.println("Astar map not computed properly.");
 			e.printStackTrace();
 		}
 
@@ -51,7 +58,7 @@ public class AstarMap {
 	public void print(Graphics2D g2d) {
 		for (int i = 0; i < this.width; i++)
 			for (int j = 0; j < this.height; j++)
-				if (i > startX - 7 && i < startX + 7 && j > startY - 7 && j < startY + 7)
+				if (i > startX - 9 && i < startX + 9 && j > startY - 7 && j < startY + 7)
 					try {
 						if (i == startX && j == startY)
 							g2d.setColor(new Color(0, 0, 255, 100));
@@ -59,11 +66,15 @@ public class AstarMap {
 							g2d.setColor(new Color(255, 0, 0, 100));
 						else
 							g2d.setColor(new Color(140, 140, 140, 100));
-						if (nodes[d1(i, j)].walkable) {
+						if (nodes[d1(i, j)].walkable && nodes[d1(i, j)].costF() > 0) {
 							g2d.fillRect(16 * i + x + 2, 16 * j + y + 2, 12, 12);
-							g2d.setColor(Color.GRAY);
-							g2d.drawString("" + (nodes[d1(i, j)].costF() < 0 ? "?" : nodes[d1(i, j)].costF()),
+							g2d.setColor(nodes[d1(i, j)].closed ? Color.WHITE : Color.GRAY);
+							g2d.drawString("" + (nodes[d1(i, j)].costF() < 0 ? "?" : nodes[d1(i, j)].costF() / 10),
 									16 * i + x + 3, 16 * j + y + 12);
+							if (path != null && path.contains(nodes[d1(i, j)])) {
+								g2d.setColor(Color.GREEN);
+								g2d.fillRect(16 * i + x + 5, 16 * j + y + 5, 6, 6);
+							}
 						}
 					} catch (Exception e) {
 						System.err
@@ -73,29 +84,36 @@ public class AstarMap {
 
 	/** https://www.youtube.com/watch?v=-L-WgKMFuhE */
 	private void compute() {
+//		System.out.println("> Computing an a* path");
 		ArrayList<AstarTile> open = new ArrayList<>(20);
 		open.add(nodes[d1(startX, startY)]);
 		nodes[d1(startX, startY)].costG = 0;
 		nodes[d1(startX, startY)].costH = computeHcost(startX, startY, endX, endY);
 
 		for (int maxiter = 0; maxiter < 200; maxiter++) {
-			if (open.size() == 0)
+			if (open.size() == 0) {
+//				System.out.println("> Computing an a* path not found. Ended.");
 				return;
+			}
 			AstarTile current = getCurrent(open);
 			open.remove(current);
 			current.closed = true;
 
 			if (current == nodes[d1(endX, endY)]) {
-				System.out.println(" > a* Path found!");
+//				System.out.println(" > a* Path found! Ended.");
+				fillPath();
 				return;
 			}
-
+//			System.out.println(" > Calculating new neighbors for " + current);
 			populateNeighbors(current);
 			for (int i = 0; i < neighbors.length; i++) {
-				if (neighbors[i] == null || !neighbors[i].walkable || neighbors[i].closed)
+				if (neighbors[i] == null || !neighbors[i].walkable || neighbors[i].closed) {
+//					System.out.println(" > Skipped neighbor " + i + (neighbors[i] == null?" (null)":" (" + neighbors[i] + ")"));
 					continue;
+				}
 				int l = (neighbors[i].x == current.x || neighbors[i].y == current.y) ? 10 : 14;
-				if (current.costG + l < neighbors[i].costG || open.contains(neighbors[i])) {
+//				System.out.println(" > Neighbor " + i + " is at dist : " + l);
+				if (current.costG + l < neighbors[i].costG || !open.contains(neighbors[i])) {
 					AstarTile n = neighbors[i];
 					n.costG = current.x == n.x || current.y == n.y ? current.costG + 10 : current.costG + 14;
 					n.costH = computeHcost(n.x, n.y, endX, endY);
@@ -125,7 +143,7 @@ public class AstarMap {
 		return ldiff * 10 + diag * 14;
 	}
 
-	private AstarTile[] neighbors = new AstarTile[9];
+	private AstarTile[] neighbors = new AstarTile[8];
 
 	/**
 	 * Populates the neighbours aray with neighbours to a tile. Contents may be null
@@ -143,6 +161,21 @@ public class AstarMap {
 		neighbors[6] = source.y >= height - 1 ? null : nodes[d1(source.x, source.y + 1)];
 		neighbors[7] = source.x >= width - 1 ? null
 				: (source.y >= height - 1 ? null : nodes[d1(source.x + 1, source.y + 1)]);
+	}
+
+	/**
+	 * Sets the path ArrayList to contain the shortest path for this astar map, from
+	 * end to start.
+	 */
+	private void fillPath() {
+		this.path = new ArrayList<>(20);
+		AstarTile current = nodes[d1(endX, endY)];
+		for (int maxiter = 0; maxiter < 300; maxiter++) {
+			this.path.add(current);
+			current = nodes[current.from];
+			if (current.from == -1)
+				break;
+		}
 	}
 
 }
