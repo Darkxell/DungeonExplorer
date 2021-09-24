@@ -159,7 +159,7 @@ public class TestDungeonManager implements FloorManager {
 		}
 		if (currentfloor.isPlayerOnTile(115, 64) || currentfloor.isPlayerOnTile(116, 64)
 				|| currentfloor.isPlayerOnTile(117, 64)) {
-			DungeonExplorer.sm.setBackgroundMusic(null);
+			DungeonExplorer.sm.setBackgroundMusic(MusicHolder.getSong("MC_Boss.mp3"));
 			PlayerInfo.posY = 60.5;
 		}
 	}

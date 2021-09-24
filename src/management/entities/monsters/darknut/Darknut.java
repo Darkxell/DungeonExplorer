@@ -7,16 +7,45 @@ import display.sprites.entities.DarknutSpriteSheet;
 import management.Position;
 import management.entities.Hitbox;
 import management.entities.Monster;
+import management.entities.monsters.pathfinding.DijkstraMap;
+import management.entities.monsters.pathfinding.DijkstraNode;
 import management.floors.Room;
 import management.player.PlayerInfo;
 
 public class Darknut extends Monster {
+
+	private DijkstraMap dmap = new DijkstraMap();
 
 	public Darknut(Room roompointer, double x, double y) {
 		super(roompointer, x, y);
 		super.state = new Darknut_Spawn(this);
 		super.entityDesign = new DarknutSpriteSheet();
 		super.damage = 0.5d;
+
+		int graphwidth = 6, graphheight = 5;
+
+		for (int j = 0; j < graphheight; j++)
+			for (int i = 0; i < graphwidth; i++) {
+				DijkstraNode n = new DijkstraNode(3.5 + i * 2, 3.5 + j * 2);
+				n.index = j * graphwidth + i;
+				dmap.nodes.add(n);
+			}
+
+		for (int i = 0; i < graphwidth; i++)
+			for (int j = 0; j < graphheight; j++) {
+				int ij = j * graphwidth + i;
+				DijkstraNode n = dmap.nodes.get(ij);
+				if (i > 0)
+					n.addNeighbor(dmap.nodes.get(ij - 1), 2);
+				if (i < graphwidth - 1)
+					n.addNeighbor(dmap.nodes.get(ij + 1), 2);
+				if (j > 0)
+					n.addNeighbor(dmap.nodes.get(ij - graphwidth), 2);
+				if (j < graphheight - 1)
+					n.addNeighbor(dmap.nodes.get(ij + graphwidth), 2);
+			}
+
+		dmap.compute(x, y, PlayerInfo.posX - roompointer.posX, PlayerInfo.posY - roompointer.posY);
 	}
 
 	@Override
@@ -30,6 +59,29 @@ public class Darknut extends Monster {
 		if (PlayerInfo.DEBUGMODE) {
 			g2d.setColor(Color.RED);
 			g2d.fillRect((int) (16 * (posX + roompointer.posX)) - 1, (int) (16 * (posY + roompointer.posY)) - 1, 2, 2);
+			g2d.drawRect((int) (16 * (posX + roompointer.posX)) - 10, (int) (16 * (posY + roompointer.posY)) - 10, 21,
+					21);
+			for (int i = 0; i < dmap.nodes.size(); i++) {
+				g2d.setColor(new Color(0, 255, 255, 150));
+				g2d.drawString("" + dmap.nodes.get(i).index, (int) (16 * (dmap.nodes.get(i).x + roompointer.posX)) + 3,
+						(int) (16 * (dmap.nodes.get(i).y + roompointer.posY)) + 12);
+				for (int nei = 0; nei < dmap.nodes.get(i).neighbors.size(); nei++) {
+					int offset = dmap.nodes.get(i).index > dmap.nodes.get(i).neighbors.get(nei).index ? 1 : -1;
+					g2d.drawLine((int) (16 * (dmap.nodes.get(i).x + roompointer.posX)) + offset,
+							(int) (16 * (dmap.nodes.get(i).y + roompointer.posY)) + offset,
+							(int) (16 * (dmap.nodes.get(i).neighbors.get(nei).x + roompointer.posX)) + offset,
+							(int) (16 * (dmap.nodes.get(i).neighbors.get(nei).y + roompointer.posY)) + offset);
+				}
+				if (dmap.start != null && dmap.nodes.get(i) == dmap.start)
+					g2d.setColor(Color.RED);
+				else if (dmap.end != null && dmap.nodes.get(i) == dmap.end)
+					g2d.setColor(Color.BLUE);
+				else
+					g2d.setColor(Color.CYAN);
+				g2d.fillRect((int) (16 * (dmap.nodes.get(i).x + roompointer.posX)) - 2,
+						(int) (16 * (dmap.nodes.get(i).y + roompointer.posY)) - 2, 4, 4);
+			}
+
 		}
 	}
 
