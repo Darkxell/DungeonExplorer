@@ -22,30 +22,14 @@ public class Darknut extends Monster {
 		super.entityDesign = new DarknutSpriteSheet();
 		super.damage = 0.5d;
 
-		int graphwidth = 6, graphheight = 5;
+		setDJgraph();
 
-		for (int j = 0; j < graphheight; j++)
-			for (int i = 0; i < graphwidth; i++) {
-				DijkstraNode n = new DijkstraNode(3.5 + i * 2, 3.5 + j * 2);
-				n.index = j * graphwidth + i;
-				dmap.nodes.add(n);
-			}
-
-		for (int i = 0; i < graphwidth; i++)
-			for (int j = 0; j < graphheight; j++) {
-				int ij = j * graphwidth + i;
-				DijkstraNode n = dmap.nodes.get(ij);
-				if (i > 0)
-					n.addNeighbor(dmap.nodes.get(ij - 1), 2);
-				if (i < graphwidth - 1)
-					n.addNeighbor(dmap.nodes.get(ij + 1), 2);
-				if (j > 0)
-					n.addNeighbor(dmap.nodes.get(ij - graphwidth), 2);
-				if (j < graphheight - 1)
-					n.addNeighbor(dmap.nodes.get(ij + graphwidth), 2);
-			}
-
-		dmap.compute(x, y, PlayerInfo.posX - roompointer.posX, PlayerInfo.posY - roompointer.posY);
+		try {
+			dmap.compute(x, y, PlayerInfo.posX - roompointer.posX, PlayerInfo.posY - roompointer.posY);
+		} catch (Exception e) {
+			System.err.println("Couldn't compute Dijkstra map For a Darknut!");
+			e.printStackTrace();
+		}
 	}
 
 	@Override
@@ -104,6 +88,29 @@ public class Darknut extends Monster {
 		points[7] = new Position(posX, posY + halfsize);
 		points[8] = new Position(posX + halfsize, posY + halfsize);
 		return new Hitbox(points);
+	}
+
+	private void setDJgraph() {
+		int graphwidth = 6, graphheight = 5;
+		for (int j = 0; j < graphheight; j++)
+			for (int i = 0; i < graphwidth; i++) {
+				DijkstraNode n = new DijkstraNode(3.5 + i * 2, 3.5 + j * 2);
+				n.index = j * graphwidth + i;
+				dmap.nodes.add(n);
+			}
+		for (int i = 0; i < graphwidth; i++)
+			for (int j = 0; j < graphheight; j++) {
+				int ij = j * graphwidth + i;
+				DijkstraNode n = dmap.nodes.get(ij);
+				if (i > 0)
+					n.addNeighbor(dmap.nodes.get(ij - 1), 2);
+				if (i < graphwidth - 1)
+					n.addNeighbor(dmap.nodes.get(ij + 1), 2);
+				if (j > 0)
+					n.addNeighbor(dmap.nodes.get(ij - graphwidth), 2);
+				if (j < graphheight - 1)
+					n.addNeighbor(dmap.nodes.get(ij + graphwidth), 2);
+			}
 	}
 
 }
