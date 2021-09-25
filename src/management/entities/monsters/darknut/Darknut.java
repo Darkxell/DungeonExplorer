@@ -4,13 +4,17 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 
 import display.sprites.entities.DarknutSpriteSheet;
+import main.DungeonExplorer;
 import management.Position;
 import management.entities.Hitbox;
 import management.entities.Monster;
 import management.entities.monsters.pathfinding.DijkstraMap;
 import management.entities.monsters.pathfinding.DijkstraNode;
+import management.entities.particle.MobDeath;
+import management.entities.particle.MobHit;
 import management.floors.Room;
 import management.player.PlayerInfo;
+import res.audio.SoundsHolder;
 import res.images.ImagesHolder;
 
 public class Darknut extends Monster {
@@ -18,8 +22,8 @@ public class Darknut extends Monster {
 	/* package */ DijkstraMap dmap = new DijkstraMap();
 	/* package */ int following = -1;
 
-	/* package */ double circleX = 4;
-	/* package */ double circleY = 4;
+	/* package */ double circleX = 4 + 9;
+	/* package */ double circleY = 4 + 7;
 
 	public Darknut(Room roompointer, double x, double y) {
 		super(roompointer, x, y);
@@ -45,9 +49,9 @@ public class Darknut extends Monster {
 
 	@Override
 	public void print(Graphics2D g2d) {
-		super.state.print(g2d);
 		g2d.drawImage(ImagesHolder.ENTITIES_CIRCLE, (int) (16 * (circleX + roompointer.posX)) - 16,
 				(int) (16 * (circleY + roompointer.posY)) - 16, null);
+		super.state.print(g2d);
 		if (PlayerInfo.DEBUGMODE) {
 			g2d.setColor(Color.RED);
 			g2d.fillRect((int) (16 * (posX + roompointer.posX)) - 1, (int) (16 * (posY + roompointer.posY)) - 1, 2, 2);
@@ -55,7 +59,7 @@ public class Darknut extends Monster {
 					21);
 			// Print the Dijkstra graph
 			for (int i = 0; i < dmap.nodes.size(); i++) {
-				g2d.setColor(new Color(0, 255, 255, 150));
+				g2d.setColor(new Color(0, 255, 255, 110));
 				g2d.drawString("" + dmap.nodes.get(i).index, (int) (16 * (dmap.nodes.get(i).x + roompointer.posX)) + 3,
 						(int) (16 * (dmap.nodes.get(i).y + roompointer.posY)) + 12);
 				for (int nei = 0; nei < dmap.nodes.get(i).neighbors.size(); nei++) {
@@ -91,13 +95,36 @@ public class Darknut extends Monster {
 
 	@Override
 	public void onhit() {
+		roompointer.addEntity(new MobHit(roompointer, posX, posY - 0.2));
 		super.hp -= 1.5;
+		if(super.hp<=0) {
+			DungeonExplorer.sm.playSound(SoundsHolder.getSong("MC_Enemy_Kill.mp3"));
+			DungeonExplorer.sm.setBackgroundMusic(null);
+			kill();
+			roompointer.addEntity(new MobDeath(roompointer, posX, posY));
+		}
 	}
 
 	/* package */ void nextState() {
+		following -= 1;
+		if (following == -1) {
+			roompointer.addEntity(new MobDeath(roompointer, posX, posY));
+			super.posX = circleX;
+			super.posY = circleY;
+			circleX = 4 + Math.random() * 9;
+			circleY = 4 + Math.random() * 7;
+			try {
+				dmap.compute(super.posX, super.posY, PlayerInfo.posX - roompointer.posX,
+						PlayerInfo.posY - roompointer.posY);
+			} catch (Exception e) {
+				System.err.println("Couldn't compute Dijkstra map For a Darknut!");
+				e.printStackTrace();
+			}
+		}
+		super.state = new Darknut_step(this);
 
 	}
-	
+
 	@Override
 	public Hitbox getHitbox(double posX, double posY) {
 		Position[] points = new Position[9];
@@ -137,14 +164,23 @@ public class Darknut extends Monster {
 			for (int j = 0; j < graphheight; j++) {
 				int ij = j * graphwidth + i;
 				DijkstraNode n = dmap.nodes.get(ij);
-				if (i > 0)
+				boolean leftn = i > 0, rightn = i < graphwidth - 1, upn = j > 0, downn = j < graphheight - 1;
+				if (leftn)
 					n.addNeighbor(dmap.nodes.get(ij - 1), 2);
-				if (i < graphwidth - 1)
+				if (rightn)
 					n.addNeighbor(dmap.nodes.get(ij + 1), 2);
-				if (j > 0)
+				if (upn)
 					n.addNeighbor(dmap.nodes.get(ij - graphwidth), 2);
-				if (j < graphheight - 1)
+				if (downn)
 					n.addNeighbor(dmap.nodes.get(ij + graphwidth), 2);
+				if (leftn && upn)
+					n.addNeighbor(dmap.nodes.get(ij - 1 - graphwidth), 2.828d);
+				if (leftn && downn)
+					n.addNeighbor(dmap.nodes.get(ij - 1 + graphwidth), 2.828d);
+				if (rightn && upn)
+					n.addNeighbor(dmap.nodes.get(ij + 1 - graphwidth), 2.828d);
+				if (rightn && downn)
+					n.addNeighbor(dmap.nodes.get(ij + 1 + graphwidth), 2.828d);
 			}
 	}
 
@@ -163,6 +199,5 @@ public class Darknut extends Monster {
 		g2d.setColor(BB3);
 		g2d.fillRect(px + 13, py + 7, (int) super.hp + 2, 1);
 	}
-
 
 }
