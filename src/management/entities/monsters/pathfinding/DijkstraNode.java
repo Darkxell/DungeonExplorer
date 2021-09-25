@@ -19,7 +19,7 @@ public class DijkstraNode {
 
 	@Override
 	public String toString() {
-		return "[DijkstraNode@" + x + "/" + y + " with " + neighbors.size() + " neighbors.";
+		return "[DijkstraNode@" + x + "/" + y + " with " + neighbors.size() + " neighbors]";
 	}
 
 	public void addNeighbor(DijkstraNode n, double dist) {

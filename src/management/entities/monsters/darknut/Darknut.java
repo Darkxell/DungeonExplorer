@@ -15,6 +15,7 @@ import management.player.PlayerInfo;
 public class Darknut extends Monster {
 
 	private DijkstraMap dmap = new DijkstraMap();
+	private int following = -1;
 
 	public Darknut(Room roompointer, double x, double y) {
 		super(roompointer, x, y);
@@ -45,6 +46,7 @@ public class Darknut extends Monster {
 			g2d.fillRect((int) (16 * (posX + roompointer.posX)) - 1, (int) (16 * (posY + roompointer.posY)) - 1, 2, 2);
 			g2d.drawRect((int) (16 * (posX + roompointer.posX)) - 10, (int) (16 * (posY + roompointer.posY)) - 10, 21,
 					21);
+			// Print the Dijkstra graph
 			for (int i = 0; i < dmap.nodes.size(); i++) {
 				g2d.setColor(new Color(0, 255, 255, 150));
 				g2d.drawString("" + dmap.nodes.get(i).index, (int) (16 * (dmap.nodes.get(i).x + roompointer.posX)) + 3,
@@ -65,7 +67,17 @@ public class Darknut extends Monster {
 				g2d.fillRect((int) (16 * (dmap.nodes.get(i).x + roompointer.posX)) - 2,
 						(int) (16 * (dmap.nodes.get(i).y + roompointer.posY)) - 2, 4, 4);
 			}
-
+			// Print the path
+			if (dmap.path != null)
+				for (int i = 0; i < dmap.path.size(); i++) {
+					g2d.setColor(Color.BLACK);
+					g2d.drawRect((int) (16 * (dmap.path.get(i).x + roompointer.posX)) - 3, (int) (16 * (dmap.path.get(i).y + roompointer.posY)) - 3, 6, 6);
+				}
+			if (dmap.path != null && following != -1) {
+				g2d.setColor(Color.MAGENTA);
+				g2d.fillRect((int) (16 * dmap.path.get(following).x + 6), (int) (16 * dmap.path.get(following).y + 6),
+						4, 4);
+			}
 		}
 	}
 

@@ -37,7 +37,6 @@ public class Floormaster_pathfind extends EntityState {
 			g2d.setColor(Color.RED);
 			g2d.fillRect( (int) (16*(this.parententity.posX + this.parententity.roompointer.posX)) - 1,
 					(int) (16*(this.parententity.posY + this.parententity.roompointer.posY)) - 1, 2, 2);
-
 		}
 	}
 

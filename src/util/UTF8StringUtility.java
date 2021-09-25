@@ -1,5 +1,10 @@
 package util;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import management.entities.monsters.pathfinding.DijkstraNode;
+
 /**
  * Class that holds static methods to manipulate strings in the utf8 encodage,
  * and get letters from values in the menus.
@@ -282,4 +287,5 @@ public abstract class UTF8StringUtility {
 	    }
 	return "*";
     }
+    
 }
