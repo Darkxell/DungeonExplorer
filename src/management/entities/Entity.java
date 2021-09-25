@@ -51,6 +51,14 @@ public abstract class Entity {
 	/** prints the entity on the graphics object. */
 	public abstract void print(Graphics2D g2d);
 
+	/**
+	 * Allows an entity to print something in absolute coordinates on the screen.
+	 * This method is only called by the floor renderer if the entity is on the same
+	 * room as the player. This renders below the player's UI elements.
+	 */
+	public void printOnUI(Graphics2D g2d) {
+	};
+
 	/** Returns the hitbox of this entity. */
 	public abstract Hitbox getHitbox(double posX, double posY);
 
@@ -64,6 +72,7 @@ public abstract class Entity {
 
 	/** Return the square of the distance between this entity and the player */
 	public double distP2() {
-		return Math.pow(posX - PlayerInfo.posX + roompointer.posX, 2) + Math.pow(posY - PlayerInfo.posY + roompointer.posY, 2);
+		return Math.pow(posX - PlayerInfo.posX + roompointer.posX, 2)
+				+ Math.pow(posY - PlayerInfo.posY + roompointer.posY, 2);
 	}
 }

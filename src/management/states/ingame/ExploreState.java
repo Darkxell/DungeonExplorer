@@ -9,6 +9,7 @@ import res.images.Res_Inventory;
 import res.images.Res_Items;
 import util.ItemsUtility;
 import util.NumberUtil;
+import management.entities.Entity;
 import management.floors.CurrentFloorHolder;
 import management.player.PlayerInfo;
 import management.states.CanvasState;

@@ -11,17 +11,22 @@ import management.entities.monsters.pathfinding.DijkstraMap;
 import management.entities.monsters.pathfinding.DijkstraNode;
 import management.floors.Room;
 import management.player.PlayerInfo;
+import res.images.ImagesHolder;
 
 public class Darknut extends Monster {
 
-	private DijkstraMap dmap = new DijkstraMap();
-	private int following = -1;
+	/* package */ DijkstraMap dmap = new DijkstraMap();
+	/* package */ int following = -1;
+
+	/* package */ double circleX = 4;
+	/* package */ double circleY = 4;
 
 	public Darknut(Room roompointer, double x, double y) {
 		super(roompointer, x, y);
 		super.state = new Darknut_Spawn(this);
 		super.entityDesign = new DarknutSpriteSheet();
 		super.damage = 0.5d;
+		super.hp = 100d;
 
 		setDJgraph();
 
@@ -41,6 +46,8 @@ public class Darknut extends Monster {
 	@Override
 	public void print(Graphics2D g2d) {
 		super.state.print(g2d);
+		g2d.drawImage(ImagesHolder.ENTITIES_CIRCLE, (int) (16 * (circleX + roompointer.posX)) - 16,
+				(int) (16 * (circleY + roompointer.posY)) - 16, null);
 		if (PlayerInfo.DEBUGMODE) {
 			g2d.setColor(Color.RED);
 			g2d.fillRect((int) (16 * (posX + roompointer.posX)) - 1, (int) (16 * (posY + roompointer.posY)) - 1, 2, 2);
@@ -71,21 +78,26 @@ public class Darknut extends Monster {
 			if (dmap.path != null)
 				for (int i = 0; i < dmap.path.size(); i++) {
 					g2d.setColor(Color.BLACK);
-					g2d.drawRect((int) (16 * (dmap.path.get(i).x + roompointer.posX)) - 3, (int) (16 * (dmap.path.get(i).y + roompointer.posY)) - 3, 6, 6);
+					g2d.drawRect((int) (16 * (dmap.path.get(i).x + roompointer.posX)) - 3,
+							(int) (16 * (dmap.path.get(i).y + roompointer.posY)) - 3, 6, 6);
 				}
 			if (dmap.path != null && following != -1) {
 				g2d.setColor(Color.MAGENTA);
-				g2d.fillRect((int) (16 * dmap.path.get(following).x + 6), (int) (16 * dmap.path.get(following).y + 6),
-						4, 4);
+				g2d.drawRect((int) (16 * (dmap.path.get(following).x + roompointer.posX)) - 3,
+						(int) (16 * (dmap.path.get(following).y + roompointer.posY)) - 3, 6, 6);
 			}
 		}
 	}
 
 	@Override
 	public void onhit() {
-		System.out.println("Haha, you hit a darknut. Fool.");
+		super.hp -= 1.5;
 	}
 
+	/* package */ void nextState() {
+
+	}
+	
 	@Override
 	public Hitbox getHitbox(double posX, double posY) {
 		Position[] points = new Position[9];
@@ -100,6 +112,17 @@ public class Darknut extends Monster {
 		points[7] = new Position(posX, posY + halfsize);
 		points[8] = new Position(posX + halfsize, posY + halfsize);
 		return new Hitbox(points);
+	}
+
+	/* package */ void moveto(double x, double y, double speed) {
+		if (posX + 0.5 - x > 0.1)
+			posX -= speed;
+		if (posX + 0.5 - x < 0.1)
+			posX += speed;
+		if (posY + 0.5 - y > 0.1)
+			posY -= speed;
+		if (posY + 0.5 - y < 0.1)
+			posY += speed;
 	}
 
 	private void setDJgraph() {
@@ -124,5 +147,22 @@ public class Darknut extends Monster {
 					n.addNeighbor(dmap.nodes.get(ij + graphwidth), 2);
 			}
 	}
+
+	private static final Color BB1 = new Color(122, 59, 199);
+	private static final Color BB2 = new Color(111, 51, 190);
+	private static final Color BB3 = new Color(58, 13, 156);
+
+	@Override
+	public void printOnUI(Graphics2D g2d) {
+		int px = 20, py = 140;
+		g2d.drawImage(ImagesHolder.ENTITIES_BOSSBAR, px, py, null);
+		g2d.setColor(BB1);
+		g2d.fillRect(px + 13, py + 5, (int) super.hp, 3);
+		g2d.setColor(BB2);
+		g2d.fillRect(px + 13, py + 6, (int) super.hp + 1, 1);
+		g2d.setColor(BB3);
+		g2d.fillRect(px + 13, py + 7, (int) super.hp + 2, 1);
+	}
+
 
 }

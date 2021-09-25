@@ -18,7 +18,7 @@ public class DijkstraMap {
 	public boolean[] closed = new boolean[] {};
 	public DijkstraNode[] previous = new DijkstraNode[] {};
 
-	private static final boolean DEBUGDIJKSTRA = true;
+	private static final boolean DEBUGDIJKSTRA = false;
 
 	/**
 	 * The shortest path, from end to start. This object is null if nothing has been

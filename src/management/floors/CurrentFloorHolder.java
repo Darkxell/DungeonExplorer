@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 
 import display.GameCanvas;
+import management.entities.Entity;
 import management.floors.floorsmanagers.FloorManager;
 import management.floors.floorsmanagers.TestDungeonManager;
 import management.player.PlayerInfo;
@@ -20,7 +21,8 @@ public abstract class CurrentFloorHolder {
 
 		try {
 			Room cpr = CurrentFloor.getPlayerRoom();
-			cpr.update();
+			if(cpr!=null)
+				cpr.update();
 		} catch (Exception e) {
 			System.err.println("Error in updater : couldn't locate player room. No room updated.");
 			e.printStackTrace();
@@ -66,6 +68,13 @@ public abstract class CurrentFloorHolder {
 		}
 
 		g2d.translate(-translateX, -translateY);
+
+		Room currentroom = CurrentFloor.getPlayerRoom();
+		if (currentroom != null) {
+			Entity[] overmobs = CurrentFloor.getPlayerRoom().entities;
+			for (int i = 0; i < overmobs.length; i++)
+				overmobs[i].printOnUI(g2d);
+		}
 
 	}
 

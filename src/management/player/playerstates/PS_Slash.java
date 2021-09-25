@@ -8,6 +8,7 @@ import util.NumberUtil;
 import display.sprites.entities.PlayerSpriteSheet;
 import main.DungeonExplorer;
 import management.floors.CurrentFloorHolder;
+import management.floors.Room;
 import management.player.Inventory;
 import management.player.PlayerInfo;
 
@@ -70,7 +71,8 @@ public class PS_Slash implements PlayerState {
     private void slash() {
 	DoubleRectangle slashhitbox = new DoubleRectangle(
 		PlayerInfo.posX - 1.5, PlayerInfo.posY - 1.5, 3, 3);
-	for (int i = 0; i < CurrentFloorHolder.CurrentFloor.getPlayerRoom().entities.length; i++)
+	Room currentroom = CurrentFloorHolder.CurrentFloor.getPlayerRoom();
+	if(currentroom != null)for (int i = 0; i < currentroom.entities.length; i++)
 	    try {
 		if (CurrentFloorHolder.CurrentFloor.getPlayerRoom().entities[i]
 			.getHitbox(
