@@ -75,4 +75,14 @@ public abstract class Entity {
 		return Math.pow(posX - PlayerInfo.posX + roompointer.posX, 2)
 				+ Math.pow(posY - PlayerInfo.posY + roompointer.posY, 2);
 	}
+
+	/** Set this entity's facing direction to look at the given coordinates. */
+	public void lookAt(double x, double y) {
+		double distX = x - posX, distY = y - posY;
+		if (Math.abs(distY) >= Math.abs(distX)) {
+			this.facing = distY > 0 ? DOWN : UP;
+		} else {
+			this.facing = distX > 0 ? RIGHT : LEFT;
+		}
+	}
 }

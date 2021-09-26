@@ -27,10 +27,10 @@ public class DarknutSpriteSheet extends SpriteSheet {
 						Res_Darknut.spawn[2], Res_Darknut.spawn[1], Res_Darknut.spawn[0], Res_Darknut.spawn[3],
 						Res_Darknut.spawn[4], Res_Darknut.spawn[3], Res_Darknut.spawn[0], Res_Darknut.spawn[5],
 						Res_Darknut.spawn[6], Res_Darknut.spawn[7] }, ID_IDLE_DOWN, this),
-				new AnimatedSprite(Res_Darknut.idle_down), new AnimatedSprite(Res_Darknut.idle_down),
-				new AnimatedSprite(Res_Darknut.idle_down), new AnimatedSprite(Res_Darknut.idle_down),
-				new AnimatedSprite(Res_Darknut.move_down), new AnimatedSprite(Res_Darknut.move_down),
-				new AnimatedSprite(Res_Darknut.move_down), new AnimatedSprite(Res_Darknut.move_down) };
+				new AnimatedSprite(Res_Darknut.idle_left), new AnimatedSprite(Res_Darknut.idle_right),
+				new AnimatedSprite(Res_Darknut.idle_up), new AnimatedSprite(Res_Darknut.idle_down),
+				new AnimatedSprite(Res_Darknut.move_left), new AnimatedSprite(Res_Darknut.move_right),
+				new AnimatedSprite(Res_Darknut.move_up), new AnimatedSprite(Res_Darknut.move_down) };
 	}
 
 }

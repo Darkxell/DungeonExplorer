@@ -45,6 +45,7 @@ public class Darknut extends Monster {
 	@Override
 	public void updateM() {
 		super.state.update();
+		super.lookAt(PlayerInfo.posX - roompointer.posX, PlayerInfo.posY - roompointer.posY);
 	}
 
 	@Override

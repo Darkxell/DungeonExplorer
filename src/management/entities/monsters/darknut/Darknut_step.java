@@ -29,10 +29,10 @@ public class Darknut_step extends EntityState {
 	public void update() {
 		switch (steplength) {
 		case 0:
-			super.parententity.entityDesign.setSpriteID(DarknutSpriteSheet.ID_MOVE_DOWN);
+			super.parententity.entityDesign.setSpriteID(DarknutSpriteSheet.ID_MOVE_LEFT + super.parententity.facing);
 			break;
 		case DASHFRAMES:
-			super.parententity.entityDesign.setSpriteID(DarknutSpriteSheet.ID_IDLE_DOWN);
+			super.parententity.entityDesign.setSpriteID(DarknutSpriteSheet.ID_IDLE_LEFT + super.parententity.facing);
 			break;
 		}
 		++updater;
@@ -49,7 +49,7 @@ public class Darknut_step extends EntityState {
 			double distppp = MathUtils.dist2(p.dmap.path.get(p.following).x + 0.5, p.dmap.path.get(p.following).y + 0.5,
 					this.parententity.posX, this.parententity.posY);
 			p.moveto(p.dmap.path.get(p.following).x + 0.5, p.dmap.path.get(p.following).y + 0.5,
-					steplength > DASHFRAMES ? 0.024 : 0.065);
+					steplength > DASHFRAMES ? 0.024 : 0.075);
 			if (/* p.following > 0 && */ distppp < 0.35)
 				p.nextState();
 		}
