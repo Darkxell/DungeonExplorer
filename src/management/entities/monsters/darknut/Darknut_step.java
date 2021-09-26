@@ -22,7 +22,7 @@ public class Darknut_step extends EntityState {
 	public void print(Graphics2D g2d) {
 		g2d.drawImage(this.parententity.entityDesign.getCurrentSprite(),
 				(int) ((this.parententity.roompointer.posX + this.parententity.posX) * 16 - 28),
-				(int) ((this.parententity.roompointer.posY + this.parententity.posY) * 16 - 28), null);
+				(int) ((this.parententity.roompointer.posY + this.parententity.posY) * 16 - 43), null);
 	}
 
 	@Override
