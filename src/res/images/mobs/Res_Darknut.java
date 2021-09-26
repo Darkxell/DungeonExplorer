@@ -33,5 +33,8 @@ public class Res_Darknut {
 			11);
 	public static BufferedImage[] slash_up = Res.getSpriteRectRow(ImagesHolder.ENTITIES_DARKNUTSLASH, 0, 192, 80, 64,
 			11);
+	
+	public static BufferedImage ghost = Res.createimage(ImagesHolder.ENTITIES_DARKNUT, 392, 56, 56, 56);
+	public static BufferedImage ghosttp = Res.createimage(ImagesHolder.ENTITIES_DARKNUT, 392, 112, 56, 56);
 
 }

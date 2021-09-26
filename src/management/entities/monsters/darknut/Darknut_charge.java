@@ -3,8 +3,10 @@ package management.entities.monsters.darknut;
 import java.awt.Graphics2D;
 
 import display.sprites.entities.DarknutSpriteSheet;
+import main.DungeonExplorer;
 import management.entities.Entity;
 import management.entities.EntityState;
+import res.audio.SoundsHolder;
 import util.MathUtils;
 
 public class Darknut_charge extends EntityState {
@@ -33,6 +35,8 @@ public class Darknut_charge extends EntityState {
 			p.facing = (p.posX > p.dmap.path.get(p.following).x) ? Entity.LEFT : Entity.RIGHT;
 			p.entityDesign.setSpriteID(
 					p.facing == Entity.LEFT ? DarknutSpriteSheet.ID_WINDUP_LEFT : DarknutSpriteSheet.ID_WINDUP_RIGHT);
+		} else if(chargelength >= WINDUP && chargelength % 12 == 0) {
+			DungeonExplorer.sm.playSound(SoundsHolder.getSong("MC_Link_Run.mp3"));
 		}
 
 		++chargelength;

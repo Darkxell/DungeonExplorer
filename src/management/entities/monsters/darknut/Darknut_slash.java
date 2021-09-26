@@ -3,17 +3,17 @@ package management.entities.monsters.darknut;
 import java.awt.Graphics2D;
 
 import display.sprites.entities.DarknutSpriteSheet;
+import main.DungeonExplorer;
 import management.entities.Entity;
 import management.entities.EntityState;
 import management.player.PlayerInfo;
-import util.MathUtils;
+import res.audio.SoundsHolder;
 
 public class Darknut_slash extends EntityState {
 
 	private int updater = 0;
 	private int slashlength = 0;
 
-	private static final int WINDUP = 16;
 	private static final int SLASHDURATION = 29;
 
 	public Darknut_slash(Entity parent) {
@@ -59,6 +59,8 @@ public class Darknut_slash extends EntityState {
 			super.parententity.lookAt(PlayerInfo.posX - super.parententity.roompointer.posX,
 					PlayerInfo.posY - super.parententity.roompointer.posY);
 			super.parententity.entityDesign.setSpriteID(DarknutSpriteSheet.ID_SLASH_LEFT + super.parententity.facing);
+		} else if(slashlength == 8) {
+			DungeonExplorer.sm.playSound(SoundsHolder.getSong("MC_Link_Sword.mp3"));
 		}
 
 		++slashlength;

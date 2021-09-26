@@ -5,6 +5,7 @@ import java.awt.Graphics2D;
 import display.sprites.entities.DarknutSpriteSheet;
 import management.entities.Entity;
 import management.entities.EntityState;
+import management.player.PlayerInfo;
 
 public class Darknut_Spawn extends EntityState {
 
@@ -31,6 +32,17 @@ public class Darknut_Spawn extends EntityState {
 			this.parententity.entityDesign.next();
 		}
 		if (exitspawn < 0) {
+			Darknut p = (Darknut) parententity;
+			p.circleX = 3.5 + Math.random() * 10;
+			p.circleY = 3.5 + Math.random() * 8;
+			try {
+				p.dmap.compute(p.posX, p.posY, PlayerInfo.posX - p.roompointer.posX,
+						PlayerInfo.posY - p.roompointer.posY);
+			} catch (Exception e) {
+				System.err.println("Couldn't compute Dijkstra map For a Darknut!");
+				e.printStackTrace();
+			}
+			p.following = p.dmap.path.size() - 1;
 			this.parententity.state = new Darknut_step(parententity);
 		}
 	}

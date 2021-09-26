@@ -16,17 +16,20 @@ import management.floors.Room;
 import management.player.PlayerInfo;
 import res.audio.SoundsHolder;
 import res.images.ImagesHolder;
+import util.MathUtils;
 
 public class Darknut extends Monster {
 
 	/* package */ DijkstraMap dmap = new DijkstraMap();
 	/* package */ int following = -1;
 
-	/* package */ double circleX = 4 + 9;
-	/* package */ double circleY = 4 + 7;
+	/* package */ double circleX;
+	/* package */ double circleY;
 
 	public Darknut(Room roompointer, double x, double y) {
 		super(roompointer, x, y);
+		circleX = x;
+		circleY = y+1;
 		super.state = new Darknut_Spawn(this);
 		super.entityDesign = new DarknutSpriteSheet();
 		super.damage = 0.5d;
@@ -106,36 +109,32 @@ public class Darknut extends Monster {
 		roompointer.addEntity(new MobHit(roompointer, posX, posY - 0.2));
 		super.hp -= 1.5;
 		if (super.hp <= 0) {
-			DungeonExplorer.sm.playSound(SoundsHolder.getSong("MC_Enemy_Kill.mp3"));
+			DungeonExplorer.sm.playSound(SoundsHolder.getSong("MC_Boss_Kill.mp3"));
 			DungeonExplorer.sm.setBackgroundMusic(null);
+			DungeonExplorer.sm.playSound(SoundsHolder.getSong("MC_Element_Thune.mp3"));
+			
 			kill();
 			roompointer.addEntity(new MobDeath(roompointer, posX, posY));
 		}
 	}
 
+	private int slashCooldown = 0;
+	
 	/* package */ void nextState() {
 		// If the Darknut does a still attack
-		if(Math.random()>0.85d) {
+		double distp = MathUtils.dist2(super.posX + roompointer.posX, super.posY + roompointer.posY, PlayerInfo.posX, PlayerInfo.posY);
+		slashCooldown--;
+		if(distp < 12.5 && slashCooldown <= 0 && Math.random()>0.4d ) {
+			slashCooldown = 3;
 			super.state = new Darknut_slash(this);
 			return;
 		}
 		// If the Darknut follows the next Dijkstra Node
-		following -= 1;
+		if(!(state instanceof Darknut_teleport))
+			following -= 1;
 		if (following == -1) {
-			roompointer.addEntity(new MobDeath(roompointer, posX, posY));
-			super.posX = circleX;
-			super.posY = circleY;
-			circleX = 3.5 + Math.random() * 10;
-			circleY = 3.5 + Math.random() * 8;
-			try {
-				dmap.compute(super.posX, super.posY, PlayerInfo.posX - roompointer.posX,
-						PlayerInfo.posY - roompointer.posY);
-			} catch (Exception e) {
-				System.err.println("Couldn't compute Dijkstra map For a Darknut!");
-				e.printStackTrace();
-			}
-			following = dmap.path.size() - 1;
-			super.state = new Darknut_step(this);
+			
+			super.state = new Darknut_teleport(this);
 			return;
 		}
 		if (dmap.nodes != null && following != -1 && following != dmap.path.size() - 1) {

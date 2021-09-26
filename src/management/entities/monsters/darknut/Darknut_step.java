@@ -3,9 +3,11 @@ package management.entities.monsters.darknut;
 import java.awt.Graphics2D;
 
 import display.sprites.entities.DarknutSpriteSheet;
+import main.DungeonExplorer;
 import management.entities.Entity;
 import management.entities.EntityState;
 import management.player.PlayerInfo;
+import res.audio.SoundsHolder;
 import util.MathUtils;
 
 public class Darknut_step extends EntityState {
@@ -34,6 +36,9 @@ public class Darknut_step extends EntityState {
 					PlayerInfo.posY - super.parententity.roompointer.posY);
 			super.parententity.entityDesign.setSpriteID(DarknutSpriteSheet.ID_MOVE_LEFT + super.parententity.facing);
 			break;
+			case 3:
+				DungeonExplorer.sm.playSound(SoundsHolder.getSong("MC_Link_Run.mp3"));
+				break;
 		case DASHFRAMES:
 			super.parententity.entityDesign.setSpriteID(DarknutSpriteSheet.ID_IDLE_LEFT + super.parententity.facing);
 			break;
