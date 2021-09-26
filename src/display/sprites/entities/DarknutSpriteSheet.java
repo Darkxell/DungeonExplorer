@@ -25,6 +25,11 @@ public class DarknutSpriteSheet extends SpriteSheet {
 	public static final int ID_CHARGE_LEFT = 11;
 	public static final int ID_CHARGE_RIGHT = 12;
 
+	public static final int ID_SLASH_LEFT = 13;
+	public static final int ID_SLASH_RIGHT = 14;
+	public static final int ID_SLASH_UP = 15;
+	public static final int ID_SLASH_DOWN = 16;
+
 	public DarknutSpriteSheet() {
 		super(null);
 		super.sprites = new AnimatedSprite[] {
@@ -38,7 +43,11 @@ public class DarknutSpriteSheet extends SpriteSheet {
 				new AnimatedSprite(Res_Darknut.move_up), new AnimatedSprite(Res_Darknut.move_down),
 				new AnimatedSprite(Res_Darknut.windup_left, ID_CHARGE_LEFT, this),
 				new AnimatedSprite(Res_Darknut.windup_right, ID_CHARGE_RIGHT, this),
-				new AnimatedSprite(Res_Darknut.charge_left), new AnimatedSprite(Res_Darknut.charge_right) };
+				new AnimatedSprite(Res_Darknut.charge_left), new AnimatedSprite(Res_Darknut.charge_right),
+				new AnimatedSprite(Res_Darknut.slash_left, ID_IDLE_LEFT, this),
+				new AnimatedSprite(Res_Darknut.slash_right, ID_IDLE_RIGHT, this),
+				new AnimatedSprite(Res_Darknut.slash_up, ID_IDLE_UP, this),
+				new AnimatedSprite(Res_Darknut.slash_down, ID_IDLE_DOWN, this) };
 	}
 
 }

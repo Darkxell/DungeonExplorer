@@ -25,4 +25,13 @@ public class Res_Darknut {
 	public static BufferedImage[] charge_left = Res.getSpriteRectRow(ImagesHolder.ENTITIES_DARKNUT, 0, 560, 64, 56, 6);
 	public static BufferedImage[] charge_right = Res.getSpriteRectRow(ImagesHolder.ENTITIES_DARKNUT, 0, 616, 64, 56, 6);
 
+	public static BufferedImage[] slash_down = Res.getSpriteRectRow(ImagesHolder.ENTITIES_DARKNUTSLASH, 0, 0, 80, 64,
+			11);
+	public static BufferedImage[] slash_left = Res.getSpriteRectRow(ImagesHolder.ENTITIES_DARKNUTSLASH, 0, 64, 80, 64,
+			11);
+	public static BufferedImage[] slash_right = Res.getSpriteRectRow(ImagesHolder.ENTITIES_DARKNUTSLASH, 0, 128, 80, 64,
+			11);
+	public static BufferedImage[] slash_up = Res.getSpriteRectRow(ImagesHolder.ENTITIES_DARKNUTSLASH, 0, 192, 80, 64,
+			11);
+
 }

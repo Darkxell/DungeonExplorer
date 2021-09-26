@@ -115,9 +115,10 @@ public class Darknut extends Monster {
 
 	/* package */ void nextState() {
 		// If the Darknut does a still attack
-
-		// TODO : sword slash trigger
-
+		if(Math.random()>0.85d) {
+			super.state = new Darknut_slash(this);
+			return;
+		}
 		// If the Darknut follows the next Dijkstra Node
 		following -= 1;
 		if (following == -1) {

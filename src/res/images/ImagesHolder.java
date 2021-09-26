@@ -19,6 +19,7 @@ public abstract class ImagesHolder {
 	public static final BufferedImage ENTITIES_OKTOROK = readfile(Res.FOLDER_PATH + "entities/oktorok.png");
 	public static final BufferedImage ENTITIES_FLOORMASTER = readfile(Res.FOLDER_PATH + "entities/floormaster.png");
 	public static final BufferedImage ENTITIES_DARKNUT = readfile(Res.FOLDER_PATH + "entities/darknut.png");
+	public static final BufferedImage ENTITIES_DARKNUTSLASH = readfile(Res.FOLDER_PATH + "entities/darknutslash.png");
 	public static final BufferedImage ENTITIES_CIRCLE = readfile(Res.FOLDER_PATH + "entities/circle.png");
 	public static final BufferedImage ENTITIES_BOSSBAR = readfile(Res.FOLDER_PATH + "entities/bossbar.png");
 	public static final BufferedImage ENTITIES_BOULDER = readfile(Res.FOLDER_PATH + "entities/boulder.png");
