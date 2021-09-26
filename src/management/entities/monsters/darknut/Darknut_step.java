@@ -5,6 +5,7 @@ import java.awt.Graphics2D;
 import display.sprites.entities.DarknutSpriteSheet;
 import management.entities.Entity;
 import management.entities.EntityState;
+import management.player.PlayerInfo;
 import util.MathUtils;
 
 public class Darknut_step extends EntityState {
@@ -29,6 +30,8 @@ public class Darknut_step extends EntityState {
 	public void update() {
 		switch (steplength) {
 		case 0:
+			super.parententity.lookAt(PlayerInfo.posX - super.parententity.roompointer.posX,
+					PlayerInfo.posY - super.parententity.roompointer.posY);
 			super.parententity.entityDesign.setSpriteID(DarknutSpriteSheet.ID_MOVE_LEFT + super.parententity.facing);
 			break;
 		case DASHFRAMES:
@@ -44,13 +47,11 @@ public class Darknut_step extends EntityState {
 
 		Darknut p = (Darknut) parententity;
 		if (p.dmap.path != null) {
-			if (p.following == -1)
-				p.following = p.dmap.path.size() - 1;
 			double distppp = MathUtils.dist2(p.dmap.path.get(p.following).x + 0.5, p.dmap.path.get(p.following).y + 0.5,
 					this.parententity.posX, this.parententity.posY);
 			p.moveto(p.dmap.path.get(p.following).x + 0.5, p.dmap.path.get(p.following).y + 0.5,
 					steplength > DASHFRAMES ? 0.024 : 0.075);
-			if (/* p.following > 0 && */ distppp < 0.35)
+			if (distppp < 0.35)
 				p.nextState();
 		}
 

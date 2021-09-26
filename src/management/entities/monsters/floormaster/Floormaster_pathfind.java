@@ -73,7 +73,7 @@ public class Floormaster_pathfind extends EntityState {
 	}
 
 	private void moveto(double x, double y) {
-		double speed = 0.015;
+		double speed = 0.019;
 		if (parententity.posX - x > 0.1)
 			parententity.posX -= speed;
 		if (parententity.posX - x < 0.1)

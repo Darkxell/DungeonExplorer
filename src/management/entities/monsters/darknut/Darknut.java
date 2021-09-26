@@ -40,12 +40,12 @@ public class Darknut extends Monster {
 			System.err.println("Couldn't compute Dijkstra map For a Darknut!");
 			e.printStackTrace();
 		}
+		following = dmap.path.size() - 1;
 	}
 
 	@Override
 	public void updateM() {
 		super.state.update();
-		super.lookAt(PlayerInfo.posX - roompointer.posX, PlayerInfo.posY - roompointer.posY);
 	}
 
 	@Override
@@ -64,7 +64,14 @@ public class Darknut extends Monster {
 				g2d.drawString("" + dmap.nodes.get(i).index, (int) (16 * (dmap.nodes.get(i).x + roompointer.posX)) + 3,
 						(int) (16 * (dmap.nodes.get(i).y + roompointer.posY)) + 12);
 				for (int nei = 0; nei < dmap.nodes.get(i).neighbors.size(); nei++) {
+					double length = dmap.nodes.get(i).distances.get(nei);
 					int offset = dmap.nodes.get(i).index > dmap.nodes.get(i).neighbors.get(nei).index ? 1 : -1;
+					if (length < 3) {
+						g2d.setColor(new Color(0, 255, 255, 110));
+					} else {
+						g2d.setColor(new Color(0, 100, 235, 180));
+						offset *= (int) (length / 1.25);
+					}
 					g2d.drawLine((int) (16 * (dmap.nodes.get(i).x + roompointer.posX)) + offset,
 							(int) (16 * (dmap.nodes.get(i).y + roompointer.posY)) + offset,
 							(int) (16 * (dmap.nodes.get(i).neighbors.get(nei).x + roompointer.posX)) + offset,
@@ -98,7 +105,7 @@ public class Darknut extends Monster {
 	public void onhit() {
 		roompointer.addEntity(new MobHit(roompointer, posX, posY - 0.2));
 		super.hp -= 1.5;
-		if(super.hp<=0) {
+		if (super.hp <= 0) {
 			DungeonExplorer.sm.playSound(SoundsHolder.getSong("MC_Enemy_Kill.mp3"));
 			DungeonExplorer.sm.setBackgroundMusic(null);
 			kill();
@@ -107,13 +114,18 @@ public class Darknut extends Monster {
 	}
 
 	/* package */ void nextState() {
+		// If the Darknut does a still attack
+
+		// TODO : sword slash trigger
+
+		// If the Darknut follows the next Dijkstra Node
 		following -= 1;
 		if (following == -1) {
 			roompointer.addEntity(new MobDeath(roompointer, posX, posY));
 			super.posX = circleX;
 			super.posY = circleY;
-			circleX = 4 + Math.random() * 9;
-			circleY = 4 + Math.random() * 7;
+			circleX = 3.5 + Math.random() * 10;
+			circleY = 3.5 + Math.random() * 8;
 			try {
 				dmap.compute(super.posX, super.posY, PlayerInfo.posX - roompointer.posX,
 						PlayerInfo.posY - roompointer.posY);
@@ -121,9 +133,18 @@ public class Darknut extends Monster {
 				System.err.println("Couldn't compute Dijkstra map For a Darknut!");
 				e.printStackTrace();
 			}
+			following = dmap.path.size() - 1;
+			super.state = new Darknut_step(this);
+			return;
+		}
+		if (dmap.nodes != null && following != -1 && following != dmap.path.size() - 1) {
+			double length = dmap.path.get(following + 1).distWithNei(dmap.path.get(following));
+			if (length > 3d) {
+				super.state = new Darknut_charge(this);
+				return;
+			}
 		}
 		super.state = new Darknut_step(this);
-
 	}
 
 	@Override
@@ -182,6 +203,16 @@ public class Darknut extends Monster {
 					n.addNeighbor(dmap.nodes.get(ij + 1 - graphwidth), 2.828d);
 				if (rightn && downn)
 					n.addNeighbor(dmap.nodes.get(ij + 1 + graphwidth), 2.828d);
+
+				if (i == 0) {
+					n.addNeighbor(dmap.nodes.get(ij + graphwidth - 1), 3.9);
+				} else if (i == 1) {
+					n.addNeighbor(dmap.nodes.get(ij + graphwidth - 2), 3.5);
+				} else if (i == graphwidth - 1) {
+					n.addNeighbor(dmap.nodes.get(ij - graphwidth + 1), 3.9);
+				} else if (i == graphwidth - 2) {
+					n.addNeighbor(dmap.nodes.get(ij - graphwidth + 2), 3.5);
+				}
 			}
 	}
 
