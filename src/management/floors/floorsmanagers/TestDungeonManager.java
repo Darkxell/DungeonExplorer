@@ -10,6 +10,7 @@ import display.sprites.AnimatedSprite;
 import main.DungeonExplorer;
 import management.entities.items.Key;
 import management.entities.monsters.darknut.Darknut;
+import management.entities.monsters.flock.Flock;
 import management.entities.monsters.floormaster.Floormaster;
 import management.entities.monsters.octorok.Oktorok;
 import management.entities.monsters.sluggula.Sluggula;
@@ -51,6 +52,8 @@ public class TestDungeonManager implements FloorManager {
 		r.addEntity(new Sluggula(r, 34, 16));
 		r.addEntity(new Floormaster(r, 4.5, 8.5));
 		r.addEntity(new Floormaster(r, 18.5, 8.5));
+		r = CurrentFloorHolder.CurrentFloor.rooms[11];
+		r.addEntity(new Flock(r, 2, 3, 19, 12));
 		r = CurrentFloorHolder.CurrentFloor.rooms[12];
 		r.addEntity(new Darknut(r, 8.5, 6));
 		DungeonExplorer.sm.setBackgroundMusic(MusicHolder.getSong("MC_DeepwoodShrine.mp3"));
