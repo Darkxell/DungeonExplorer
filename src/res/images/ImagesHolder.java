@@ -18,6 +18,7 @@ public abstract class ImagesHolder {
 	public static final BufferedImage ENTITIES_SLUGGULA = readfile(Res.FOLDER_PATH + "entities/sluggula.png");
 	public static final BufferedImage ENTITIES_OKTOROK = readfile(Res.FOLDER_PATH + "entities/oktorok.png");
 	public static final BufferedImage ENTITIES_FLOORMASTER = readfile(Res.FOLDER_PATH + "entities/floormaster.png");
+	public static final BufferedImage ENTITIES_KEESE = readfile(Res.FOLDER_PATH + "entities/keese.png");
 	public static final BufferedImage ENTITIES_DARKNUT = readfile(Res.FOLDER_PATH + "entities/darknut.png");
 	public static final BufferedImage ENTITIES_DARKNUTSLASH = readfile(Res.FOLDER_PATH + "entities/darknutslash.png");
 	public static final BufferedImage ENTITIES_CIRCLE = readfile(Res.FOLDER_PATH + "entities/circle.png");

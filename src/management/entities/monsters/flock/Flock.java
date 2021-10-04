@@ -18,9 +18,9 @@ public class Flock extends Monster {
 
 	public ArrayList<Boid> content = new ArrayList<>(20);
 	public double width, height;
-	public int size = 15;
+	public int size = 25;
 	private int spawner = 0;
-	private static final int SPAWNCOOLDOWN = 25;
+	private static final int SPAWNCOOLDOWN = 15;
 
 	public Flock(Room roompointer, double x, double y, double width, double height) {
 		super(roompointer, x, y);
@@ -30,6 +30,7 @@ public class Flock extends Monster {
 
 	@Override
 	public void updateM() {
+		
 		spawner++;
 		if (spawner >= SPAWNCOOLDOWN && content.size() < size) {
 			spawner = 0;
@@ -46,6 +47,10 @@ public class Flock extends Monster {
 			g2d.drawRect((int) (16 * (posX + roompointer.posX)), (int) (16 * (posY + roompointer.posY)),
 					(int) (width * 16), (int) (height * 16));
 		}
+
+		for (int i = 0; i < content.size(); i++)
+			if (content.get(i) instanceof ObstacleBoid)
+				content.get(i).print(g2d);
 	}
 
 	@Override

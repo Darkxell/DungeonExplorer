@@ -81,4 +81,8 @@ public class MathVector {
 		return x * m.x + y * m.y;
 	}
 
+	public boolean isZero() {
+		return x == 0d && y == 0d;
+	}
+
 }
