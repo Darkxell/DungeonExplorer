@@ -30,8 +30,13 @@ public class PS_ThrowBoomerang implements PlayerState {
 				break;
 			}
 		}else if (duration == 2) {
-			Room r = CurrentFloorHolder.CurrentFloor.getPlayerRoom();
-			r.addEntity(new MagicBoomerang(r, PlayerInfo.posX - r.posX, PlayerInfo.posY - r.posY));
+			if(PlayerInfo.hasboomerang) {
+				Room r = CurrentFloorHolder.CurrentFloor.getPlayerRoom();
+				if(r!= null) {
+					r.addEntity(new MagicBoomerang(r, PlayerInfo.posX - r.posX, PlayerInfo.posY - r.posY));
+					PlayerInfo.hasboomerang = false;
+				}
+			}
 		}
 		duration++;
 		if (duration > 15)

@@ -27,6 +27,8 @@ public abstract class PlayerInfo {
 
 	private static int playerupdater;
 
+	public static boolean hasboomerang = true;
+	
 	public static boolean DEBUGMODE = false;
 
 	/** The player inventory. */
