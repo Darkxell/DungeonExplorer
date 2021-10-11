@@ -7,23 +7,23 @@ import management.player.PlayerInfo;
 
 public class PS_ThrowBoomerang implements PlayerState {
 
-	private int duration = 25;
+	private int duration = 20;
 	private int throwdirection;
 
 	@Override
 	public void update() {
-		if (duration == 25) {
+		if (duration == 20) {
 			throwdirection = PlayerInfo.playerdirection;
 			switch (PlayerInfo.playerdirection) {
 			case PlayerInfo.DOWN:
-				PlayerInfo.playersprite.setSpriteID(PlayerSpriteSheet.ID_STILL_DOWN);
+				PlayerInfo.playersprite.setSpriteID(PlayerSpriteSheet.ID_THROW_DOWN);
 				break;
 			case PlayerInfo.UP:
-				PlayerInfo.playersprite.setSpriteID(PlayerSpriteSheet.ID_STILL_UP);
+				PlayerInfo.playersprite.setSpriteID(PlayerSpriteSheet.ID_THROW_UP);
 				break;
 			case PlayerInfo.LEFT:
 			case PlayerInfo.RIGHT:
-				PlayerInfo.playersprite.setSpriteID(PlayerSpriteSheet.ID_STILL_LEFT);
+				PlayerInfo.playersprite.setSpriteID(PlayerSpriteSheet.ID_THROW_LEFT);
 				break;
 			}
 		}
@@ -33,7 +33,6 @@ public class PS_ThrowBoomerang implements PlayerState {
 				PlayerInfo.currentstate = new PS_Iddle();
 			else
 				PlayerInfo.currentstate = new PS_Walk();
-
 	}
 
 	@Override

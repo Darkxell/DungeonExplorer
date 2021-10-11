@@ -62,7 +62,7 @@ public abstract class PlayerInfo {
 	public static PlayerState currentstate = new PS_Iddle();
 
 	/** The id of the item in the player S hand. */
-	public static int hand_S_itemID = Inventory.ITEM_SHIELD;
+	public static int hand_S_itemID = Inventory.ITEM_BOOMERANG;
 	/** The id of the item in the player D hand. */
 	public static int hand_D_itemID = Inventory.ITEM_SWORD;
 
