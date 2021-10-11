@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.util.ArrayList;
 
+import management.entities.Entity;
 import management.entities.Hitbox;
 import management.entities.Monster;
 import management.floors.Room;
@@ -14,7 +15,7 @@ import management.player.PlayerInfo;
  * move. Do note that entities added by this flock are added to the parent room
  * too.
  */
-public class Flock extends Monster {
+public class Flock extends Entity {
 
 	public ArrayList<Boid> content = new ArrayList<>(20);
 	public double width, height;
@@ -33,7 +34,7 @@ public class Flock extends Monster {
 	}
 
 	@Override
-	public void updateM() {
+	public void update() {
 		if (spawned < totalsize) {
 			spawner++;
 			if (spawner >= SPAWNCOOLDOWN && content.size() < size) {

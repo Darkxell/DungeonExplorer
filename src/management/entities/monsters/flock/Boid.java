@@ -5,6 +5,7 @@ import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.Random;
 
+import main.DungeonExplorer;
 import management.Position;
 import management.entities.Hitbox;
 import management.entities.Monster;
@@ -12,6 +13,7 @@ import management.entities.items.Heart;
 import management.entities.particle.MobDeath;
 import management.floors.Room;
 import management.player.PlayerInfo;
+import res.audio.SoundsHolder;
 import res.images.mobs.Res_Keese;
 import util.MathUtils;
 import util.MathVector;
@@ -42,6 +44,8 @@ public class Boid extends Monster {
 
 	@Override
 	public void updateM() {
+		if (lastkillsound < 100)
+			lastkillsound++;
 		align();
 		repulse();
 		lurk();
@@ -163,6 +167,8 @@ public class Boid extends Monster {
 		}
 	}
 
+	private static int lastkillsound = 0;
+
 	@Override
 	public void onhit() {
 		parent.content.remove(this);
@@ -170,7 +176,11 @@ public class Boid extends Monster {
 		roompointer.addEntity(new MobDeath(roompointer, posX, posY));
 		int r = NumberUtil.randomINT(1, 10);
 		if (r == 1)
-		    roompointer.addEntity(new Heart(roompointer, posX, posY,20));
+			roompointer.addEntity(new Heart(roompointer, posX, posY, 20));
+		if (lastkillsound > 10) {
+			DungeonExplorer.sm.playSound(SoundsHolder.getSong("MC_Enemy_Kill.mp3"));
+			lastkillsound = 0;
+		}
 	}
 
 	@Override

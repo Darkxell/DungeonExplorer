@@ -116,7 +116,7 @@ public class Darknut extends Monster {
 	@Override
 	public void onhit() {
 		roompointer.addEntity(new MobHit(roompointer, posX, posY - 0.2));
-		super.hp -= 1.5;
+		super.hp -= super.hp > 40 ? 3.5 : 2;
 		if (super.hp <= 0) {
 			DungeonExplorer.sm.playSound(SoundsHolder.getSong("MC_Boss_Kill.mp3"));
 
@@ -251,7 +251,7 @@ public class Darknut extends Monster {
 	 */
 	private boolean isLastinroom() {
 		for (int i = 0; i < roompointer.entities.length; i++)
-			if (roompointer.entities[i] instanceof Darknut)
+			if (roompointer.entities[i] instanceof Darknut && roompointer.entities[i] != this)
 				return false;
 		return true;
 	}
