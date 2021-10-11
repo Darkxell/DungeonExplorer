@@ -11,6 +11,7 @@ import management.floors.Room;
 import management.player.PlayerInfo;
 import res.audio.SoundsHolder;
 import res.images.Res_PlayerItems;
+import util.NumberUtil;
 
 public class MagicBoomerang extends Entity {
 
@@ -37,15 +38,15 @@ public class MagicBoomerang extends Entity {
 
 	@Override
 	public void update() {
-		if(rotation % 14 == 0)
+		if (rotation % 14 == 0)
 			DungeonExplorer.sm.playSound(SoundsHolder.getSong("MC_Boomerang.mp3"));
-		
+
 		if (rotation > 400 || targets == null || targets.size() == 0) {
 			kill();
 			return;
 		}
 		rotation++;
-		
+
 		double targetX = next >= targets.size() ? PlayerInfo.posX - roompointer.posX : targets.get(next).posX,
 				targetY = next >= targets.size() ? PlayerInfo.posY - roompointer.posY : targets.get(next).posY;
 		boolean moved = false;
@@ -96,16 +97,40 @@ public class MagicBoomerang extends Entity {
 		PlayerInfo.hasboomerang = true;
 	}
 
+	/**
+	 * Sorts the targets arraylist using a montecarlo algorithm, derived from a
+	 * genetic mutation algorithm.
+	 */
 	private void optimisePath() {
+		if (targets.size() >= 2)
+			for (int i = 0; i < 1000; i++) {
+				optimiseStep();
+			}
+	}
 
+	private void optimiseStep() {
+		double previouslength = computePathLengthSquared();
+		int swap1 = NumberUtil.randomINT(0, targets.size() - 1), swap2 = NumberUtil.randomINT(0, targets.size() - 1);
+		if (swap1 == swap2)
+			return;
+		swapnumbers(swap1, swap2);
+		double newlength = computePathLengthSquared();
+		if (previouslength < newlength)
+			swapnumbers(swap1, swap2);
+	}
+
+	private void swapnumbers(int index1, int index2) {
+		Entity temp = targets.get(index1);
+		targets.set(index1, targets.get(index2));
+		targets.set(index2, temp);
 	}
 
 	private double computePathLengthSquared() {
 		if (targets == null || targets.size() == 0)
-			return 0f;
+			return 0d;
 		double toreturn = Math.pow(originalX - targets.get(0).posX, 2) + Math.pow(originalY - targets.get(0).posY, 2);
 		for (int i = 1; i < targets.size(); i++) {
-			Entity p = targets.get(i - 1);
+			Entity p = targets.get(i);
 			Entity c = targets.get(i - 1);
 			toreturn += Math.pow(p.posX - c.posX, 2) + Math.pow(p.posY - c.posY, 2);
 		}
