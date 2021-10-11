@@ -3,16 +3,19 @@ package management.player.playerstates;
 import java.awt.image.BufferedImage;
 
 import display.sprites.entities.PlayerSpriteSheet;
+import management.entities.player.boomerang.MagicBoomerang;
+import management.floors.CurrentFloorHolder;
+import management.floors.Room;
 import management.player.PlayerInfo;
 
 public class PS_ThrowBoomerang implements PlayerState {
 
-	private int duration = 20;
+	private int duration = 0;
 	private int throwdirection;
 
 	@Override
 	public void update() {
-		if (duration == 20) {
+		if (duration == 0) {
 			throwdirection = PlayerInfo.playerdirection;
 			switch (PlayerInfo.playerdirection) {
 			case PlayerInfo.DOWN:
@@ -26,9 +29,12 @@ public class PS_ThrowBoomerang implements PlayerState {
 				PlayerInfo.playersprite.setSpriteID(PlayerSpriteSheet.ID_THROW_LEFT);
 				break;
 			}
+		}else if (duration == 2) {
+			Room r = CurrentFloorHolder.CurrentFloor.getPlayerRoom();
+			r.addEntity(new MagicBoomerang(r, PlayerInfo.posX - r.posX, PlayerInfo.posY - r.posY));
 		}
-		--duration;
-		if (duration <= 0)
+		duration++;
+		if (duration > 15)
 			if (!PlayerInfo.isPressingAKey())
 				PlayerInfo.currentstate = new PS_Iddle();
 			else

@@ -64,9 +64,9 @@ public class PlayerSpriteSheet extends SpriteSheet {
 				new AnimatedSprite(Res_Player.roll_down, ID_STILL_DOWN, this),
 				new AnimatedSprite(Res_Player.roll_left, ID_STILL_LEFT, this),
 				new AnimatedSprite(Res_Player.roll_up, ID_STILL_UP, this), new AnimatedSprite(Res_Player.faint),
-				new AnimatedSprite(Res_Player.throw_up, ID_STILL_DOWN, this),
+				new AnimatedSprite(Res_Player.throw_down, ID_STILL_DOWN, this),
 				new AnimatedSprite(Res_Player.throw_left, ID_STILL_LEFT, this),
-				new AnimatedSprite(Res_Player.throw_down, ID_STILL_UP, this) };
+				new AnimatedSprite(Res_Player.throw_up, ID_STILL_UP, this) };
 
 	}
 
@@ -77,15 +77,16 @@ public class PlayerSpriteSheet extends SpriteSheet {
 	 */
 	public int getFramesPerSprite() {
 		int sID = super.getSpriteID();
-		if (sID >= 0 && sID <= 5)
+		if (sID >= ID_STILL_DOWN && sID <= ID_WALK_UP)
 			return 3;
-		if (sID >= 6 && sID <= 20)
+		if (sID >= ID_SLASH_DOWN_1 && sID <= ID_SLASH_UP_5)
 			return 1;
-		if (sID >= 21 && sID <= 23)
+		if (sID >= ID_ROLL_DOWN && sID <= ID_ROLL_UP)
 			return 2;
-		if (sID == 24)
+		if (sID == ID_FAINT)
 			return 10;
-
+		if (sID >= ID_THROW_DOWN && sID <= ID_THROW_UP)
+			return 3;
 		return 1;
 	}
 

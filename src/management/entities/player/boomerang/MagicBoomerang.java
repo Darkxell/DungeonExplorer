@@ -22,7 +22,7 @@ public class MagicBoomerang extends Entity {
 
 	@Override
 	public void print(Graphics2D g2d) {
-		g2d.drawImage(Res_PlayerItems.boomerang2[rotation / 10 % 3],
+		g2d.drawImage(Res_PlayerItems.boomerang2[rotation / 2 % 3],
 				(int) ((super.roompointer.posX + super.posX) * 16 - 8),
 				(int) ((super.roompointer.posY + super.posY) * 16 - 8), null);
 	}
