@@ -8,12 +8,14 @@ import main.DungeonExplorer;
 import management.Position;
 import management.entities.Hitbox;
 import management.entities.Monster;
+import management.entities.items.BossKey;
 import management.entities.monsters.pathfinding.DijkstraMap;
 import management.entities.monsters.pathfinding.DijkstraNode;
 import management.entities.particle.MobDeath;
 import management.entities.particle.MobHit;
 import management.floors.Room;
 import management.player.PlayerInfo;
+import res.audio.MusicHolder;
 import res.audio.SoundsHolder;
 import res.images.ImagesHolder;
 import util.MathUtils;
@@ -26,10 +28,17 @@ public class Darknut extends Monster {
 	/* package */ double circleX;
 	/* package */ double circleY;
 
+	private int index = 0;
+
+	public Darknut(Room roompointer, double x, double y, int index) {
+		this(roompointer, x, y);
+		this.index = index;
+	}
+
 	public Darknut(Room roompointer, double x, double y) {
 		super(roompointer, x, y);
 		circleX = x;
-		circleY = y+1;
+		circleY = y + 1;
 		super.state = new Darknut_Spawn(this);
 		super.entityDesign = new DarknutSpriteSheet();
 		super.damage = 0.5d;
@@ -110,30 +119,35 @@ public class Darknut extends Monster {
 		super.hp -= 1.5;
 		if (super.hp <= 0) {
 			DungeonExplorer.sm.playSound(SoundsHolder.getSong("MC_Boss_Kill.mp3"));
-			DungeonExplorer.sm.setBackgroundMusic(null);
-			DungeonExplorer.sm.playSound(SoundsHolder.getSong("MC_Element_Thune.mp3"));
-			
-			kill();
+
 			roompointer.addEntity(new MobDeath(roompointer, posX, posY));
+			if (!PlayerInfo.playerInventory.dungeon_hasbosskey && isLastinroom())
+				roompointer.addEntity(new BossKey(roompointer, posX, posY, 16));
+			if (isLastinroom()) {
+				DungeonExplorer.sm.setBackgroundMusic(MusicHolder.getSong("MC_DeepwoodShrine.mp3"));
+				DungeonExplorer.sm.playSound(SoundsHolder.getSong("MC_Element_Thune.mp3"));
+			}
+			kill();
 		}
 	}
 
 	private int slashCooldown = 0;
-	
+
 	/* package */ void nextState() {
 		// If the Darknut does a still attack
-		double distp = MathUtils.dist2(super.posX + roompointer.posX, super.posY + roompointer.posY, PlayerInfo.posX, PlayerInfo.posY);
+		double distp = MathUtils.dist2(super.posX + roompointer.posX, super.posY + roompointer.posY, PlayerInfo.posX,
+				PlayerInfo.posY);
 		slashCooldown--;
-		if(distp < 12.5 && slashCooldown <= 0 && Math.random()>0.4d ) {
+		if (distp < 12.5 && slashCooldown <= 0 && Math.random() > 0.4d) {
 			slashCooldown = 3;
 			super.state = new Darknut_slash(this);
 			return;
 		}
 		// If the Darknut follows the next Dijkstra Node
-		if(!(state instanceof Darknut_teleport))
+		if (!(state instanceof Darknut_teleport))
 			following -= 1;
 		if (following == -1) {
-			
+
 			super.state = new Darknut_teleport(this);
 			return;
 		}
@@ -222,7 +236,7 @@ public class Darknut extends Monster {
 
 	@Override
 	public void printOnUI(Graphics2D g2d) {
-		int px = 20, py = 140;
+		int px = 20, py = 140 - (10 * index);
 		g2d.drawImage(ImagesHolder.ENTITIES_BOSSBAR, px, py, null);
 		g2d.setColor(BB1);
 		g2d.fillRect(px + 13, py + 5, (int) super.hp, 3);
@@ -230,6 +244,16 @@ public class Darknut extends Monster {
 		g2d.fillRect(px + 13, py + 6, (int) super.hp + 1, 1);
 		g2d.setColor(BB3);
 		g2d.fillRect(px + 13, py + 7, (int) super.hp + 2, 1);
+	}
+
+	/**
+	 * predicate that returns true if this darknut is the last/only one in the room.
+	 */
+	private boolean isLastinroom() {
+		for (int i = 0; i < roompointer.entities.length; i++)
+			if (roompointer.entities[i] instanceof Darknut)
+				return false;
+		return true;
 	}
 
 }

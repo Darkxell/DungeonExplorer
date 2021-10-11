@@ -61,7 +61,8 @@ public class TestDungeonManager implements FloorManager {
 		f.content.add(new ObstacleBoid(r, f, 14.5d, 6.5d));
 		r.addEntity(f);
 		r = CurrentFloorHolder.CurrentFloor.rooms[12];
-		r.addEntity(new Darknut(r, 8.5, 6));
+		r.addEntity(new Darknut(r, 7.5, 6));
+		r.addEntity(new Darknut(r, 9.5, 6, 1));
 		DungeonExplorer.sm.setBackgroundMusic(MusicHolder.getSong("MC_DeepwoodShrine.mp3"));
 		CurrentFloorHolder.CurrentFloor.rooms[7].setTileAt(17, 10, new KeyDoor(KeyDoor.stone_left));
 		// TODO : set the testdungeon state from the save file

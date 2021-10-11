@@ -8,11 +8,14 @@ import java.util.Random;
 import management.Position;
 import management.entities.Hitbox;
 import management.entities.Monster;
+import management.entities.items.Heart;
 import management.entities.particle.MobDeath;
 import management.floors.Room;
 import management.player.PlayerInfo;
 import res.images.mobs.Res_Keese;
+import util.MathUtils;
 import util.MathVector;
+import util.NumberUtil;
 
 /**
  * Content of a flock
@@ -28,6 +31,7 @@ public class Boid extends Monster {
 
 	public static final double RANGE_REPULSE = 0.65d;
 	public static final double RANGE_ALIGN = 2d;
+	public static final double RANGE_ATTACK = 2d;
 	public static final double RANGE_LURK = 4.8d;
 
 	public Boid(Room roompointer, Flock parent, double x, double y) {
@@ -41,6 +45,7 @@ public class Boid extends Monster {
 		align();
 		repulse();
 		lurk();
+		attack();
 		step();
 		rebound();
 		spriteupdater++;
@@ -102,6 +107,23 @@ public class Boid extends Monster {
 	}
 
 	/**
+	 * Changes this boid's direction to go slightly towards the player
+	 */
+	private void attack() {
+		MathVector adjustment = new MathVector(0d, 0d);
+		double distp = MathUtils.dist2(super.posX + roompointer.posX, super.posY + roompointer.posY, PlayerInfo.posX,
+				PlayerInfo.posY);
+		if (distp < RANGE_ATTACK * RANGE_ATTACK) {
+			adjustment.x += PlayerInfo.posX - roompointer.posX - this.posX;
+			adjustment.y += PlayerInfo.posY - roompointer.posY - this.posY;
+		}
+		if (!adjustment.isZero()) {
+			adjustment.normalize().mul(0.2d);
+			this.direction.add(adjustment).normalize();
+		}
+	}
+
+	/**
 	 * Changes this boid's direction to go away from its very close neighbors.
 	 */
 	private void repulse() {
@@ -123,7 +145,7 @@ public class Boid extends Monster {
 
 	@Override
 	public void print(Graphics2D g2d) {
-		g2d.drawImage(Res_Keese.keese[spriteupdater/5], (int) ((super.roompointer.posX + super.posX) * 16 - 16),
+		g2d.drawImage(Res_Keese.keese[spriteupdater / 5], (int) ((super.roompointer.posX + super.posX) * 16 - 16),
 				(int) ((super.roompointer.posY + super.posY) * 16 - 18), null);
 		if (PlayerInfo.DEBUGMODE) {
 			g2d.setColor(new Color(0, 0, 0, 120));
@@ -146,6 +168,9 @@ public class Boid extends Monster {
 		parent.content.remove(this);
 		kill();
 		roompointer.addEntity(new MobDeath(roompointer, posX, posY));
+		int r = NumberUtil.randomINT(1, 10);
+		if (r == 1)
+		    roompointer.addEntity(new Heart(roompointer, posX, posY,20));
 	}
 
 	@Override

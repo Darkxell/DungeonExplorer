@@ -37,11 +37,11 @@ public class Inventory {
     public static final int JAR_GREENAMULET = 10;
     public static final int JAR_BLUEAMULET = 11;
 
-    public double maxhealth = 3.0d;
+    public double maxhealth = 4.0d;
     public int ruppees = 0;
     public int keys = 0;
-    public int bombs;
-    public int arrows;
+    public int bombs = 0;
+    public int arrows = 0;
     public int maxbombs = 10;
     public int maxarrows = 30;
 
@@ -62,4 +62,7 @@ public class Inventory {
     public int level_jar3 = JAR_WATER;
     public int level_jar4 = JAR_GREENAMULET;
 
+    public boolean dungeon_hasmap = true;
+    public boolean dungeon_hasbosskey = false;
+    public boolean dungeon_hascompass = true;
 }

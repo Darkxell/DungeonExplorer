@@ -36,12 +36,12 @@ public abstract class PlayerInfo {
 	 * The X position of the player in the Floor. keep in mind that this is not the
 	 * position in the room.
 	 */
-	public static double posX = 111d; // 61.5d;
+	public static double posX = 61.5d;
 	/**
 	 * The Y position of the player in the Floor. keep in mind taht this is not the
 	 * position in the room.
 	 */
-	public static double posY = 73d; // 85.5d;
+	public static double posY = 85.5d;
 
 	/**
 	 * The direction faced by the player. Is equals to the last key PRESSED if you

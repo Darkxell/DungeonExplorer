@@ -18,7 +18,11 @@ public class Flock extends Monster {
 
 	public ArrayList<Boid> content = new ArrayList<>(20);
 	public double width, height;
+	/** The maximum amount of mobs spawned at once. */
 	public int size = 25;
+	/** The maximum amount of boids spawned by this flock. */
+	public int totalsize = 50;
+	private int spawned = 0;
 	private int spawner = 0;
 	private static final int SPAWNCOOLDOWN = 15;
 
@@ -30,13 +34,15 @@ public class Flock extends Monster {
 
 	@Override
 	public void updateM() {
-		
-		spawner++;
-		if (spawner >= SPAWNCOOLDOWN && content.size() < size) {
-			spawner = 0;
-			Boid newboid = new Boid(roompointer, this, posX + width / 2, posY + height / 2);
-			content.add(newboid);
-			roompointer.addEntity(newboid);
+		if (spawned < totalsize) {
+			spawner++;
+			if (spawner >= SPAWNCOOLDOWN && content.size() < size) {
+				spawner = 0;
+				spawned++;
+				Boid newboid = new Boid(roompointer, this, posX + width / 2, posY + height / 2);
+				content.add(newboid);
+				roompointer.addEntity(newboid);
+			}
 		}
 	}
 
