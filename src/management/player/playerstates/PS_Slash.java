@@ -34,9 +34,6 @@ public class PS_Slash implements PlayerState {
 			.setSpriteID(PlayerSpriteSheet.ID_SLASH_UP_1);
 		break;
 	    case PlayerInfo.LEFT:
-		PlayerInfo.playersprite
-			.setSpriteID(PlayerSpriteSheet.ID_SLASH_LEFT_1);
-		break;
 	    case PlayerInfo.RIGHT:
 		PlayerInfo.playersprite
 			.setSpriteID(PlayerSpriteSheet.ID_SLASH_LEFT_1);
@@ -67,27 +64,24 @@ public class PS_Slash implements PlayerState {
 		PlayerInfo.currentstate = new PS_Walk();
     }
 
-    /** Creates particle effects on monsters and diminish their health. */
-    private void slash() {
-	DoubleRectangle slashhitbox = new DoubleRectangle(
-		PlayerInfo.posX - 1.5, PlayerInfo.posY - 1.5, 3, 3);
-	Room currentroom = CurrentFloorHolder.CurrentFloor.getPlayerRoom();
-	if(currentroom != null)for (int i = 0; i < currentroom.entities.length; i++)
-	    try {
-		if (CurrentFloorHolder.CurrentFloor.getPlayerRoom().entities[i]
-			.getHitbox(
-				CurrentFloorHolder.CurrentFloor.getPlayerRoom().entities[i].posX
-					+ CurrentFloorHolder.CurrentFloor
-						.getPlayerRoom().posX,
-				CurrentFloorHolder.CurrentFloor.getPlayerRoom().entities[i].posY
-					+ CurrentFloorHolder.CurrentFloor
-						.getPlayerRoom().posY)
-			.intersects(slashhitbox))
-		    CurrentFloorHolder.CurrentFloor.getPlayerRoom().entities[i]
-			    .onhit();
-	    } catch (Exception e) {
-	    }
-    }
+	/** Creates particle effects on monsters and diminish their health. */
+	private void slash() {
+		DoubleRectangle slashhitbox = new DoubleRectangle(PlayerInfo.posX - 1.5, PlayerInfo.posY - 1.5, 3, 3);
+		Room currentroom = CurrentFloorHolder.CurrentFloor.getPlayerRoom();
+		if (currentroom != null)
+			for (int i = 0; i < currentroom.entities.length; i++)
+				try {
+					if (CurrentFloorHolder.CurrentFloor.getPlayerRoom().entities[i]
+							.getHitbox(
+									CurrentFloorHolder.CurrentFloor.getPlayerRoom().entities[i].posX
+											+ CurrentFloorHolder.CurrentFloor.getPlayerRoom().posX,
+									CurrentFloorHolder.CurrentFloor.getPlayerRoom().entities[i].posY
+											+ CurrentFloorHolder.CurrentFloor.getPlayerRoom().posY)
+							.intersects(slashhitbox))
+						CurrentFloorHolder.CurrentFloor.getPlayerRoom().entities[i].onhit();
+				} catch (Exception e) {
+				}
+	}
 
     @Override
     public void actionRpress() {

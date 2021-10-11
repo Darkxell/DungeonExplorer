@@ -32,6 +32,7 @@ public abstract class ImagesHolder {
 	public static final BufferedImage PARTICLE_BOULDERCOLLAPSE = readfile(
 			Res.FOLDER_PATH + "particles/bouldercollapse.png");
 	public static final BufferedImage PARTICLE_MOBHIT = readfile(Res.FOLDER_PATH + "particles/mobhit.png");
+	public static final BufferedImage PARTICLE_BOOMERANG = readfile(Res.FOLDER_PATH + "particles/boomerang.png");
 
 	public static final BufferedImage INVENTORY_INVENTORY = readfile(Res.FOLDER_PATH + "inventory/inventory.png");
 
