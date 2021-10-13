@@ -26,7 +26,6 @@ public class Floor {
 		rooms = new Room[roomsfiles.size()];
 		int x, y;
 		for (int i = 0; i < rooms.length; i++) {
-			System.out.println(folderpath + roomsfiles.get(i));
 			String name = StringMatcher.getRawFilename(roomsfiles.get(i));
 			String[] indexes = StringMatcher.split(name, '-');
 			x = Integer.parseInt(indexes[1]);
@@ -34,7 +33,6 @@ public class Floor {
 
 			String s = TextFileUtility
 					.fromInputStream(PackageScanner.getResourceAsStream(folderpath + "/" + roomsfiles.get(i)));
-			System.out.println(s);
 			rooms[i] = new Room(s, x, y);
 		}
 	}

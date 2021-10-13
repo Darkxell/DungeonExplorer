@@ -89,7 +89,7 @@ public class DijkstraMap {
 				toreturn = nodes.get(i);
 				nodeamount++;
 			}
-		if (nodeamount == 0 && DEBUGDIJKSTRA)
+		if (DEBUGDIJKSTRA && nodeamount == 0)
 			System.err.println("No node available for dijkstra distance check...!");
 		return toreturn;
 	}

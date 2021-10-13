@@ -21,7 +21,6 @@ public class PackageScanner {
 		try {
 			List<String> filenames = new ArrayList<>();
 			URI uri = PackageScanner.class.getResource(path).toURI();
-			System.out.println("Starting from: " + uri);
 			try (FileSystem fileSystem = (uri.getScheme().equals("jar")
 					? FileSystems.newFileSystem(uri, Collections.<String, Object>emptyMap())
 					: null)) {
@@ -29,7 +28,6 @@ public class PackageScanner {
 				Files.walkFileTree(myPath, new SimpleFileVisitor<Path>() {
 					@Override
 					public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
-						System.out.println("visited file:" + file.getFileName());
 						filenames.add(file.getFileName().toString());
 						return FileVisitResult.CONTINUE;
 					}

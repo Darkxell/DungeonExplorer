@@ -87,7 +87,6 @@ public class Tile {
 	if (tileType == TYPE_SOLID) {
 	    return false;
 	}
-	System.out.println("test");
 	return false; // TODO : add all the weird tiles.
     }
 
