@@ -2,7 +2,6 @@ package management.floors.floorsmanagers;
 
 import java.awt.image.BufferedImage;
 
-import res.Res;
 import res.audio.MusicHolder;
 import res.audio.SoundsHolder;
 import res.images.Res_Tiles;
@@ -34,37 +33,42 @@ public class TestDungeonManager implements FloorManager {
 
 	@Override
 	public void setFloorFromSave() {
-		CurrentFloorHolder.CurrentFloor = new Floor(Res.FOLDER_PATH + "maps\\testdungeon");
-		Room r = CurrentFloorHolder.CurrentFloor.rooms[0];
-		r.addEntity(new Sluggula(r, 10, 10));
-		r.addEntity(new Sluggula(r, 5, 10));
-		r = CurrentFloorHolder.CurrentFloor.rooms[1];
-		r.addEntity(new Sluggula(r, 5, 9));
-		r = CurrentFloorHolder.CurrentFloor.rooms[2];
-		r.addEntity(new Key(r, 6, 6, 0));
-		r = CurrentFloorHolder.CurrentFloor.rooms[5];
-		r.addEntity(new Unknown(r, 7, 2));
-		r.addEntity(new Meat(r, 9, 9));
-		r = CurrentFloorHolder.CurrentFloor.rooms[8];
-		r.addEntity(new Floormaster(r, 8, 3));
-		r.addEntity(new Floormaster(r, 8, 9));
-		r = CurrentFloorHolder.CurrentFloor.rooms[10];
-		r.addEntity(new Sluggula(r, 36, 14));
-		r.addEntity(new Sluggula(r, 34, 16));
-		r.addEntity(new Floormaster(r, 4.5, 8.5));
-		r.addEntity(new Floormaster(r, 18.5, 8.5));
-		r = CurrentFloorHolder.CurrentFloor.rooms[11];
-		Flock f = new Flock(r, 2, 3, 19, 12);
-		f.content.add(new ObstacleBoid(r, f, 9.5d, 4.5d));
-		f.content.add(new ObstacleBoid(r, f, 13.5d, 4.5d));
-		f.content.add(new ObstacleBoid(r, f, 8.5d, 6.5d));
-		f.content.add(new ObstacleBoid(r, f, 14.5d, 6.5d));
-		r.addEntity(f);
-		r = CurrentFloorHolder.CurrentFloor.rooms[12];
-		r.addEntity(new Darknut(r, 7.5, 6));
-		r.addEntity(new Darknut(r, 9.5, 6, 1));
-		DungeonExplorer.sm.setBackgroundMusic(MusicHolder.getSong("MC_DeepwoodShrine.mp3"));
-		CurrentFloorHolder.CurrentFloor.rooms[7].setTileAt(17, 10, new KeyDoor(KeyDoor.stone_left));
+		CurrentFloorHolder.CurrentFloor = new Floor("/maps/testdungeon");
+		try {
+			Room r = CurrentFloorHolder.CurrentFloor.rooms[0];
+			r.addEntity(new Sluggula(r, 10, 10));
+			r.addEntity(new Sluggula(r, 5, 10));
+			r = CurrentFloorHolder.CurrentFloor.rooms[1];
+			r.addEntity(new Sluggula(r, 5, 9));
+			r = CurrentFloorHolder.CurrentFloor.rooms[2];
+			r.addEntity(new Key(r, 6, 6, 0));
+			r = CurrentFloorHolder.CurrentFloor.rooms[5];
+			r.addEntity(new Unknown(r, 7, 2));
+			r.addEntity(new Meat(r, 9, 9));
+			r = CurrentFloorHolder.CurrentFloor.rooms[8];
+			r.addEntity(new Floormaster(r, 8, 3));
+			r.addEntity(new Floormaster(r, 8, 9));
+			r = CurrentFloorHolder.CurrentFloor.rooms[10];
+			r.addEntity(new Sluggula(r, 36, 14));
+			r.addEntity(new Sluggula(r, 34, 16));
+			r.addEntity(new Floormaster(r, 4.5, 8.5));
+			r.addEntity(new Floormaster(r, 18.5, 8.5));
+			r = CurrentFloorHolder.CurrentFloor.rooms[11];
+			Flock f = new Flock(r, 2, 3, 19, 12);
+			f.content.add(new ObstacleBoid(r, f, 9.5d, 4.5d));
+			f.content.add(new ObstacleBoid(r, f, 13.5d, 4.5d));
+			f.content.add(new ObstacleBoid(r, f, 8.5d, 6.5d));
+			f.content.add(new ObstacleBoid(r, f, 14.5d, 6.5d));
+			r.addEntity(f);
+			r = CurrentFloorHolder.CurrentFloor.rooms[12];
+			r.addEntity(new Darknut(r, 7.5, 6));
+			r.addEntity(new Darknut(r, 9.5, 6, 1));
+			DungeonExplorer.sm.setBackgroundMusic(MusicHolder.getSong("MC_DeepwoodShrine.mp3"));
+			CurrentFloorHolder.CurrentFloor.rooms[7].setTileAt(17, 10, new KeyDoor(KeyDoor.stone_left));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 		// TODO : set the testdungeon state from the save file
 	}
 

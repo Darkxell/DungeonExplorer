@@ -4,7 +4,7 @@ import java.awt.image.BufferedImage;
 
 public abstract class Res {
 
-    public static final String FOLDER_PATH = "D:\\zeldaTMC\\";
+    //public static final String FOLDER_PATH = "D:\\zeldaTMC\\";
 
     /** Gets a part of a buffered Image. */
     public static BufferedImage createimage(BufferedImage image, int x, int y,
