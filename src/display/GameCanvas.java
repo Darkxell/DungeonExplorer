@@ -43,7 +43,8 @@ public class GameCanvas extends Canvas {
 	private int mouseY;
 	private boolean isMouseInside;
 	private boolean isMouseOnCorner;
-
+	private long lastclickstamp = 0l;
+	
 	public GameCanvas() {
 		this.addMouseListener(new MouseListener() {
 
@@ -76,6 +77,10 @@ public class GameCanvas extends Canvas {
 
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				if(lastclickstamp + 200 > System.currentTimeMillis()) {
+					DungeonExplorer.frame.maximize();
+				} else
+				lastclickstamp = System.currentTimeMillis();
 			}
 		});
 		this.addMouseMotionListener(new MouseMotionListener() {

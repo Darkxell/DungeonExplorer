@@ -53,6 +53,10 @@ public class GameFrame {
 		shadows.setVisible(false);
 		frame.setState(JFrame.ICONIFIED);
 	}
+	
+	public void maximize() {
+		frame.setExtendedState(frame.getExtendedState() | JFrame.MAXIMIZED_BOTH);
+	}
 
 	/** Bump this frame to the top. */
 	public void bump() {
