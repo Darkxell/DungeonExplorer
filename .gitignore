@@ -1,6 +1,4 @@
 # Eclipse things
-.project
-.classpath
 /bin/*
 .settings/*
 
