@@ -2,8 +2,10 @@ package management.floors.specialtiles;
 
 import java.awt.image.BufferedImage;
 
+import res.audio.SoundsHolder;
 import res.images.Res_Tiles;
 import display.sprites.AnimatedSprite;
+import main.DungeonExplorer;
 import management.floors.Room;
 import management.floors.Tile;
 
@@ -27,6 +29,7 @@ public class KeyDoor extends Tile {
     public static void openDoorAt(int x, int y, Room room) {
 	Tile door = room.getTile(x-room.posX, y-room.posY);
 	if (door instanceof KeyDoor) {
+		DungeonExplorer.sm.playSound(SoundsHolder.getSong("MC_DungeonDoor.mp3"));
 	    switch (((KeyDoor)door).spriteID) {
 	    case stone_left:
 		room.setTileAt(x-room.posX, y-room.posY-1, new Tile(new AnimatedSprite(new BufferedImage[] { Res_Tiles.tilessprites[1] }), Tile.TYPE_SOLID));

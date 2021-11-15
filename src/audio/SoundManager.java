@@ -119,6 +119,7 @@ public class SoundManager implements Runnable {
 		    new Player(new FileInputStream(sound.getfilepath())).play();
 		} catch (Exception e) {
 		    System.err.println("Sound "+ sound +" couldn't be played.");
+		    e.printStackTrace();
 		}
 	    }
 	});

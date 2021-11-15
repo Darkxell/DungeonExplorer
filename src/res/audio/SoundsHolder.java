@@ -7,13 +7,13 @@ import audio.Song;
 public abstract class SoundsHolder {
 
 	public static Song[] sounds = getSounds();
-	private static String[] names = new String[0];
+	private static String[] names;
 
 	private static Song[] getSounds() {
 		try {
-			File[] all = new File("audio\\sounds").listFiles();
+			File[] all = new File("res\\audio\\sounds").listFiles();
 			names = new String[all.length];
-			for (int i = 0; i < all.length; i++)
+			for (int i = 0; i < all.length; i++) 
 				names[i] = all[i].getName();
 			Song[] ts = new Song[all.length];
 			for (int i = 0; i < all.length; i++)
