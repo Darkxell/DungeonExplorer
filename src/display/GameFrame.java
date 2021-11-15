@@ -47,6 +47,7 @@ public class GameFrame {
 	public void moveTo(int x, int y) {
 		this.frame.setLocation(x, y);
 		this.shadows.setLocation(x - 10, y - 10);
+		this.shadows.setSize(frame.getWidth() + 20, frame.getHeight() + 20);
 	}
 
 	public void minimize() {
