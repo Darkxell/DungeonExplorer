@@ -171,8 +171,8 @@ public class TestDungeonManager implements FloorManager {
 					new Tile(new AnimatedSprite(new BufferedImage[] { Res_Tiles.tilessprites[41] }), 1));
 			currentfloor.getPlayerRoom().addEntity(new MobDeath(currentfloor.getPlayerRoom(), 18.5, 3.5));
 		}
-		if (currentfloor.isPlayerOnTile(115, 64) || currentfloor.isPlayerOnTile(116, 64)
-				|| currentfloor.isPlayerOnTile(117, 64)) {
+		if ((currentfloor.isPlayerOnTile(115, 64) || currentfloor.isPlayerOnTile(116, 64)
+				|| currentfloor.isPlayerOnTile(117, 64)) && !PlayerInfo.playerInventory.dungeon_hasbosskey) {
 			DungeonExplorer.sm.setBackgroundMusic(MusicHolder.getSong("MC_Boss.mp3"));
 			PlayerInfo.posY = 60.5;
 		}
