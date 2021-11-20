@@ -171,10 +171,17 @@ public class TestDungeonManager implements FloorManager {
 					new Tile(new AnimatedSprite(new BufferedImage[] { Res_Tiles.tilessprites[41] }), 1));
 			currentfloor.getPlayerRoom().addEntity(new MobDeath(currentfloor.getPlayerRoom(), 18.5, 3.5));
 		}
+		// Teleport in darknut room
 		if ((currentfloor.isPlayerOnTile(115, 64) || currentfloor.isPlayerOnTile(116, 64)
 				|| currentfloor.isPlayerOnTile(117, 64)) && !PlayerInfo.playerInventory.dungeon_hasbosskey) {
-			DungeonExplorer.sm.setBackgroundMusic(MusicHolder.getSong("MC_Boss.mp3"));
+			DungeonExplorer.sm.setBackgroundMusic(MusicHolder.getSong("MC_MiniBoss.mp3"));
 			PlayerInfo.posY = 60.5;
+		}
+		// Teleport in boss room
+		if ( PlayerInfo.playerInventory.dungeon_hasbosskey && (currentfloor.isPlayerOnTile(71, 68) || currentfloor.isPlayerOnTile(72, 68)
+				|| currentfloor.isPlayerOnTile(73, 68))) {
+			DungeonExplorer.sm.setBackgroundMusic(MusicHolder.getSong("MC_Boss.mp3"));
+			PlayerInfo.posY = 57.5;
 		}
 	}
 

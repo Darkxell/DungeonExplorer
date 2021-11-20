@@ -7,7 +7,7 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/ncandela/Documents/docs/DErelease/JZedited.jar"/>
-	<classpathentry kind="lib" path="C:/Users/ncandela/Documents/docs/DErelease/tritonus_share.jar"/>
+	<classpathentry kind="lib" path="D:/repositories/zeldaTMC/JZedited.jar"/>
+	<classpathentry kind="lib" path="D:/repositories/zeldaTMC/tritonus_share.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

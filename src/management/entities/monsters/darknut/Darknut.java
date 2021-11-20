@@ -131,7 +131,6 @@ public class Darknut extends Monster {
 				roompointer.addEntity(new BossKey(roompointer, posX, posY, 16));
 			if (isLastinroom()) {
 				DungeonExplorer.sm.setBackgroundMusic(MusicHolder.getSong("MC_DeepwoodShrine.mp3"));
-				DungeonExplorer.sm.playSound(SoundsHolder.getSong("MC_Element_Thune.mp3"));
 				roompointer.setTileAt(7, 12, new Tile(new AnimatedSprite(new BufferedImage[] {Res_Tiles.tilessprites[494]}), Tile.TYPE_NORMAL));
 				roompointer.setTileAt(8, 12, new Tile(new AnimatedSprite(new BufferedImage[] {Res_Tiles.tilessprites[495]}), Tile.TYPE_NORMAL));
 				roompointer.setTileAt(9, 12, new Tile(new AnimatedSprite(new BufferedImage[] {Res_Tiles.tilessprites[496]}), Tile.TYPE_NORMAL));
