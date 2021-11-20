@@ -8,6 +8,7 @@ import res.images.Res_Tiles;
 import display.sprites.AnimatedSprite;
 import main.DungeonExplorer;
 import management.entities.items.Key;
+import management.entities.monsters.boss1.ChuchuBoss;
 import management.entities.monsters.darknut.Darknut;
 import management.entities.monsters.flock.Flock;
 import management.entities.monsters.flock.ObstacleBoid;
@@ -63,6 +64,8 @@ public class TestDungeonManager implements FloorManager {
 			r = CurrentFloorHolder.CurrentFloor.rooms[12];
 			r.addEntity(new Darknut(r, 7.5, 6));
 			r.addEntity(new Darknut(r, 9.5, 6, 1));
+			r = CurrentFloorHolder.CurrentFloor.rooms[13];
+			r.addEntity(new ChuchuBoss(r, 8.5, 6));
 			DungeonExplorer.sm.setBackgroundMusic(MusicHolder.getSong("MC_DeepwoodShrine.mp3"));
 			CurrentFloorHolder.CurrentFloor.rooms[7].setTileAt(17, 10, new KeyDoor(KeyDoor.stone_left));
 		} catch (Exception e) {

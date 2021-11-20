@@ -6,8 +6,10 @@ import java.awt.image.BufferedImage;
 
 import res.images.Res_Tiles;
 import display.sprites.AnimatedSprite;
+import util.DoubleRectangle;
 import util.StringMatcher;
 import management.entities.Entity;
+import management.entities.Hitbox;
 import management.player.PlayerInfo;
 
 /** Object that represents a room. */
@@ -99,6 +101,16 @@ public class Room {
 				}
 		for (int i = 0; i < entities.length; i++)
 			entities[i].print(g2d);
+		if (PlayerInfo.DEBUGMODE) {
+			g2d.setColor(Color.DARK_GRAY);
+			for (int i = 0; i < entities.length; i++) {
+				Hitbox hboxnullable = entities[i].getHitbox(entities[i].posX, entities[i].posY);
+				if (hboxnullable == null)
+					continue;
+				DoubleRectangle hbox = hboxnullable.getRectHitbox();
+				g2d.drawRect(x + (int) (16 * hbox.x), y + (int) (16 * hbox.y), (int) (hbox.width * 16), (int) (hbox.height * 16));
+			}
+		}
 
 		// TODO : draw the tileentities.
 	}
