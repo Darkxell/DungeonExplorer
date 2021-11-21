@@ -44,7 +44,9 @@ public class Zol extends Monster implements Comparable<Zol> {
 		// AI iteration
 		this.posX += spawninfo.direction.x * spawninfo.speed * (1f - spawninfo.chaseratio);
 		this.posY += spawninfo.direction.y * spawninfo.speed * (1f - spawninfo.chaseratio);
-		// TODO: go towards player by chaseratio
+		MathVector towardsplayer = new MathVector(playerX - this.posX , playerY - this.posY).normalize();
+		this.posX += towardsplayer.x * spawninfo.speed * spawninfo.chaseratio;
+		this.posY += towardsplayer.y * spawninfo.speed * spawninfo.chaseratio;
 		this.height += heightmomentum;
 		heightmomentum -= 0.1f;
 		// Score iteration
@@ -64,7 +66,7 @@ public class Zol extends Monster implements Comparable<Zol> {
 				(int) ((super.roompointer.posY + super.posY) * 16 - 8) - heightoffset, null);
 		g2d.setColor(Color.CYAN);
 		if (PlayerInfo.DEBUGMODE) {
-			g2d.drawString("" + (score/10), (int) ((super.roompointer.posX + super.posX) * 16 - 8),
+			g2d.drawString("" + (score / 10), (int) ((super.roompointer.posX + super.posX) * 16 - 8),
 					(int) ((super.roompointer.posY + super.posY) * 16 + 13));
 		}
 	}

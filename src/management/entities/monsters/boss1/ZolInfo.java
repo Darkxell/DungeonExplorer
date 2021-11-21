@@ -13,7 +13,7 @@ public class ZolInfo {
 	public final float speed;
 
 	public ZolInfo() {
-		this(false, MathVector.newRandom(), 0.1f, 1.6f, 0.11f);
+		this(false, MathVector.newRandom(), 0.2f, 1.6f, 0.11f);
 	}
 
 	public ZolInfo(boolean spawnbig, MathVector direction, float chaseratio, float upwardsmomentum, float speed) {
