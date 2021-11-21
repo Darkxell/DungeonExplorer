@@ -2,19 +2,27 @@ package management.entities.monsters.boss1;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.concurrent.ThreadLocalRandom;
 
+import display.sprites.AnimatedSprite;
 import main.DungeonExplorer;
 import management.Position;
 import management.entities.Hitbox;
 import management.entities.Monster;
+import management.entities.items.BossKey;
+import management.entities.particle.MobDeath;
+import management.entities.particle.MobHit;
 import management.floors.Room;
+import management.floors.Tile;
 import management.player.PlayerInfo;
+import res.audio.MusicHolder;
 import res.audio.SoundsHolder;
 import res.images.ImagesHolder;
 import res.images.Res_Particles;
+import res.images.Res_Tiles;
 import res.images.mobs.Res_Chuchu;
 import util.MathVector;
 
@@ -112,6 +120,16 @@ public class ChuchuBoss extends Monster {
 
 	@Override
 	public void onhit() {
+		roompointer.addEntity(new MobHit(roompointer, posX, posY - 0.2));
+		super.hp -= super.hp > 40 ? 3.5 : 2;
+		if (PlayerInfo.DEBUGMODE)
+			super.hp -= 10;
+		if (super.hp <= 0) {
+			DungeonExplorer.sm.playSound(SoundsHolder.getSong("MC_Boss_Kill.mp3"));
+			roompointer.addEntity(new MobDeath(roompointer, posX, posY));
+			DungeonExplorer.sm.setBackgroundMusic(MusicHolder.getSong("MC_DeepwoodShrine.mp3"));
+			kill();
+		}
 	}
 
 	@Override
