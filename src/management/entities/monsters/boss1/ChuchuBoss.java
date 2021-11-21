@@ -2,6 +2,7 @@ package management.entities.monsters.boss1;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.util.ArrayList;
 
 import management.Position;
 import management.entities.Hitbox;
@@ -10,23 +11,47 @@ import management.floors.Room;
 import res.images.ImagesHolder;
 import res.images.mobs.Res_Chuchu;
 
-public class ChuchuBoss extends Monster{
+public class ChuchuBoss extends Monster {
+
+	private ArrayList<Zol> childrens = new ArrayList<>(20);
+
+	// Genetic algorithm attributes for zol spawning
+	private int generationsize = 20, bestthreshold = 4;
+	private float mutationchance = 0.2f;
 
 	public ChuchuBoss(Room roompointer, double x, double y) {
 		super(roompointer, x, y);
 		super.hp = 100d;
 	}
 
+	private int nextphasecountdown = 50;
+
 	@Override
 	public void updateM() {
-		
+		nextphasecountdown++;
+		if (nextphasecountdown >= 130) {
+			nextphasecountdown = 0;
+			// Computes the new generation to spawn
+			for (int i = 0; i < childrens.size(); i++) {
+				Zol currentzol = childrens.get(i);
+				if (!currentzol.killed)
+					currentzol.kill();
+			}
+			childrens.clear();
+			// Spawns the new generation
+			for (int i = 0; i < generationsize; i++) {
+				Zol toadd = new Zol(roompointer, posX, posY, new ZolInfo());
+				childrens.add(toadd);
+				roompointer.addEntity(toadd);
+			}
+		}
+
 	}
 
 	@Override
 	public void print(Graphics2D g2d) {
-		g2d.drawImage(Res_Chuchu.CHUCHU_FEET,
-				(int) ((super.roompointer.posX + super.posX) * 16 - 8),
-				(int) ((super.roompointer.posY + super.posY) * 16 - 8), null);
+		g2d.drawImage(Res_Chuchu.CHUCHU_FEET, (int) ((super.roompointer.posX + super.posX) * 16 - 20),
+				(int) ((super.roompointer.posY + super.posY) * 16 - 11), null);
 	}
 
 	@Override
@@ -36,23 +61,23 @@ public class ChuchuBoss extends Monster{
 	@Override
 	public Hitbox getHitbox(double posX, double posY) {
 		Position[] points = new Position[9];
-		double halfsize = 0.65d;
-		points[0] = new Position(posX - halfsize, posY - halfsize);
-		points[1] = new Position(posX, posY - halfsize);
-		points[2] = new Position(posX + halfsize, posY - halfsize);
-		points[3] = new Position(posX - halfsize, posY);
+		final double halfsizeVert = 0.55d, halfsizeHori = 0.95d;
+		points[0] = new Position(posX - halfsizeHori, posY - halfsizeVert);
+		points[1] = new Position(posX, posY - halfsizeVert);
+		points[2] = new Position(posX + halfsizeHori, posY - halfsizeVert);
+		points[3] = new Position(posX - halfsizeHori, posY);
 		points[4] = new Position(posX, posY);
-		points[5] = new Position(posX + halfsize, posY);
-		points[6] = new Position(posX - halfsize, posY + halfsize);
-		points[7] = new Position(posX, posY + halfsize);
-		points[8] = new Position(posX + halfsize, posY + halfsize);
+		points[5] = new Position(posX + halfsizeHori, posY);
+		points[6] = new Position(posX - halfsizeHori, posY + halfsizeVert);
+		points[7] = new Position(posX, posY + halfsizeVert);
+		points[8] = new Position(posX + halfsizeHori, posY + halfsizeVert);
 		return new Hitbox(points);
 	}
-	
+
 	private static final Color BB1 = new Color(122, 59, 199);
 	private static final Color BB2 = new Color(111, 51, 190);
 	private static final Color BB3 = new Color(58, 13, 156);
-	
+
 	@Override
 	public void printOnUI(Graphics2D g2d) {
 		int px = 20, py = 140;

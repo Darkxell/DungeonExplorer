@@ -1,5 +1,8 @@
 package util;
 
+import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
+
 import management.Position;
 
 /** Represents a mathematical 2D vector. */
@@ -7,6 +10,20 @@ public class MathVector {
 
 	public double x;
 	public double y;
+
+	/**
+	 * Returns a new random normalized vector. Output is slightly biased towards
+	 * diagonals.
+	 */
+	public static MathVector newRandom() {
+		double xratio = ThreadLocalRandom.current().nextDouble(1.8d) - 0.8d,
+				yratio = ThreadLocalRandom.current().nextDouble(1.8d) - 0.8d;
+		if (xratio < 0.1d)
+			xratio -= 0.2d;
+		if (yratio < 0.1d)
+			yratio -= 0.2d;
+		return new MathVector(xratio, yratio).normalize();
+	}
 
 	/** Builds a mathematical vector. */
 	public MathVector(double x, double y) {
