@@ -6,6 +6,8 @@ import res.Res;
 
 public class Res_Particles {
 
+	public static BufferedImage shadow = Res.createimage(ImagesHolder.PARTICLE_BOULDERCOLLAPSE, 51, 13, 8, 4);
+	
     public static BufferedImage[] mobdeath = Res.getSpriteRectRow(
 	    ImagesHolder.PARTICLE_MOBDEATH, 0, 0, 32, 16, 9);
     public static BufferedImage[] bouldercollapse = Res.getSpriteRectRow(

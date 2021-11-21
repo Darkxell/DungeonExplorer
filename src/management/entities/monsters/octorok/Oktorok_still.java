@@ -16,7 +16,6 @@ public class Oktorok_still extends EntityState {
     @Override
     public void print(Graphics2D g2d) {
 	BufferedImage sprite = Res_Oktorok.still_down;
-	;
 	switch (super.parententity.facing) {
 	case Entity.UP:
 	    sprite = Res_Oktorok.still_up;

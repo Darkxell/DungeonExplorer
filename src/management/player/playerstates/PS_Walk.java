@@ -13,8 +13,6 @@ import display.sprites.entities.PlayerSpriteSheet;
 
 public class PS_Walk implements PlayerState {
 
-    private static final boolean walktroughwallscheat = false;
-
     @Override
     public void update() {
 	updateWalksprite();
@@ -79,7 +77,7 @@ public class PS_Walk implements PlayerState {
      * coordinates.
      */
     public static boolean canWalkTo(double toX, double toY) {
-	if (walktroughwallscheat)
+	if (PlayerInfo.DEBUGMODE)
 	    return true;
 	Position[] playerhitbox = PlayerInfo.getPlayerHitbox(toX, toY).cardinals;
 	for (int i = 0; i < playerhitbox.length; i++) {
@@ -109,21 +107,25 @@ public class PS_Walk implements PlayerState {
     public void actionRrelease() {
     }
 
-    @Override
-    public void action1press() {
-	if (PlayerInfo.hand_S_itemID == Inventory.ITEM_SWORD)
-	    PlayerInfo.currentstate = new PS_Slash();
-    }
+	@Override
+	public void action1press() {
+		if (PlayerInfo.hand_S_itemID == Inventory.ITEM_SWORD)
+			PlayerInfo.currentstate = new PS_Slash();
+		if (PlayerInfo.hand_S_itemID == Inventory.ITEM_BOOMERANG)
+			PlayerInfo.currentstate = new PS_ThrowBoomerang();
+	}
 
-    @Override
-    public void action1release() {
-    }
+	@Override
+	public void action1release() {
+	}
 
-    @Override
-    public void action2press() {
-	if (PlayerInfo.hand_D_itemID == Inventory.ITEM_SWORD)
-	    PlayerInfo.currentstate = new PS_Slash();
-    }
+	@Override
+	public void action2press() {
+		if (PlayerInfo.hand_D_itemID == Inventory.ITEM_SWORD)
+			PlayerInfo.currentstate = new PS_Slash();
+		if (PlayerInfo.hand_D_itemID == Inventory.ITEM_BOOMERANG)
+			PlayerInfo.currentstate = new PS_ThrowBoomerang();
+	}
 
     @Override
     public void action2release() {

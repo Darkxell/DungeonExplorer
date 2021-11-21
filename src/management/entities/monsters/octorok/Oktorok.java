@@ -42,7 +42,7 @@ public class Oktorok extends Monster {
 	    roompointer.addEntity(new Rupee(roompointer, posX, posY,20));
 	roompointer.addEntity(new MobDeath(roompointer, posX, posY));
 	roompointer.addEntity(new MobHit(roompointer, posX, posY - 0.2));
-	 DungeonExplorer.sm.playSound(SoundsHolder.getSong("MC_Enemy_Kill.mp3"));
+	DungeonExplorer.sm.playSound(SoundsHolder.getSong("MC_Enemy_Kill.mp3"));
     }
 
     @Override
@@ -66,7 +66,7 @@ public class Oktorok extends Monster {
      * player.
      */
     public boolean isLookingAtPlayer() {
-	int viewdistance = 5;// in tiles
+	int viewdistance = 5; // in tiles
 	int x = (int) super.posX + roompointer.posX, y = (int) super.posY
 		+ roompointer.posY;
 	int px = (int) PlayerInfo.posX, py = (int) PlayerInfo.posY;

@@ -7,7 +7,7 @@ import util.StringMatcher;
 import display.sprites.AnimatedSprite;
 
 /**
- * Object that represents the phisical 16x16 area on the ground. Thoose tiles
+ * Object that represents the physical 16x16 area on the ground. Thoose tiles
  * are only the most common ones, see TileEvent for more interesting things.
  */
 public class Tile {
@@ -87,7 +87,6 @@ public class Tile {
 	if (tileType == TYPE_SOLID) {
 	    return false;
 	}
-	System.out.println("test");
 	return false; // TODO : add all the weird tiles.
     }
 

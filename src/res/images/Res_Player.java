@@ -18,6 +18,10 @@ public class Res_Player {
     public static BufferedImage[] walk_left = getPlayerSpriteRow(0, 64, 32, 10);
     public static BufferedImage[] walk_up = getPlayerSpriteRow(0, 96, 32, 10);
 
+    public static BufferedImage[] throw_down = getPlayerSpriteRow(320, 32, 32, 6);
+    public static BufferedImage[] throw_left = getPlayerSpriteRow(320, 64, 32, 6);
+    public static BufferedImage[] throw_up = getPlayerSpriteRow(320, 96, 32, 6);
+    
     public static BufferedImage[] slash_down_1 = getPlayerSpriteRow(0, 128, 64, 8);
     public static BufferedImage[] slash_left_1 = getPlayerSpriteRow(0, 192, 64, 8);
     public static BufferedImage[] slash_up_1 = getPlayerSpriteRow(0, 256, 64, 8);

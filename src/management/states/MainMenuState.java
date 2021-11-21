@@ -1,9 +1,11 @@
 package management.states;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 
 import main.DungeonExplorer;
+import management.player.PlayerInfo;
 import display.GameCanvas;
 import res.audio.MusicHolder;
 import res.audio.SoundsHolder;
@@ -17,6 +19,10 @@ public class MainMenuState implements CanvasState {
     public int startcounter;
     public int swordshine;
 
+    private boolean press_S = false;
+    private boolean press_Z = false;
+    
+    
     @Override
     public void print(Graphics2D g2d) {
 	g2d.drawImage(Res_MainMenu.background, 0, 0, null);
@@ -63,7 +69,15 @@ public class MainMenuState implements CanvasState {
 	if (frame > 400 && startcounter > 20) {
 	    g2d.drawImage(Res_MainMenu.start, 75, 140, null);
 	}
-
+	
+	if(PlayerInfo.DEBUGMODE) {
+		g2d.setColor(Color.WHITE);
+		g2d.drawString("DEBUG MODE ON", 5, 145);
+		g2d.drawString("Press S+Z for fast boot", 5, 155);
+		g2d.setColor(Color.BLACK);
+		g2d.drawString("DEBUG MODE ON", 6, 144);
+		g2d.drawString("Press S+Z for fast boot", 6, 154);
+	}
     }
 
     @Override
@@ -101,10 +115,23 @@ public class MainMenuState implements CanvasState {
 		    .getSong("MC_FairyFountain1.mp3"));
 	    DungeonExplorer.frame.getCanvas().state = new FileSelectState();
 	}
+	if(e.getKeyCode() == KeyEvent.VK_Z)press_Z = false;
+	if(e.getKeyCode() == KeyEvent.VK_S)press_S = false;
     }
 
-    @Override
-    public void keyPressed(KeyEvent e) {
-    }
+	@Override
+	public void keyPressed(KeyEvent e) {
+		if (e.getKeyCode() == KeyEvent.VK_Z)
+			press_Z = true;
+		if (e.getKeyCode() == KeyEvent.VK_S)
+			press_S = true;
+		if (press_S && press_Z)
+			fastBoot();
+	}
+
+	private void fastBoot() {
+		DungeonExplorer.sm.playSound(SoundsHolder.getSong("MC_Menu_Select.mp3"));
+		DungeonExplorer.frame.getCanvas().state = new GameState();
+	}
 
 }

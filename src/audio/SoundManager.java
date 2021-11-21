@@ -23,8 +23,8 @@ public class SoundManager implements Runnable {
      * thread to play the BGM, and is ready to use.
      */
     public SoundManager() {
-	this.runner = new Thread(this);
-	this.runner.start();
+    	this.runner = new Thread(this);
+    	this.runner.start();
     }
 
     /**
@@ -118,7 +118,7 @@ public class SoundManager implements Runnable {
 		try {
 		    new Player(new FileInputStream(sound.getfilepath())).play();
 		} catch (Exception e) {
-		    System.err.println("Sound couldn't be played.");
+		    System.err.println("Sound "+ sound +" couldn't be played.");
 		    e.printStackTrace();
 		}
 	    }

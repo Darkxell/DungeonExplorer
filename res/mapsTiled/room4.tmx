@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="left-up" width="18" height="14" tilewidth="16" tileheight="16" nextobjectid="1">
+ <tileset firstgid="1" name="ZeldaTMC" tilewidth="16" tileheight="16" tilecount="640">
+  <image source="../tiles/tileset.png" width="320" height="512"/>
+  <terraintypes>
+   <terrain name="Nouveau terrain" tile="-1"/>
+  </terraintypes>
+ </tileset>
+ <layer name="Calque de Tile 1" width="18" height="14">
+  <data encoding="base64" compression="zlib">
+   eJyF0r1OAkEQwPGdxqAgibVBMVqLyJeVJqICSoWlxlIfgI4XkFfRRH0CTdQnkEcxNlr5v7CbmxtcLH65mZ29ye3ONZ1zLeyihm1UsIMqPvHl47BHx3U0cIozHOMEh2jjyK8tiHM5Sesdl4276OEO9xBvNMctG8aSzfd5HuAZL6rHvF4XFC8lmw94nuMDE/V+3xuZPFa/xg2+8aO+Re8T08fWE+FcyxSLMnseibBnzbNYQANNme1he8XurEaxLum87H38lSf9Vnx+JdlzhXmF9di92rxn+oR5jSX+7fbOhuo/snPvS/pN/xmq/yjMfZN8Cw/Ej3jCIpa8VWolmcZhPa/iQjJztNizh1fiN7yjhDWvQq0q0zisr6u4jA38AkkRVDs=
+  </data>
+ </layer>
+</map>
