@@ -42,7 +42,7 @@ public abstract class Monster extends Entity {
 		Hitbox ph = PlayerInfo.getPlayerHitbox(PlayerInfo.posX, PlayerInfo.posY);
 		if (ph.intersects(hitbox.getRectHitbox()))
 			collide = true;
-		if (collide && !(PlayerInfo.currentstate instanceof PS_Knockback)) {
+		if (collide && PlayerInfo.health > 0.01f && !(PlayerInfo.currentstate instanceof PS_Knockback)) {
 			PlayerInfo.currentstate = new PS_Knockback(
 					new MathVector(PlayerInfo.posX - super.posX, PlayerInfo.posY - super.posY), 9);
 			PlayerInfo.health -= this.damage;

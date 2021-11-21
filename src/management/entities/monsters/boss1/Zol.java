@@ -44,11 +44,12 @@ public class Zol extends Monster implements Comparable<Zol> {
 		// AI iteration
 		this.posX += spawninfo.direction.x * spawninfo.speed * (1f - spawninfo.chaseratio);
 		this.posY += spawninfo.direction.y * spawninfo.speed * (1f - spawninfo.chaseratio);
-		MathVector towardsplayer = new MathVector(playerX - this.posX , playerY - this.posY).normalize();
+		MathVector towardsplayer = new MathVector(playerX - this.posX, playerY - this.posY).normalize();
 		this.posX += towardsplayer.x * spawninfo.speed * spawninfo.chaseratio;
 		this.posY += towardsplayer.y * spawninfo.speed * spawninfo.chaseratio;
 		this.height += heightmomentum;
 		heightmomentum -= 0.1f;
+		if(height<0)height = 0;
 		// Score iteration
 		float distwithplayer = (float) new MathVector(this.posX - playerX, this.posY - playerY).norm();
 		score += 8 - (int) distwithplayer;
@@ -76,9 +77,11 @@ public class Zol extends Monster implements Comparable<Zol> {
 		roompointer.addEntity(new MobHit(roompointer, posX, posY - 0.2));
 		if (big) {
 			big = false;
+			score += 50;
 		} else {
 			roompointer.addEntity(new MobDeath(roompointer, posX, posY));
 			DungeonExplorer.sm.playSound(SoundsHolder.getSong("MC_Enemy_Kill.mp3"));
+			score += 150; // Scores on death, because close to the player.
 			killed = true;
 			kill();
 		}
@@ -103,7 +106,7 @@ public class Zol extends Monster implements Comparable<Zol> {
 
 	@Override
 	public int compareTo(Zol o) {
-		return score - o.score;
+		return o.score - score;
 	}
 
 }

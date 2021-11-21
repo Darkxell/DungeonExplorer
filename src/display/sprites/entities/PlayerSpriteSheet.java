@@ -37,6 +37,7 @@ public class PlayerSpriteSheet extends SpriteSheet {
 	public static final int ID_THROW_DOWN = 25;
 	public static final int ID_THROW_LEFT = 26;
 	public static final int ID_THROW_UP = 27;
+	public static final int ID_FAINTED = 28;
 
 	/** Creates a new player PlayerSpriteSheet and returns it. */
 	public PlayerSpriteSheet() {
@@ -63,10 +64,12 @@ public class PlayerSpriteSheet extends SpriteSheet {
 				new AnimatedSprite(Res_Player.slash_up_5, ID_STILL_UP, this),
 				new AnimatedSprite(Res_Player.roll_down, ID_STILL_DOWN, this),
 				new AnimatedSprite(Res_Player.roll_left, ID_STILL_LEFT, this),
-				new AnimatedSprite(Res_Player.roll_up, ID_STILL_UP, this), new AnimatedSprite(Res_Player.faint),
+				new AnimatedSprite(Res_Player.roll_up, ID_STILL_UP, this),
+				new AnimatedSprite(Res_Player.faint, ID_FAINTED, this),
 				new AnimatedSprite(Res_Player.throw_down, ID_STILL_DOWN, this),
 				new AnimatedSprite(Res_Player.throw_left, ID_STILL_LEFT, this),
-				new AnimatedSprite(Res_Player.throw_up, ID_STILL_UP, this) };
+				new AnimatedSprite(Res_Player.throw_up, ID_STILL_UP, this),
+				new AnimatedSprite(new BufferedImage[] { Res_Player.faint[Res_Player.faint.length - 1] }) };
 
 	}
 
